@@ -5,7 +5,7 @@ public class Game {
 		System.out.println("Hello, World!"); 
 		// Testing puzzle used to verify methods work
 		Puzzle p = new Puzzle();
-		
+		System.out.println (Connect.access("molly"));
 	}
 	
 } 

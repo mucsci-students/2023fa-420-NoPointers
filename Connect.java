@@ -34,14 +34,13 @@ public class Connect {
 		    // Create a connection to the database
 		    Connection conn = DriverManager.getConnection(url);
 		    if (conn != null) {
-			System.out.println("Connected to the database");
 			res = findWord(size, word, conn);
 			
 			conn.close();
-			System.out.println("Database and table created successfully");
 		    }
 		} catch (SQLException e) {
-		    System.err.println("Database creation error: " + e.getMessage());
+		    //System.err.println("Database creation error: " + e.getMessage());
+		    return false;
 		}
 		return res;
 	}
@@ -62,7 +61,8 @@ public class Connect {
 		        return found;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return false;
 		}
 
 		return false;

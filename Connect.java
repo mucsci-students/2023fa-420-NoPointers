@@ -38,7 +38,7 @@ public class Connect {
 		String num = Integer.toString(size);
 		Statement stmt = conn.createStatement();
 
-        // Create a table (You can define your own schema)
+        // SQL Query to find word in table of specific word size
         String SQLQuery = "SELECT * FROM " + num + "words WHERE word = \"" 
         		+ wordString +"\";";
         stmt.execute(SQLQuery);

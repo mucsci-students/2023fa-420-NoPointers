@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Connect {
 	public boolean acsess(String word) {
-        // Database URL (You can specify the path where you want to create the database)
+        // Database URL
         String url = "jdbc:sqlite:/path/to/your/database.db";
         int size = word.length();
         try {
@@ -32,11 +32,11 @@ public class Connect {
 		String num = String.valueOf(size);
 		Statement stmt = conn.createStatement();
 
-        // Create a table (You can define your own schema)
+        // SQL Query to find word in table
         String SQLQuery = "SELECT * FROM " + num + "words WHERE word = '" 
         		+ wordString +"';";
         stmt.executequery(SQLQuery);
         stmt.close();
-		return true;
+	return true;
 	}
 }

@@ -19,14 +19,12 @@ public class Connect {
             if (conn != null) {
                 System.out.println("Connected to the database");
                 findWord(size, wordString, conn);
-                // Close the statement and connection
-                
                 conn.close();
                 
-                System.out.println("Database and table created successfully");
+                
             }
         } catch (SQLException e) {
-            System.err.println("Database creation error: " + e.getMessage());
+		System.out.println("Acsess not granted. Didn't work");
         }
         
     }

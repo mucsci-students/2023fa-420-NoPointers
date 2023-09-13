@@ -9,6 +9,7 @@ public class Puzzle {
 	private ArrayList<String> validWords;
 	// The required letter
 	private char requiredLetter;
+	private ArrayList<String> guessed;
 		
 	// Builder (New puzzle)
 	public Puzzle() {
@@ -53,7 +54,9 @@ public class Puzzle {
 	}
 	
 	
-	
+	    public void addGuess(String word) {
+        guessed.add(word);
+    }
 	// Helper method to get 6 random letters
 	private char[] getSixLetters( ) {
 		ArrayList<Character> pickedLetters = new ArrayList<Character>();

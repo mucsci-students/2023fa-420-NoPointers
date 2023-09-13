@@ -25,6 +25,23 @@ public class Puzzle {
 		//showPuzzle ();
 		//System.out.println (validWords);
 	}
+
+		public Puzzle(char requiredLetter, char[] letters, ArrayList<String> guessed) {
+		this.requiredLetter = requiredLetter;
+		this.letters = letters;
+		this.guessed = guessed;
+	}
+
+		public static Puzzle fromJsonObject(JsonObject jo) {
+		String requiredLetter =  (String) jo.get("required letter");
+		char reql = requiredLetter.charAt(0);
+		char[] letters = (char[]) jo.get("letters used").toString().toCharArray();
+		
+		
+		ArrayList<String> guessed = (ArrayList<String>) jo.get("Guessed Words");
+		return new Puzzle(reql, letters, guessed);
+
+	}
 		
 	// Builder using input from user (New puzzle from base)
 	public Puzzle(String input) {
@@ -87,6 +104,19 @@ public class Puzzle {
 		
 		// Dummy return for testing purposes.
 		return true;
+	}
+
+		public JSONObject toJsonObject() {
+		String used = "";
+		for (int i = 0; i < letters.length; ++i) {
+			used += letters[i];
+		}
+		JSONObject jo = new JSONObject();
+		String reqletter = ""+requiredLetter;
+		jo.put("required letter", reqletter);
+		jo.put("letters used", used);
+		jo.put("Guessed Words", guessed);
+		return jo;
 	}
 	
 	//Method to be called on from Shuffle Command. Shuffles the order of the non-required letters.

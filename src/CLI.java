@@ -71,7 +71,8 @@ public class CLI {
 				System.out.println("Guess is too short!");
 				break;
 			}
-			puzzle.addGuess(args[1]);
+			puzzle.guessWord(args[1]);
+			//puzzle.addGuess(args[1]);
 			break;
 		case "shuffle":
 			puzzle.shuffleLetters();

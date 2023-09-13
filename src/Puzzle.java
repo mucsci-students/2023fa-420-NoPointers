@@ -1,6 +1,10 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.random.*;
+
+import org.json.simple.JSONObject;
+
+import com.github.cliftonlabs.json_simple.JsonObject;
 public class Puzzle {
 	
 	// Fields of Puzzle Class
@@ -22,6 +26,7 @@ public class Puzzle {
 		
 		letters[6] = requiredLetter;
 		
+		guessed = new ArrayList<>();
 		validWords = Connect.getWords(letters);
 		//showPuzzle ();
 		//System.out.println (validWords);
@@ -102,11 +107,47 @@ public class Puzzle {
 	
 	//Method to be called on from Guess Command. Takes input from user and checks it it is in the 
 	// list of possible words found in the dictionary.
-	public boolean guessWord() {
-		// Fill in
+	public boolean guessWord (String guess) {
+		if (validWords.contains (guess)) {
+			if (guessed.contains(guess)) {
+				System.out.println ("Word already found!");
+				return false;
+			}
+			System.out.println ("Correct! Word added to guessed words.");
+			guessed.add(guess);
+			return true;
+		}
+		boolean foundRequired = false;
+		for (int i = 0; i < guess.length(); ++i) {
+			if (guess.charAt(i) == requiredLetter) {
+				foundRequired = true;
+				break;
+			}
+		}
+		if (!foundRequired) {
+			System.out.println ("Incorrect. Does not use required letter.");
+			return false;
+		}
 		
+		for (int i = 0; i < letters.length; ++i) {
+			boolean found = false;
+			for (int j = 0; j < guess.length(); ++j) {
+				if (guess.charAt(j) == letters[i]) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				System.out.println ("Bad letters");
+				return false;
+			}
+			
+		}
+		
+		System.out.println ("Not a valid word.");
+		return false;
 		// Dummy return for testing purposes.
-		return true;
+		
 	}
 
 		public JSONObject toJsonObject() {

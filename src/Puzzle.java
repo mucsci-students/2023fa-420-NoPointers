@@ -91,7 +91,17 @@ public class Puzzle {
 	
 	//Method to be called on from Shuffle Command. Shuffles the order of the non-required letters.
 	public void shuffleLetters() {
-		// Fill in.
+		// We will always keep the required letter at the end of the list.
+		for (int i = 0; i < letters.length - 1; ++i) {
+			int rand = Math.abs ((int) Math.random() % 6);
+			
+			if (i == rand)
+				continue;
+			
+			char temp = letters[i];
+			letters[i] = letters[rand];
+			letters[rand] = temp;
+		}
 	}
 	
 }

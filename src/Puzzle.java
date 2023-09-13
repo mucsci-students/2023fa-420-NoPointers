@@ -2,18 +2,28 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.random.*;
 public class Puzzle {
+	
 	// Fields of Puzzle Class
 	// The 6 optional letters
 	private char[] letters;
+	private ArrayList<String> validWords;
 	// The required letter
 	private char requiredLetter;
 		
 	// Builder (New puzzle)
 	public Puzzle() {
+		validWords = new ArrayList<>();
 		// Add 6 random letters to letters array
 		this.letters = getSixLetters();	
+		
 		// Insert a random vowel for required letter
 		this.requiredLetter = getRequiredLetter();	
+		
+		letters[6] = requiredLetter;
+		
+		validWords = Connect.getWords(letters);
+		//showPuzzle ();
+		//System.out.println (validWords);
 	}
 		
 	// Builder using input from user (New puzzle from base)
@@ -24,6 +34,8 @@ public class Puzzle {
 		// Or just make a system like having the last letter be the requited letter?
 			
 	}
+	
+	
 	
 	// Helper method to get 6 random letters
 	private char[] getSixLetters( ) {
@@ -39,10 +51,11 @@ public class Puzzle {
 			}
 		}
 		// Converts ArrayList of Characters to array of chars
-		char[] array = new char[pickedLetters.size()];
+		char[] array = new char[pickedLetters.size() + 1];
 		for(int i = 0; i < pickedLetters.size(); i++) {
 		    array[i] = pickedLetters.get(i);
 		}
+		array[6] = '.';
 		
 		return array;  
 	}
@@ -58,15 +71,13 @@ public class Puzzle {
 	
 	// Method to be called on from Show Puzzle Command. Prints out the puzzle letters to user.
 	public void showPuzzle() {
-		// Fill in
-		
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(letters);
-		stringBuilder.append("[");
-		stringBuilder.append(requiredLetter);
-		stringBuilder.append("]");
 		//Print out the seven letters with the required letter in brackets [].
-		System.out.println(stringBuilder.toString()); 
+		for (int i = 0; i < letters.length; ++i) {
+			if (i == 6)
+				System.out.print("[");
+			System.out.print(letters[i]);
+		}
+		System.out.print("]\n");
 	}
 	
 	//Method to be called on from Guess Command. Takes input from user and checks it it is in the 

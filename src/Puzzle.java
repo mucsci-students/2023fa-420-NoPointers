@@ -51,6 +51,9 @@ public class Puzzle {
 		this.validWords = new ArrayList<String>();
 		requiredLetter = selectRequiredLetter();
 		validWords = Connect.getWords(letters);
+
+		score = 0;
+		maxScore = calculateMaxScore ();
 	}
 	
 	public Puzzle(char requiredLetter, char[] letters, ArrayList<String> guessed) {
@@ -58,6 +61,9 @@ public class Puzzle {
 		this.letters = letters;
 		this.guessed = guessed;
 		this.validWords = Connect.getWords(letters);
+
+		score = 0;
+		maxScore = calculateMaxScore ();
 	}
 
 	// Builder using input from user (New puzzle from base)
@@ -71,6 +77,8 @@ public class Puzzle {
 		validWords = Connect.getWords(letters);
 		this.guessed = new ArrayList<String>();
 
+		score = 0;
+		maxScore = calculateMaxScore ();
 	}
 	
 	public static Puzzle fromJsonObject(JsonObject jo) {

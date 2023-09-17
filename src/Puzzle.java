@@ -1,120 +1,179 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
-import java.util.random.*;
-
 import org.json.simple.JSONObject;
-
 import com.github.cliftonlabs.json_simple.JsonObject;
+
 public class Puzzle {
-	
 	// Fields of Puzzle Class
 	// The 6 optional letters
 	private char[] letters;
-	private ArrayList<String> validWords;
 	// The required letter
 	private char requiredLetter;
+	private ArrayList<String> validWords;
 	private ArrayList<String> guessed;
-		
+
 	// Builder (New puzzle)
 	public Puzzle() {
-		validWords = new ArrayList<>();
-		// Add 6 random letters to letters array
-		this.letters = getSixLetters();	
-		
-		// Insert a random vowel for required letter
-		this.requiredLetter = getRequiredLetter();	
-		
-		letters[6] = requiredLetter;
-		
-		guessed = new ArrayList<>();
+		char[] pangram = Connect.selectPangram();
+		this.letters = pangram;
+		this.guessed = new ArrayList<String>();
+		this.validWords = new ArrayList<String>();
+		requiredLetter = selectRequiredLetter();
 		validWords = Connect.getWords(letters);
-		//showPuzzle ();
-		//System.out.println (validWords);
 	}
-
-		public Puzzle(char requiredLetter, char[] letters, ArrayList<String> guessed) {
+	
+	public Puzzle(char requiredLetter, char[] letters, ArrayList<String> guessed) {
 		this.requiredLetter = requiredLetter;
 		this.letters = letters;
 		this.guessed = guessed;
+		this.validWords = Connect.getWords(letters);
 	}
 
-		public static Puzzle fromJsonObject(JsonObject jo) {
-		String requiredLetter =  (String) jo.get("required letter");
+	// Builder using input from user (New puzzle from base)
+	public Puzzle(String input) {
+		validWords = new ArrayList<>();
+		// Take 6 non-requited letters from input
+		// Take requiredLetter from input (Have user specify what is required letter?
+		// Or just make a system like having the last letter be the requited letter?
+		this.letters = input.toCharArray();
+		this.requiredLetter = selectRequiredLetter();
+		validWords = Connect.getWords(letters);
+		this.guessed = new ArrayList<String>();
+
+	}
+	
+	public static Puzzle fromJsonObject(JsonObject jo) {
+		String requiredLetter = (String) jo.get("required letter");
 		char reql = requiredLetter.charAt(0);
 		char[] letters = (char[]) jo.get("letters used").toString().toCharArray();
-		
-		
-		ArrayList<String> guessed = (ArrayList<String>) jo.get("Guessed Words");
+
+		ArrayList<String> guessed = (ArrayList<String>)jo.get("Guessed Words");
 		return new Puzzle(reql, letters, guessed);
 
 	}
-		
-	// Builder using input from user (New puzzle from base)
-	public Puzzle(String input) {
-		// Take 6 non-requited letters from input
-			
-		// Take requiredLetter from input (Have user specify what is required letter?
-		// Or just make a system like having the last letter be the requited letter?
-			
-	}
-	
-	
-	    public void addGuess(String word) {
-        guessed.add(word);
+
+	private ArrayList<Character> findVowels () {
+        ArrayList<Character> found = new ArrayList<>();
+        char[] vowels = {'a', 'e', 'i', 'o', 'u'};
+        
+        for (int i = 0; i < letters.length; ++i) {
+            for (char c : vowels) {
+                if (letters[i] == c && !found.contains(c)) {
+                    found.add(c);
+                    break;
+                }
+            }
+        }
+        if (found.isEmpty ())
+            found.add ('y');
+        return found;
     }
+	private char selectRequiredLetter () {
+        ArrayList<Character> vowels = findVowels();
+
+        Random random = new Random();
+        int randInt = random.nextInt (vowels.size ());
+
+        for (int i = 0; i < letters.length; ++i) {
+            if (letters[i] != vowels.get (randInt))
+                continue;
+
+            char temp = letters[6];
+            letters[6] = letters[i];
+            letters[i] = temp;
+            requiredLetter = letters[6];
+            break;
+        }
+        return letters[6];
+    }
+
 	// Helper method to get 6 random letters
-	private char[] getSixLetters( ) {
+	private char[] getSixLetters() {
 		ArrayList<Character> pickedLetters = new ArrayList<Character>();
 		while (pickedLetters.size() < 6) {
 			Random r = new Random();
-			char c = (char)(r.nextInt(26) + 'a');
+			char c = (char) (r.nextInt(26) + 'a');
 			if (pickedLetters.contains(c)) {
-				
-			}
-			else {
+
+			} else {
 				pickedLetters.add(c);
 			}
 		}
+
 		// Converts ArrayList of Characters to array of chars
 		char[] array = new char[pickedLetters.size() + 1];
-		for(int i = 0; i < pickedLetters.size(); i++) {
-		    array[i] = pickedLetters.get(i);
+		for (int i = 0; i < pickedLetters.size(); i++) {
+			array[i] = pickedLetters.get(i);
 		}
-		array[6] = '.';
-		
-		return array;  
+
+		return array;
 	}
-	
+
 	// Helper method to get required vowel letter that must be used in all guesses
 	private char getRequiredLetter() {
-		char[] array = {'a', 'e', 'i', 'o', 'u'};
+		char[] array = { 'a', 'e', 'i', 'o', 'u' };
 		Random r = new Random();
 		char c = array[r.nextInt(5)];
-		// Need to find way to check if our picked vowel is already in the other 6 letters.
+		// Need to find way to check if our picked vowel is already in the other 6
+		// letters.
 		return c;
 	}
-	
-	// Method to be called on from Show Puzzle Command. Prints out the puzzle letters to user.
+
+	// Method to be called on from Show Puzzle Command. Prints out the puzzle
+	// letters to user.
 	public void showPuzzle() {
-		//Print out the seven letters with the required letter in brackets [].
+		// Print out the seven letters with the required letter in brackets [].
 		for (int i = 0; i < letters.length; ++i) {
 			if (i == 6)
 				System.out.print("[");
 			System.out.print(letters[i]);
 		}
 		System.out.print("]\n");
+		System.out.println("Guessed Words: " + guessed.toString());
+		System.out.println("                  .'* *.'\n"
+				+ "               __/_*_*(_\n"
+				+ "              / _______ \\\n"
+				+ "             _\\_)/___\\(_/_ \n"
+				+ "            / _((\\- -/))_ \\\n"
+				+ "            \\ \\())(-)(()/ /\n"
+				+ "             ' \\(((()))/ '\n"
+				+ "            / ' \\)).))/ ' \\\n"
+				+ "           / _ \\ - | - /_  \\\n"
+				+ "          (   ( .;''';. .'  )\n"
+				+ "          _\\\"__ /    )\\ __\"/_\n"
+				+ "            \\/  \\   ' /  \\/\n"
+				+ "             .'  '...' ' )\n"
+				+ "              / /  |  \\ \\\n"
+				+ "             / .   .   . \\\n"
+				+ "            /   .     .   \\\n"
+				+ "           /   /   |   \\   \\\n"
+				+ "         .'   /    |    '.  '.\n"
+				+ "     _.-'    /     |     '-. '-._ \n"
+				+ " _.-'       |      |       '-.  '-. \n"
+				+ "(________mrf\\____.| .________)____)");
 	}
-	
-	//Method to be called on from Guess Command. Takes input from user and checks it it is in the 
+
+	public String givePuzzle() {
+		StringBuilder s = new StringBuilder();
+		for (char c : letters) {
+			s.append(c);
+		}
+		return s.toString();
+	}
+
+	// Method to be called on from Guess Command. Takes input from user and checks
+	// it it is in the
 	// list of possible words found in the dictionary.
-	public boolean guessWord (String guess) {
-		if (validWords.contains (guess)) {
+	public boolean guessWord(String guess) {
+		if (validWords.contains(guess)) {
 			if (guessed.contains(guess)) {
-				System.out.println ("Word already found!");
+				System.out.println("Word already found!");
 				return false;
 			}
-			System.out.println ("Correct! Word added to guessed words.");
+			System.out.println("Correct! Word added to guessed words.");
 			guessed.add(guess);
+			showPuzzle();
 			return true;
 		}
 		boolean foundRequired = false;
@@ -125,10 +184,11 @@ public class Puzzle {
 			}
 		}
 		if (!foundRequired) {
-			System.out.println ("Incorrect. Does not use required letter.");
+			System.out.println("Incorrect. Does not use required letter.");
+			System.out.println("The Required letter is [" + this.requiredLetter + "]");
 			return false;
 		}
-		
+
 		for (int i = 0; i < letters.length; ++i) {
 			boolean found = false;
 			for (int j = 0; j < guess.length(); ++j) {
@@ -138,45 +198,69 @@ public class Puzzle {
 				}
 			}
 			if (!found) {
-				System.out.println ("Bad letters");
+				System.out.println("Not a valid word.");
 				return false;
 			}
-			
+
 		}
-		
-		System.out.println ("Not a valid word.");
+
+		System.out.println("Not a valid word.");
 		return false;
-		// Dummy return for testing purposes.
-		
+
 	}
 
-		public JSONObject toJsonObject() {
-		String used = "";
-		for (int i = 0; i < letters.length; ++i) {
-			used += letters[i];
-		}
-		JSONObject jo = new JSONObject();
-		String reqletter = ""+requiredLetter;
-		jo.put("required letter", reqletter);
-		jo.put("letters used", used);
-		jo.put("Guessed Words", guessed);
-		return jo;
+	public void addGuess(String word) {
+		guessed.add(word);
 	}
-	
-	//Method to be called on from Shuffle Command. Shuffles the order of the non-required letters.
+
+	// Method to be called on from Shuffle Command. Shuffles the order of the
+	// non-required letters.
 	public void shuffleLetters() {
 		// We will always keep the required letter at the end of the list.
 		for (int i = 0; i < letters.length - 1; ++i) {
-			int rand = Math.abs ((int) Math.random() % 6);
-			
+			int rand = Math.abs((int) Math.random() % 6);
+
 			if (i == rand)
 				continue;
-			
+
 			char temp = letters[i];
 			letters[i] = letters[rand];
 			letters[rand] = temp;
 		}
 	}
-	
-}
 
+	public JSONObject toJsonObject() {
+		String used = "";
+		for (int i = 0; i < letters.length; ++i) {
+			used += letters[i];
+		}
+		JSONObject jo = new JSONObject();
+		String reqletter = "" + requiredLetter;
+		jo.put("required letter", reqletter);
+		jo.put("letters used", used);
+		jo.put("Guessed Words", guessed);
+		return jo;
+	}
+
+	public char[] getLetters() {
+		return letters;
+	}
+
+	public void setLetters(char[] letters) {
+		this.letters = letters;
+	}
+
+	public ArrayList<String> getGuessed() {
+		return guessed;
+	}
+
+	public void setGuessed(ArrayList<String> guessed) {
+		this.guessed = guessed;
+	}
+
+	public void setRequiredLetter(char requiredLetter) {
+		this.requiredLetter = requiredLetter;
+
+	}
+
+}

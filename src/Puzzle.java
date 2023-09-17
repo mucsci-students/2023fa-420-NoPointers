@@ -210,7 +210,7 @@ public class Puzzle {
 				return false;
 			}
 			System.out.println("Correct! Word added to guessed words.");
-			addCorrectWord();
+			addCorrectWord(guess);
 			showPuzzle();
 			return true;
 		}

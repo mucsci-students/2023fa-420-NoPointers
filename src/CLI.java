@@ -1,3 +1,4 @@
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -7,13 +8,16 @@ import java.util.Iterator;
 import java.util.Scanner;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
-
 import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * 
+ * @author Christian Michel
+ * @
+ */
 public class CLI {
 
 	private Scanner scanner;
@@ -54,7 +58,12 @@ public class CLI {
 			System.out.println("Please enter a command");
 			break;
 		case "show":
-			puzzle.showPuzzle();
+			if(puzzle != null)
+			{
+				puzzle.showPuzzle();
+				break;
+			}
+			System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
 			break;
 		case "save":
 			if(puzzle != null)
@@ -66,8 +75,9 @@ public class CLI {
 			System.out.println("No Puzzle to Save");
 			break;
 		case "guess":
-			if (args[1] == null) {
-				System.out.println("No word provided!");
+			if(puzzle == null)
+			{
+				System.out.println("No puzzle to guess on!\nPlease generate a puzzle.");
 				break;
 			}
 			if(args[1].isBlank() || args[1].length() < 4)
@@ -76,9 +86,13 @@ public class CLI {
 				break;
 			}
 			puzzle.guessWord(args[1]);
-			//puzzle.addGuess(args[1]);
 			break;
 		case "shuffle":
+			if(puzzle == null)
+			{
+				System.out.println("No puzzle to shuffle!");
+				break;
+			}
 			puzzle.shuffleLetters();
 			break;
 		case "rules":
@@ -89,6 +103,25 @@ public class CLI {
 			break;
 		case "new":
 			newPuzzle();
+			break;
+		case "help":
+			commands();
+			break;
+		case "rank":
+		
+		case "custom":
+			if( args.length < 2||args[1] == null || args[1].length() < 7 )
+			{
+				System.out.println("Invalid Pangram!");
+				break;
+			}
+			if(Connect.checkPangram(args[1]))
+			{
+				newPuzzleBase(args[1]);
+				puzzle.shuffleLetters();
+				break;
+			}
+			System.out.println("Invalid pangram");
 			break;
 		default:
 			System.out.println(command + ": Unknown Command");
@@ -122,7 +155,9 @@ public class CLI {
 		this.puzzle = new Puzzle();
 		System.out.println("\nNew Puzzle Generated!");
 	}
-	
+	/**
+	 * Displays a loading animation on our terminal.
+	 */
 	void time() {
 		for (int i = 0; i < 100; ++i) {
 			try {
@@ -133,7 +168,7 @@ public class CLI {
 				System.out.print((i + 1) + "%");
 				System.out.flush();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+			
 				e.printStackTrace();
 			}
 		}
@@ -198,10 +233,18 @@ public class CLI {
 		}
 
 	}
+	private void newPuzzleBase(String input) {
+		// TODO Auto-generated method stub
+		System.out.println("Generating New Puzzle...");
+		time();
+		this.puzzle = new Puzzle(input);
+		System.out.println("\nNew Puzzle Generated!");
+	}
+	
+
 
 	private void intro() {
-		 
-		System.out.println("\u001b[31;1m");
+		System.out.println("\033[34;1m");
 		System.out.println("\t ▄█     █▄   ▄██████▄     ▄████████ ████████▄        ▄█     █▄   ▄█   ▄███████▄     ▄████████    ▄████████ ████████▄     ▄████████ \n"
 				+ "\t███     ███ ███    ███   ███    ███ ███   ▀███      ███     ███ ███  ██▀     ▄██   ███    ███   ███    ███ ███   ▀███   ███    ███ \n"
 				+ "\t███     ███ ███    ███   ███    ███ ███    ███      ███     ███ ███▌       ▄███▀   ███    ███   ███    ███ ███    ███   ███    █▀  \n"
@@ -211,21 +254,47 @@ public class CLI {
 				+ "\t███ ▄█▄ ███ ███    ███   ███    ███ ███   ▄███      ███ ▄█▄ ███ ███  ███▄     ▄█   ███    ███   ███    ███ ███   ▄███    ▄█    ███ \n"
 				+ " \t▀███▀███▀   ▀██████▀    ███    ███ ████████▀        ▀███▀███▀  █▀    ▀████████▀   ███    █▀    ███    ███ ████████▀   ▄████████▀  \n"
 				+ "\t                         ███    ███                                                             ███    ███                         ");
-		System.out.println("\n\t\t\tWelcome \u001b[24m To Word Wizards! To begin playing enter a command below!\n\n\n");
-		System.out.println("\t\t\t \u001b[4m New \u001b[24m \254 Creates a New Puzzle\n\n");
+		System.out.println("\n\t\t\t Welcome \u001b[24m To Word Wizards! To begin playing enter a command below!\n\n\n");
+		System.out.println("\t\t\t \u001b[4m New \u001b[24m \254  Creates a New Puzzle\n\n");
 		System.out.println("\t\t\t \u001b[4m Save \u001b[24m \254 Saves Your Current Puzzle to Your Home Directory\n\n");
 		System.out.println("\t\t\t \u001b[4m Load \u001b[24m \254 Loads a Puzzle From Your Home Directory\n\n");
-		System.out.println("\t\t\t \u001b[4m Commands \u001b[24m \254 Display Additional Commands \n\n");
+		System.out.println("\t\t\t \u001b[4m Help \u001b[24m \254 Display Additional Commands \n\n");
 		System.out.println("\t\t\t \u001b[4m Exit \u001b[24m \254 Exits the Program\n\n");
+		System.out.println("\033[49m");
 		System.out.flush();
+	 
 	}
 	
 	public void commands() {
-		System.out.println("\t\t\t\t ");
+		
+		String padding = "               ";
+		System.out.println(padding + "============================================================================");
+		System.out.println(padding + " New \u001b[24m \254  Creates a New Puzzle\n");
+		System.out.println(padding + " Save \u001b[24m \254 Saves Your current puzzle to your Home Directory\n");
+		System.out.println(padding + " Load \u001b[24m \254 Loads a Puzzle From Your Home Directory\n");
+		System.out.println(padding + " Rules \u001b[24m \254 Display the rules of the game\n");
+		System.out.println(padding + " Shuffle \u001b[24m \254 Shuffles your puzzle current puzzle re-arranging the words!\n");
+		System.out.println(padding + " Guess \u001b[24m \254 Checks if the word you guessed is a valid word!\n");
+		System.out.println(padding + " Show \u001b[24m \254 Displays the puzzle and all found words\n");
+		System.out.println(padding + " Custom \u001b[24m \254 Create a custom puzzle by entering 6 words and a required letter\n");
+		System.out.println(padding + "============================================================================");
 	}
 
 	private void rules() {
-		System.out.println("");
+		System.out.println("============================================================================================================");
+		System.out.println("Welcome to Word Wizards! The goal of this game is to find all the possible words of a generated pangram \nHere are the rules for the game.\n"
+				+ "\n"
+				+ "	- You must use the required word in the pangram at least once in your guess.\n"
+				+ "\n"
+				+ "	- Your word guess must be greater than 4 letters.\n"
+				+ "\n"
+				+ "	- You can only use the letters in the generated puzzle.\n"
+				+ "\n"
+				+ "	- Words longer than the minimum 4 letters will be awarded bonus points among other criteria.\n"
+				+ "\n"
+				+ "	- Your guess MUST be a valid word to get points.");
+		System.out.println("============================================================================================================");
+
 	}
 
 }

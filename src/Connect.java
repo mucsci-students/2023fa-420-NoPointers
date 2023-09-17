@@ -102,6 +102,36 @@ public class Connect {
 		return false;
 	}
 
+	public static char[] convertToArray (String word) {
+		HashSet<Character> s = new HashSet<>();
+		for(char c: word.toCharArray())
+		{
+			s.add(c);
+		}
+		ArrayList<Character> lst = new ArrayList<Character>();
+		lst.addAll(s);
+		char[] arr = new char[7];
+		for(int i = 0; i < lst.size(); ++i)
+		{
+			arr[i] = (char) lst.get(i);
+		}
+		return arr;
+	}
+	public static char[] convertToArray (char[] word) {
+		HashSet<Character> s = new HashSet<>();
+		for(char c : word)
+		{
+			s.add(c);
+		}
+		ArrayList<Character> lst = new ArrayList<Character>();
+		lst.addAll(s);
+		char[] arr = new char[7];
+		for(int i = 0; i < lst.size(); ++i)
+		{
+			arr[i] = (char) lst.get(i);
+		}
+		return arr;
+	}
 	public static char[] selectPangram() {
 		String url = "jdbc:sqlite:src/words";
 		String sql = "SELECT * FROM pangrams ORDER BY RANDOM() LIMIT 1;";

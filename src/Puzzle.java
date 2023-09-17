@@ -58,8 +58,10 @@ public class Puzzle {
 	
 	public Puzzle(char requiredLetter, char[] letters, ArrayList<String> guessed) {
 		this.requiredLetter = requiredLetter;
-		this.letters = letters;
+		this.letters = Connect.convertToArray(letters);
 		this.guessed = guessed;
+
+		
 		this.validWords = Connect.getWords(letters);
 
 		score = 0;
@@ -72,7 +74,7 @@ public class Puzzle {
 		// Take 6 non-requited letters from input
 		// Take requiredLetter from input (Have user specify what is required letter?
 		// Or just make a system like having the last letter be the requited letter?
-		this.letters = input.toCharArray();
+		this.letters = Connect.convertToArray(input);
 		this.requiredLetter = selectRequiredLetter();
 		validWords = Connect.getWords(letters);
 		this.guessed = new ArrayList<String>();

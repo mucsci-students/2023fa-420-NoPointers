@@ -66,12 +66,17 @@ public class CLI {
 			System.out.println("No Puzzle to Save");
 			break;
 		case "guess":
+			if (args[1] == null) {
+				System.out.println("No word provided!");
+				break;
+			}
 			if(args[1].isBlank() || args[1].length() < 4)
 			{
 				System.out.println("Guess is too short!");
 				break;
 			}
-			puzzle.addGuess(args[1]);
+			puzzle.guessWord(args[1]);
+			//puzzle.addGuess(args[1]);
 			break;
 		case "shuffle":
 			puzzle.shuffleLetters();

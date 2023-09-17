@@ -69,8 +69,8 @@ public class Connect {
 				characters.add(alphabet[i]);
 		}
 		
-		String sql = "SELECT * FROM words WHERE word NOT LIKE '%" + characters.get(0) + "%'";
-		for (int i = 1; i < characters.size (); ++i) {
+		String sql = "SELECT * FROM words WHERE word LIKE '%" + letters[6] + "%'";
+		for (int i = 0; i < characters.size (); ++i) {
 			sql += " AND word NOT LIKE '%" + characters.get(i) + "%'";
 		}
 		sql += ";";
@@ -104,9 +104,10 @@ public class Connect {
 				stmt = conn.createStatement();
 			
 		        ResultSet rs = stmt.executeQuery (getSqlString (letters));
-		        int count = 0;
-		        while (rs.next ())
+		        
+		        while (rs.next ()) {
 		        	wordList.add (rs.getString (1));
+		        }
 		        
 		        stmt.close();
 				

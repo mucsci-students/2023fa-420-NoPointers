@@ -5,6 +5,33 @@ import org.json.simple.JSONObject;
 import com.github.cliftonlabs.json_simple.JsonObject;
 
 public class Puzzle {
+
+	//Rank related structures
+	String[] ranks = {
+			"Beginner",
+			"Good Start",
+			"Moving Up",
+			"Good",
+			"Solid",
+			"Nice",
+			"Great",
+			"Amazing",
+			"Genius",
+			"Queen Bee"
+	};
+	int[] levels = {
+			0,
+			2,
+			5,
+			8,
+			15,
+			25,
+			40,
+			50,
+			70,
+			100
+	};
+
 	// Fields of Puzzle Class
 	// The 6 optional letters
 	private char[] letters;
@@ -12,6 +39,9 @@ public class Puzzle {
 	private char requiredLetter;
 	private ArrayList<String> validWords;
 	private ArrayList<String> guessed;
+
+	private int score;
+	private int maxScore;
 
 	// Builder (New puzzle)
 	public Puzzle() {
@@ -172,7 +202,7 @@ public class Puzzle {
 				return false;
 			}
 			System.out.println("Correct! Word added to guessed words.");
-			guessed.add(guess);
+			addCorrectWord();
 			showPuzzle();
 			return true;
 		}
@@ -263,4 +293,65 @@ public class Puzzle {
 
 	}
 
+
+public int getRank () {
+		double overallScorePercent = (double) score / maxScore;
+
+		if (overallScorePercent >= 1.0)
+			return 9;
+		else if (overallScorePercent >= 0.70)
+			return 8;
+		else if (overallScorePercent >= 0.50)
+			return 7;
+		else if (overallScorePercent >= 0.40)
+			return 6;
+		else if (overallScorePercent >= 0.25)
+			return 5;
+		else if (overallScorePercent >= 0.15)
+			return 4;
+		else if (overallScorePercent >= 0.08)
+			return 3;
+		else if (overallScorePercent >= 0.05)
+			return 2;
+		else if (overallScorePercent >= 0.02)
+			return 1;
+		else 
+			return 0;
+	}
+	public void displayRank () {
+		System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " + ranks[getRank()]);
+		if (getRank () == 9)
+			return;
+		System.out.println ("Next rank: " + ranks[getRank() + 1] + " at " + (int) (levels[getRank () + 1] * maxScore / 100) + "pts");
+	}
+	private void addCorrectWord (String guess) {
+		guessed.add(guess);
+		int prevRank = getRank ();
+		score += calculatePoints(guess);
+		if (getRank() != prevRank)
+			System.out.println ("Level up!");
+		displayRank ();
+	}
+	private int calculateMaxScore () {
+		int total = 0;
+		for (String word : validWords) {
+			int points = word.length();
+			if (points == 4)
+				points = 1;
+			if (Connect.checkPangram(word))
+				points += 7;
+			total += points;
+		}
+		return total;
+	}
+	private int calculatePoints (String guess) {
+		int points = guess.length();
+		if (points == 4)
+			points = 1;
+		
+		if (Connect.checkPangram(guess))
+			points += 7;
+		
+		return points;
+	}
 }

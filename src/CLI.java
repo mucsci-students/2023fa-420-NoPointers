@@ -75,6 +75,11 @@ public class CLI {
 			System.out.println("No Puzzle to Save");
 			break;
 		case "guess":
+			if(puzzle == null)
+			{
+				System.out.println("No puzzle to guess on!\nPlease generate a puzzle.");
+				break;
+			}
 			if(args[1].isBlank() || args[1].length() < 4)
 			{
 				System.out.println("Guess is too short!");
@@ -102,8 +107,21 @@ public class CLI {
 		case "help":
 			commands();
 			break;
+		case "rank":
+		
 		case "custom":
-			newPuzzleBase(args[1]);
+			if( args.length < 2||args[1] == null || args[1].length() < 7 )
+			{
+				System.out.println("Invalid Pangram!");
+				break;
+			}
+			if(Connect.checkPangram(args[1]))
+			{
+				newPuzzleBase(args[1]);
+				puzzle.shuffleLetters();
+				break;
+			}
+			System.out.println("Invalid pangram");
 			break;
 		default:
 			System.out.println(command + ": Unknown Command");
@@ -137,7 +155,9 @@ public class CLI {
 		this.puzzle = new Puzzle();
 		System.out.println("\nNew Puzzle Generated!");
 	}
-	
+	/**
+	 * Displays a loading animation on our terminal.
+	 */
 	void time() {
 		for (int i = 0; i < 100; ++i) {
 			try {
@@ -224,7 +244,7 @@ public class CLI {
 
 
 	private void intro() {
-		System.out.println("\033[35;1m");
+		System.out.println("\033[34;1m");
 		System.out.println("\t ▄█     █▄   ▄██████▄     ▄████████ ████████▄        ▄█     █▄   ▄█   ▄███████▄     ▄████████    ▄████████ ████████▄     ▄████████ \n"
 				+ "\t███     ███ ███    ███   ███    ███ ███   ▀███      ███     ███ ███  ██▀     ▄██   ███    ███   ███    ███ ███   ▀███   ███    ███ \n"
 				+ "\t███     ███ ███    ███   ███    ███ ███    ███      ███     ███ ███▌       ▄███▀   ███    ███   ███    ███ ███    ███   ███    █▀  \n"
@@ -261,7 +281,20 @@ public class CLI {
 	}
 
 	private void rules() {
-		System.out.println("");
+		System.out.println("============================================================================================================");
+		System.out.println("Welcome to Word Wizards! The goal of this game is to find all the possible words of a generated pangram \nHere are the rules for the game.\n"
+				+ "\n"
+				+ "	- You must use the required word in the pangram at least once in your guess.\n"
+				+ "\n"
+				+ "	- Your word guess must be greater than 4 letters.\n"
+				+ "\n"
+				+ "	- You can only use the letters in the generated puzzle.\n"
+				+ "\n"
+				+ "	- Words longer than the minimum 4 letters will be awarded bonus points among other criteria.\n"
+				+ "\n"
+				+ "	- Your guess MUST be a valid word to get points.");
+		System.out.println("============================================================================================================");
+
 	}
 
 }

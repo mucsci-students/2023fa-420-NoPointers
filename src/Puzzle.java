@@ -15,17 +15,34 @@ public class Puzzle {
 
 	// Builder (New puzzle)
 	public Puzzle() {
-		// Add 6 random letters to letters array
-		this.letters = getSixLetters();
-		// Insert a random vowel for required letter
-		this.requiredLetter = getRequiredLetter();
-
+		char[] pangram = Connect.selectPangram();
+		letters = pangram;
 		this.guessed = new ArrayList<String>();
 		this.validWords = new ArrayList<String>();
-		letters[6] = requiredLetter;
+		requiredLetter = selectRequiredLetter();
 		validWords = Connect.getWords(letters);
 	}
+	
+	public Puzzle(char requiredLetter, char[] letters, ArrayList<String> guessed) {
+		this.requiredLetter = requiredLetter;
+		this.letters = letters;
+		this.guessed = guessed;
+		this.validWords = Connect.getWords(letters);
+	}
 
+	// Builder using input from user (New puzzle from base)
+	public Puzzle(String input) {
+		validWords = new ArrayList<>();
+		// Take 6 non-requited letters from input
+		// Take requiredLetter from input (Have user specify what is required letter?
+		// Or just make a system like having the last letter be the requited letter?
+		this.letters = input.toCharArray();
+		this.requiredLetter = selectRequiredLetter();
+		validWords = Connect.getWords(letters);
+		this.guessed = new ArrayList<String>();
+
+	}
+	
 	public static Puzzle fromJsonObject(JsonObject jo) {
 		String requiredLetter = (String) jo.get("required letter");
 		char reql = requiredLetter.charAt(0);
@@ -36,44 +53,40 @@ public class Puzzle {
 
 	}
 
-	// Builder using input from user (New puzzle from base)
-	public Puzzle(String input) {
-		validWords = new ArrayList<>();
-		// Take 6 non-requited letters from input
-		// Take requiredLetter from input (Have user specify what is required letter?
-		// Or just make a system like having the last letter be the requited letter?
-		this.letters = convertSixLetters(input);
-		this.requiredLetter = convertRequiredLetter(input);
-		letters[6] = requiredLetter;
-		validWords = Connect.getWords(letters);
-		this.guessed = new ArrayList<String>();
+	private ArrayList<Character> findVowels () {
+        ArrayList<Character> found = new ArrayList<>();
+        char[] vowels = {'a', 'e', 'i', 'o', 'u'};
+        
+        for (int i = 0; i < letters.length; ++i) {
+            for (char c : vowels) {
+                if (letters[i] == c && !found.contains(c)) {
+                    found.add(c);
+                    break;
+                }
+            }
+        }
+        if (found.isEmpty ())
+            found.add ('y');
+        return found;
+    }
+	private char selectRequiredLetter () {
+        ArrayList<Character> vowels = findVowels();
 
-	}
+        Random random = new Random();
+        int randInt = random.nextInt (vowels.size ());
 
-	// Helper method to take input from user in new puzzle to make 6 non-required
-	// letters.
-	private char[] convertSixLetters(String input) {
-		char[] userLetters = new char[7];
-		for (int i = 0; i < input.length() - 1; i++) {
-			userLetters[i] = input.charAt(i);
-		}
+        for (int i = 0; i < letters.length; ++i) {
+            if (letters[i] != vowels.get (randInt))
+                continue;
 
-		return userLetters;
-	}
-
-	// Helper method to take input from user in new puzzle to make required letter.
-	// Required letter is the seventh letter entered by user
-	private char convertRequiredLetter(String input) {
-		char userRequiredLetter = input.charAt(6);
-		return userRequiredLetter;
-	}
-
-	public Puzzle(char requiredLetter, char[] letters, ArrayList<String> guessed) {
-		this.requiredLetter = requiredLetter;
-		this.letters = letters;
-		this.guessed = guessed;
-		this.validWords = Connect.getWords(letters);
-	}
+            char temp = letters[6];
+            letters[6] = letters[i];
+            letters[i] = temp;
+            requiredLetter = letters[6];
+            break;
+        }
+        return letters[6];
+    }
 
 	// Helper method to get 6 random letters
 	private char[] getSixLetters() {
@@ -107,37 +120,37 @@ public class Puzzle {
 		return c;
 	}
 
-	// Method to be called on from Show Puzzle Command. Prints out the puzzle letters to user.
+	// Method to be called on from Show Puzzle Command. Prints out the puzzle
+	// letters to user.
 	public void showPuzzle() {
-		//Print out the seven letters with the required letter in brackets [].
+		// Print out the seven letters with the required letter in brackets [].
 		for (int i = 0; i < letters.length; ++i) {
 			if (i == 6)
 				System.out.print("[");
 			System.out.print(letters[i]);
 		}
 		System.out.print("]\n");
-		System.out.println("Guessed Words: "+guessed.toString());
+		System.out.println("Guessed Words: " + guessed.toString());
 	}
+
 	public String givePuzzle() {
 		StringBuilder s = new StringBuilder();
-		for(char c: letters)
-		{
+		for (char c : letters) {
 			s.append(c);
 		}
-		return s.toString(); 
+		return s.toString();
 	}
-	
 
 	// Method to be called on from Guess Command. Takes input from user and checks
 	// it it is in the
 	// list of possible words found in the dictionary.
-	public boolean guessWord (String guess) {
-		if (validWords.contains (guess)) {
+	public boolean guessWord(String guess) {
+		if (validWords.contains(guess)) {
 			if (guessed.contains(guess)) {
-				System.out.println ("Word already found!");
+				System.out.println("Word already found!");
 				return false;
 			}
-			System.out.println ("Correct! Word added to guessed words.");
+			System.out.println("Correct! Word added to guessed words.");
 			guessed.add(guess);
 			showPuzzle();
 			return true;
@@ -150,11 +163,11 @@ public class Puzzle {
 			}
 		}
 		if (!foundRequired) {
-			System.out.println ("Incorrect. Does not use required letter.");
-			System.out.println("The Required letter is [" + getRequiredLetter() + "]");
+			System.out.println("Incorrect. Does not use required letter.");
+			System.out.println("The Required letter is [" + this.requiredLetter + "]");
 			return false;
 		}
-		
+
 		for (int i = 0; i < letters.length; ++i) {
 			boolean found = false;
 			for (int j = 0; j < guess.length(); ++j) {
@@ -164,18 +177,16 @@ public class Puzzle {
 				}
 			}
 			if (!found) {
-				System.out.println ("Bad letters");
+				System.out.println("Not a valid word.");
 				return false;
 			}
-			
-		}
-		
-		System.out.println ("Not a valid word.");
-		return false;
-		// Dummy return for testing purposes.
-		
-	}
 
+		}
+
+		System.out.println("Not a valid word.");
+		return false;
+
+	}
 
 	public void addGuess(String word) {
 		guessed.add(word);

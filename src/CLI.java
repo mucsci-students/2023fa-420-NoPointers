@@ -108,7 +108,10 @@ public class CLI {
 			commands();
 			break;
 		case "rank":
-		
+			if (puzzle != null) {
+				puzzle.displayRank();
+				break;
+			}
 		case "custom":
 			if( args.length < 2||args[1] == null || args[1].length() < 7 )
 			{

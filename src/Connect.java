@@ -38,7 +38,7 @@ public class Connect {
 
 	// Get words should be used to
 	public static ArrayList<String> getWords(char[] letters) {
-		String url = "jdbc:sqlite:src/words";
+		String url = "jdbc:sqlite:words.db";
 		ArrayList<String> wordList = new ArrayList<>();
 		try {
 			// Create a connection to the database
@@ -80,7 +80,7 @@ public class Connect {
 	}
 
 	public static boolean checkPangram(String pangram) {
-		String url = "jdbc:sqlite:src/words";
+		String url = "jdbc:sqlite:words.db";
 		String sql = "SELECT * FROM pangrams WHERE pangram = '" + pangram + "';";
 		try {
 			// Create a connection to the database
@@ -133,7 +133,7 @@ public class Connect {
 		return arr;
 	}
 	public static char[] selectPangram() {
-		String url = "jdbc:sqlite:src/words";
+		String url = "jdbc:sqlite:words.db";
 		String sql = "SELECT * FROM pangrams ORDER BY RANDOM() LIMIT 1;";
 
 		try {
@@ -174,7 +174,7 @@ public class Connect {
 	}
 
 	public static void search(int size, String letters) {
-		String url = "jdbc:sqlite:src/words";
+		String url = "jdbc:sqlite:words.db";
 
 		try {
 			// Create a connection to the database
@@ -221,7 +221,7 @@ public class Connect {
 
 	public static boolean access(String word) {
 		// Database URL
-		String url = "jdbc:sqlite:src/words";
+		String url = "jdbc:sqlite:words.db";
 		int size = word.length();
 
 		boolean res = false;

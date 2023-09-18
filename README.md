@@ -1,6 +1,6 @@
 # 2023fa-420-NoPointers
 
-In order to run this game inside of the source dirctory (2023fa-420-NoPointers-develop\src) run the "Game.jar" file with  java -jar .\Game.jar 
+In order to run this game inside of the source directory (2023fa-420-NoPointers-develop\src) run the "Game.jar" file with  java -jar .\Game.jar 
 This iteration was designed for pretty much any modern terminal that allows ascii escape codes and UTF-8 characters.
 
 Word Wizards - Spelling Bee Game

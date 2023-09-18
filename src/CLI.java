@@ -53,43 +53,39 @@ public class CLI {
 		String[] args = command.split(" ");
 		switch (args[0]) {
 		case "exit":
+			System.out.println("\033[49m");
 			System.exit(0);
 		case "":
 			System.out.println("Please enter a command");
 			break;
 		case "show":
-			if(puzzle != null)
-			{
+			if (puzzle != null) {
 				puzzle.showPuzzle();
 				break;
 			}
 			System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
 			break;
 		case "save":
-			if(puzzle != null)
-			{
-			save();
-			System.out.println("Puzzle Saved!");
-			break;
+			if (puzzle != null) {
+				save();
+				System.out.println("Puzzle Saved!");
+				break;
 			}
 			System.out.println("No Puzzle to Save");
 			break;
 		case "guess":
-			if(puzzle == null)
-			{
+			if (puzzle == null) {
 				System.out.println("No puzzle to guess on!\nPlease generate a puzzle.");
 				break;
 			}
-			if(args[1].isBlank() || args[1].length() < 4)
-			{
+			if (args[1].isBlank() || args[1].length() < 4) {
 				System.out.println("Guess is too short!");
 				break;
 			}
 			puzzle.guessWord(args[1]);
 			break;
 		case "shuffle":
-			if(puzzle == null)
-			{
+			if (puzzle == null) {
 				System.out.println("No puzzle to shuffle!");
 				break;
 			}
@@ -108,28 +104,27 @@ public class CLI {
 			commands();
 			break;
 		case "rank":
-			if (puzzle != null) {
+			if(puzzle != null)
+			{
 				puzzle.displayRank();
 				break;
 			}
+			System.out.println("No puzzle to rank!");
+			break;
 		case "custom":
-			if( args.length < 2||args[1] == null || args[1].length() < 7 )
-			{
+			if (args.length < 2 || args[1] == null || args[1].length() < 7) {
 				System.out.println("Invalid Pangram!");
 				break;
 			}
-			if(Connect.checkPangram(args[1]))
-			{
+			if (Connect.checkPangram(args[1])) {
 				newPuzzleBase(args[1]);
 				puzzle.shuffleLetters();
 				break;
 			}
-			System.out.println("Invalid pangram");
 			break;
 		default:
 			System.out.println(command + ": Unknown Command");
 		}
-
 	}
 
 	/**
@@ -269,18 +264,20 @@ public class CLI {
 	}
 	
 	public void commands() {
-		
 		String padding = "               ";
 		System.out.println(padding + "============================================================================");
 		System.out.println(padding + " New \u001b[24m \254  Creates a New Puzzle\n");
 		System.out.println(padding + " Save \u001b[24m \254 Saves Your current puzzle to your Home Directory\n");
 		System.out.println(padding + " Load \u001b[24m \254 Loads a Puzzle From Your Home Directory\n");
 		System.out.println(padding + " Rules \u001b[24m \254 Display the rules of the game\n");
-		System.out.println(padding + " Shuffle \u001b[24m \254 Shuffles your puzzle current puzzle re-arranging the words!\n");
+		System.out.println(
+				padding + " Shuffle \u001b[24m \254 Shuffles your puzzle current puzzle re-arranging the words!\n");
 		System.out.println(padding + " Guess \u001b[24m \254 Checks if the word you guessed is a valid word!\n");
 		System.out.println(padding + " Show \u001b[24m \254 Displays the puzzle and all found words\n");
-		System.out.println(padding + " Custom \u001b[24m \254 Create a custom puzzle by entering 6 words and a required letter\n");
+		System.out.println(
+				padding + " Custom \u001b[24m \254 Create a custom puzzle by entering 6 words and a required letter\n");
 		System.out.println(padding + "============================================================================");
+		System.out.println(padding + " Rank \u001b[24m \254 Displays your current rank in the puzzle including your points\n");
 	}
 
 	private void rules() {

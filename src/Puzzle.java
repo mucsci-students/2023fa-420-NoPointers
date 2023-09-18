@@ -8,16 +8,16 @@ public class Puzzle {
 
 	//Rank related structures
 	String[] ranks = {
-			"Beginner",
-			"Good Start",
-			"Moving Up",
-			"Good",
-			"Solid",
-			"Nice",
-			"Great",
-			"Amazing",
+			"Student",
+			"Apprentice",
+			"Adept",
+			"Master",
+			"Elder Wizard",
+			"Sorcerer",
+			"Keeper of Words",
+			"Keeper of Words",
 			"Genius",
-			"Queen Bee"
+			"Word Wizard"
 	};
 	int[] levels = {
 			0,

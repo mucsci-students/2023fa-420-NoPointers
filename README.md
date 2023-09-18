@@ -16,5 +16,7 @@ To play: Players will interact with the game by typing in the following commands
 -   help – displays additional commands to the player.
 -   exit – exits the program.
 -   Rank - Displays your current score and rank in the puzzle.
-USAGE
-In order to run this game inside of the source dirctory run the "Game.jar" file with java -jar .\Game.jar
+
+- USAGE 
+![#f03c15] In order to run this game inside of the source dirctory run the "Game.jar" file with java -jar .\Game.jar `#f03c15`
+ 

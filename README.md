@@ -18,5 +18,4 @@ To play: Players will interact with the game by typing in the following commands
 -   Rank - Displays your current score and rank in the puzzle.
 
 - USAGE 
-![#f03c15] In order to run this game inside of the source dirctory run the "Game.jar" file with java -jar .\Game.jar `#f03c15`
- 
+ In order to run this game inside of the source dirctory run the "Game.jar" file with java -jar .\Game.jar 

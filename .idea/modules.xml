@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/WordWizards.iml" filepath="$PROJECT_DIR$/WordWizards.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/WordWizards.main.iml" filepath="$PROJECT_DIR$/.idea/modules/WordWizards.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/WordWizards.test.iml" filepath="$PROJECT_DIR$/.idea/modules/WordWizards.test.iml" />
+    </modules>
+  </component>
+</project>

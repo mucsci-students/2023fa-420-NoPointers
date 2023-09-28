@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'org.nopointers.Game'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+group 'org.nopointers'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+configurations {
+    sqliteConfig
+    jsonConfig4
+    jsonConfig1
+}
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    sqliteConfig implementation("org.xerial:sqlite-jdbc:3.43.0.0")
+    jsonConfig4 implementation("com.github.cliftonlabs:json-simple:4.0.1")
+    jsonConfig1 implementation("com.googlecode.json-simple:json-simple:1.1.1")
+
+}
+
+test {
+    useJUnitPlatform()
+}

@@ -1,40 +1,79 @@
 plugins {
-    id 'java'
+  id 'java'
+  id 'application'
+  id 'org.javamodularity.moduleplugin' version '1.8.12'
+  id 'org.openjfx.javafxplugin' version '0.0.13'
+  id 'org.beryx.jlink' version '2.25.0'
 }
 
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'org.nopointers.Game'
-        )
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
 
-group 'org.nopointers'
+
+group 'com.example'
 version '1.0-SNAPSHOT'
 
 repositories {
-    mavenCentral()
+  mavenCentral()
 }
-configurations {
-    sqliteConfig
-    jsonConfig4
-    jsonConfig1
+
+ext {
+  junitVersion = '5.9.2'
 }
+
+
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+tasks.withType(JavaCompile) {
+  options.encoding = 'UTF-8'
+}
+
+application {
+  mainModule = 'nopointers'
+  mainClass = 'nopointers.Main'
+}
+
+javafx {
+  version = '17.0.6'
+  modules = ['javafx.controls', 'javafx.fxml']
+}
+
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-
-    sqliteConfig implementation("org.xerial:sqlite-jdbc:3.43.0.0")
-    jsonConfig4 implementation("com.github.cliftonlabs:json-simple:4.0.1")
-    jsonConfig1 implementation("com.googlecode.json-simple:json-simple:1.1.1")
-
+  implementation('org.controlsfx:controlsfx:11.1.2')
+          {
+            exclude group: 'org.hamcrest', module: 'hamcrest-core'
+          }
+  implementation('org.xerial:sqlite-jdbc:3.43.0.0')
+          {
+            exclude group: 'org.hamcrest', module: 'hamcrest-core'
+          }
+  implementation('com.github.cliftonlabs:json-simple:4.0.1')
+          {
+            exclude group: 'org.hamcrest', module: 'hamcrest-core'
+          }
+  implementation ('org.json:json:20230227')
+          {
+            exclude group: 'org.hamcrest', module: 'hamcrest-core'
+          }
+  testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+  implementation("com.googlecode.json-simple:json-simple:1.1.1")
+         {
+           exclude group: 'org.hamcrest', module: 'hamcrest-core'
+         }
 }
 
 test {
-    useJUnitPlatform()
+useJUnitPlatform()}
+
+jlink {
+  imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
+  options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+  launcher {
+    name = 'app'
+  }
+}
+
+jlinkZip {
+  group = 'distribution'
 }

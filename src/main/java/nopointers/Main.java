@@ -1,6 +1,7 @@
 package nopointers;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -13,9 +14,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Word-Wizard.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
@@ -28,6 +31,19 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        if(args != null) {
+            if (args.length > 0 && args[0].equalsIgnoreCase("cl")) {
+                commandLine();
+            } else {
+                launch(args);
+            }
+        }
+
+    }
+
+    public static void commandLine()
+    {
+        CLI c = new CLI();
+        Platform.exit();
     }
 }

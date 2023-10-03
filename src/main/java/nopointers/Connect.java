@@ -4,7 +4,7 @@ package nopointers;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
-//
+
 public class Connect {
     public static String[] numToWords = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
             "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen" };

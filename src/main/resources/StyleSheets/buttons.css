@@ -1,0 +1,28 @@
+/* Define a wizard-themed button style with Comic Sans font */
+.wizard-button {
+    -fx-background-color: #00ff0d; /* Normal state background color */
+    -fx-text-fill: #000000; /* Text color */
+    -fx-font-family: "Harrington"; /* Font family */
+    -fx-font-size: 16px; /* Font size */
+    -fx-padding: 5px 10px; /* Padding */
+    -fx-background-radius: 5px; /* Rounded corners */
+    -fx-border-color: #2980b9; /* Border color */
+    -fx-border-width: 2px; /* Border width */
+}
+
+
+/* Define the pressed effect */
+.wizard-button:pressed {
+    -fx-background-color: #1d7c21; /* Pressed state background color */
+}
+
+/* Define the focused effect */
+.wizard-button:focused {
+    -fx-border-color: #e74c3c; /* Highlight border color on focus */
+    -fx-border-width: 2px; /* Highlight border width on focus */
+}
+
+/* Define the disabled state */
+.wizard-button:disabled {
+    -fx-opacity: 0.5; /* Reduce opacity for disabled state */
+}

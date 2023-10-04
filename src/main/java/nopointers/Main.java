@@ -23,7 +23,6 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Word-Wizard.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setFullScreen(true);
         stage.setTitle("Word Wizards");
         stage.setScene(scene);
 

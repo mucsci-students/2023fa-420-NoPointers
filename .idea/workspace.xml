@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c97543d9-8988-4d6c-a98e-4aeb280c48f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/nopointers/HexButtons.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Images/icons8-shuffle-64.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/buttons.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/Backgrounds/mainBG.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/Backgrounds/mainBG.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/Size Buttons.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/Size Buttons.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/buttons.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/buttons.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +47,20 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "hihi4605"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="a32e0148-eb4f-4041-a747-1c3ba638a9fd" />
+        <option name="url" value="https://github.com/mucsci-students/2023fa-420-NoPointers.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -199,6 +208,15 @@
       <option name="presentableId" value="Default" />
       <updated>1696181189307</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added button functionality &#10;User Interface updates">
+      <option name="closed" value="true" />
+      <created>1696438578799</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1696438578799</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -211,6 +229,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added button functionality &#10;User Interface updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added button functionality &#10;User Interface updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

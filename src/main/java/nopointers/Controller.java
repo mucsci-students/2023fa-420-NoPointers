@@ -31,6 +31,8 @@ public class Controller {
     @FXML
     Label requiredLetter = new Label();
 
+
+
     public void NewPuzzle(ActionEvent e)
     {
         puzzle = new Puzzle();
@@ -41,6 +43,14 @@ public class Controller {
 
             pdislay.setText(word.substring(0,5));
             requiredLetter.setText(String.valueOf(word.charAt(6)));
+        }
+    }
+
+    public void save(ActionEvent e)
+    {
+        if(puzzle != null)
+        {
+            puzzle.
         }
     }
 
@@ -63,6 +73,7 @@ public class Controller {
             if(puzzle.guessWord(guess))
             {
                 guessed.insertText(0,guess + ",");
+                gfield.clear();
             }
 
         }

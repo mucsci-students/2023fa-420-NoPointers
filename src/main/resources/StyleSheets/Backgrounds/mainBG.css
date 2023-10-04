@@ -1,6 +1,4 @@
  
-.starry-night-pane {
-    -fx-background-color: #001f3f; /* Dark blue background color */
-
-    -fx-background-repeat: repeat;
+.backgroundColor{
+    -fx-background-color: linear-gradient(to right,#5c2eb1, #3d50bd);
 }

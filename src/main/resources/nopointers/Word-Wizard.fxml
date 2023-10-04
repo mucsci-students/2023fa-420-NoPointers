@@ -72,7 +72,7 @@
       <VBox BorderPane.alignment="CENTER" />
    </left>
    <center>
-      <Pane prefHeight="375.0" prefWidth="367.0" styleClass="starry-night-pane" stylesheets="@../StyleSheets/Backgrounds/mainBG.css" BorderPane.alignment="CENTER">
+      <Pane prefHeight="375.0" prefWidth="367.0" styleClass="backgroundColor" stylesheets="@../StyleSheets/Backgrounds/mainBG.css" BorderPane.alignment="CENTER">
          <children>
             <HBox layoutY="86.0" prefHeight="100.0" prefWidth="400.0">
                <children>
@@ -101,11 +101,14 @@
                         <TextField editable="false" prefHeight="58.0" prefWidth="119.0" styleClass="comic-sans-text-field" stylesheets="@../StyleSheets/Found.css" text="Rank" />
                      </children>
                   </VBox>
-                  <TextArea fx:id="guessed" editable="false" prefHeight="307.0" prefWidth="106.0" />
+                  <TextArea fx:id="guessed" editable="false" prefHeight="307.0" prefWidth="106.0">
+                     <font>
+                        <Font size="25.0" />
+                     </font></TextArea>
                </children>
             </VBox>
             <VBox layoutX="370.0" layoutY="377.0" />
-          <Button fx:id="b" layoutX="433.0" layoutY="295.0" mnemonicParsing="false" onAction="#NewPuzzle" prefHeight="64.0" prefWidth="77.0" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="New" textAlignment="CENTER" textFill="WHITE">
+          <Button fx:id="b" layoutX="378.0" layoutY="293.0" mnemonicParsing="false" onAction="#NewPuzzle" prefHeight="64.0" prefWidth="77.0" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="New" textAlignment="CENTER" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -113,7 +116,7 @@
                   <Font name="Ink Free" size="25.0" />
                </font>
             </Button>
-            <Button fx:id="b2" layoutX="433.0" layoutY="495.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="64.0" prefWidth="78.0" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="Shuffle" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="b2" layoutX="378.0" layoutY="377.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="64.0" prefWidth="78.0" style="-fx-font-size: 16;" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="Shuffle" textAlignment="CENTER" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -126,6 +129,22 @@
                   <Font name="Harrington" size="72.0" />
                </font>
             </Label>
+            <Button fx:id="b21" layoutX="170.0" layoutY="180.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="31.0" prefWidth="77.0" style="-fx-font-size: 12;" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="Save" textAlignment="CENTER" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="SansSerif Regular" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="b211" layoutX="84.0" layoutY="181.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="31.0" prefWidth="77.0" style="-fx-font-size: 12;" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="Load" textAlignment="CENTER" textFill="WHITE">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <font>
+                  <Font name="SansSerif Regular" size="15.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </center>

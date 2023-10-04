@@ -2,6 +2,7 @@ package nopointers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 import java.util.Scanner;
@@ -11,17 +12,18 @@ import java.util.concurrent.TimeUnit;
 
 public class Controller {
     @FXML
-    private Scanner scanner;
+    Button b;
+    Scanner scanner;
     private Puzzle puzzle;
 
-    public void Begin(ActionEvent e)
+    public void NewPuzzle(ActionEvent e)
     {
-    System.out.println("Begin");
+        b.setText("Generatinsg");
+        Puzzle p = new Puzzle();
+
     }
    public void newPuzzle(ActionEvent e) {
-        System.out.println("Generating New Puzzle...");
-        time();
-        System.out.println("\nNew Puzzle Generated!");
+
     }
 
     public void text()

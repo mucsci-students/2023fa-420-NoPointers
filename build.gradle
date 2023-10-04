@@ -9,11 +9,8 @@ plugins {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'nopointers.Game'
+                'Main-Class': 'nopointers.Main'
         )
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }

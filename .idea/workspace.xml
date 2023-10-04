@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c97543d9-8988-4d6c-a98e-4aeb280c48f9" name="Changes" comment="Huge Update Fixed Everything">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/words.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Connect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Connect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" afterDir="false" />
     </list>
@@ -55,8 +49,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "hihi4605"
+  }
+}]]></component>
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="d56b173a-7e36-48b5-a9c2-4e5bb5fbdebc" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="d56b173a-7e36-48b5-a9c2-4e5bb5fbdebc" />
+        <option name="url" value="https://github.com/mucsci-students/2023fa-420-NoPointers.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="jar://$USER_HOME$/AppData/Local/Programs/Eclipse Adoptium/jdk-17.0.6.10-hotspot/lib/src.zip!/java.base/java/util/Scanner.java" root0="SKIP_INSPECTION" />
@@ -76,10 +84,10 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/chris/eclipse-workspace/222/src/main/resources",
-    "project.structure.last.edited": "Problems",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.4229885",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "settings.editor.selected.configurable": "preferences.JavaFX"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -91,7 +99,7 @@
       <recent name="C:\Users\chris\IdeaProjects\demo1\src\main\resources\Images" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.222 [dependencies]">
+  <component name="RunManager" selected="Gradle.demo1 [jar]">
     <configuration name="222 [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -160,11 +168,6 @@
     </configuration>
     <configuration name="demo1 [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
-        <option name="env">
-          <map>
-            <entry key="args" value="&quot;cl&quot;" />
-          </map>
-        </option>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
@@ -190,7 +193,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -229,9 +232,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.222 [dependencies]" />
         <item itemvalue="Gradle.demo1 [run]" />
         <item itemvalue="Gradle.demo1 [jar]" />
+        <item itemvalue="Gradle.222 [dependencies]" />
         <item itemvalue="Gradle.demo1 [build]" />
         <item itemvalue="Gradle.222 [clean]" />
       </list>
@@ -254,7 +257,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696282504626</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Huge Update Fixed Everything">
+      <option name="closed" value="true" />
+      <created>1696365555489</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1696365555490</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -283,6 +294,12 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/main/java/nopointers/Controller.java</url>
+          <line>16</line>
+          <properties field="puzzle" class="nopointers.Controller" />
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

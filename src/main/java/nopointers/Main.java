@@ -18,6 +18,7 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        Puzzle puzzle = new Puzzle();
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Word-Wizard.fxml"));
 

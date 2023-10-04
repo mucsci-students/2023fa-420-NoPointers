@@ -38,6 +38,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <top>
@@ -64,8 +65,11 @@
    <left>
       <ToolBar orientation="VERTICAL" prefHeight="374.0" prefWidth="99.0" BorderPane.alignment="CENTER">
         <items>
-          <Button mnemonicParsing="false" text="Button" />
+          <Button fx:id="New" mnemonicParsing="false" onAction="#New"  prefHeight="22.0" prefWidth="80.0" text="New" textAlignment="CENTER" />
         </items>
       </ToolBar>
    </left>
+   <center>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="22.13671875" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

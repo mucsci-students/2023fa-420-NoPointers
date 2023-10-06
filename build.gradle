@@ -5,13 +5,19 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
 }
+run
+        {
+            standardInput = System.in
 
+        }
 jar {
     manifest {
         attributes(
+
                 'Main-Class': 'nopointers.Main'
         )
     }
+
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 

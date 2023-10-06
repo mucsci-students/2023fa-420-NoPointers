@@ -2,48 +2,86 @@ package nopointers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-
+import nopointers.Hexagon;
 
 
 public class Controller {
-    @FXML
-    private Scanner scanner;
     private Puzzle puzzle;
 
-    public void Begin(ActionEvent e)
+    @FXML
+    Button newpuzz = new Button();
+
+    @FXML
+    Button guessBox = new Button();
+
+    @FXML
+    TextArea guessed = new TextArea();
+
+    @FXML
+    Label pdislay = new Label();
+
+    @FXML
+    TextField gfield = new TextField();
+
+    @FXML
+    Label requiredLetter = new Label();
+
+    @FXML
+    Button hex = new Button();
+
+    public void NewPuzzle(ActionEvent e)
     {
-    System.out.println("Begin");
-    }
-   public void newPuzzle(ActionEvent e) {
-        System.out.println("Generating New Puzzle...");
-        time();
-        System.out.println("\nNew Puzzle Generated!");
-    }
+        puzzle = new Puzzle();
+        if(puzzle != null)
+        {
+            char[] arr = puzzle.getLetters();
+            String word = new String(arr);
 
-    public void text()
-    {
-        Text text = new Text();
-        text.setText("ABCDEF");
-
-
-    }
-    void time() {
-        for (int i = 0; i < 100; ++i) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(1);
-                System.out.print("\u001b[1000D");
-                System.out.flush();
-                TimeUnit.MILLISECONDS.sleep(1);
-                System.out.print((i + 1) + "%");
-                System.out.flush();
-            } catch (InterruptedException e) {
-
-                e.printStackTrace();
-            }
+            pdislay.setText(word.substring(0,6));
+            requiredLetter.setText(String.valueOf(word.charAt(6)));
+            guessed.clear();
         }
     }
+
+    public void save(ActionEvent e)
+    {
+        if(puzzle != null)
+        {
+
+        }
+    }
+
+    public void shuffle(ActionEvent e)
+    {
+        if(puzzle != null)
+        {
+            char[] arr = puzzle.getLetters();
+            String word = new String(arr);
+            puzzle.shuffleLetters();
+            pdislay.setText(word.substring(0,6));
+        }
+    }
+
+    public void guess(ActionEvent e)
+    {
+        if(puzzle != null)
+        {
+            String guess = gfield.getText();
+            if(puzzle.guessWord(guess))
+            {
+                guessed.insertText(0,guess);
+                gfield.clear();
+            }
+
+        }
+    }
+
+
+
 }

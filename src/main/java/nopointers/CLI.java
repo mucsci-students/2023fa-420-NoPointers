@@ -25,22 +25,22 @@ import java.util.concurrent.TimeUnit;
  */
 public class CLI {
 
-    private Scanner scanner;
+    private Scanner sc;
     private Puzzle puzzle;
 
     public CLI() {
-        this.scanner = new Scanner(System.in);
-        start(scanner);
-        scanner.close();
+        Scanner sc = new Scanner(System.in);
+        System.out.flush();
+        start(sc);
+
     }
 
-    /**
-     *
-     * @param sc A scanner that will take input from system.in
-     */
+
     public void start(Scanner sc) {
         boolean isRun = true;
         intro();
+        System.out.flush();
+
         while (isRun) {
             System.out.print("> ");
             String command = sc.nextLine().toLowerCase().trim();

@@ -5,18 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c97543d9-8988-4d6c-a98e-4aeb280c48f9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/HexButtons.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Hexagon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/Backgrounds/mainBG.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/Backgrounds/mainBG.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/Size Buttons.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/Size Buttons.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/buttons.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/buttons.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/Found.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/Found.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/hello-view.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../222\exportToHTML" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -48,19 +57,8 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "hihi4605"
-  }
-}]]></component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="a32e0148-eb4f-4041-a747-1c3ba638a9fd" />
-        <option name="url" value="https://github.com/mucsci-students/2023fa-420-NoPointers.git" />
-      </UrlAndAccount>
-    </option>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -77,12 +75,13 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/chris/IdeaProjects/demo1/src",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.4229885",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable"
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -92,6 +91,9 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\chris\IdeaProjects\2023fa-420-NoPointers\src\main\resources\Images" />
       <recent name="C:\Users\chris\IdeaProjects\demo1\src\main\resources\Images" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="nopointers" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.demo1 [run]">
@@ -192,8 +194,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.demo1 [run]" />
-        <item itemvalue="Gradle.demo1 [build]" />
         <item itemvalue="Gradle.demo1 [jar]" />
+        <item itemvalue="Gradle.demo1 [build]" />
         <item itemvalue="JAR Application.WordWizards.jar" />
         <item itemvalue="JAR Application.demo1-1.0-SNAPSHOT.jar" />
       </list>
@@ -208,15 +210,6 @@
       <option name="presentableId" value="Default" />
       <updated>1696181189307</updated>
     </task>
-    <task id="LOCAL-00001" summary="Added button functionality &#10;User Interface updates">
-      <option name="closed" value="true" />
-      <created>1696438578799</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1696438578799</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -229,10 +222,6 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added button functionality &#10;User Interface updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added button functionality &#10;User Interface updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

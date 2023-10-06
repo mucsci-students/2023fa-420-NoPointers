@@ -6,8 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
+import nopointers.Hexagon;
 
 
 public class Controller {
@@ -31,7 +32,8 @@ public class Controller {
     @FXML
     Label requiredLetter = new Label();
 
-
+    @FXML
+    Button hex = new Button();
 
     public void NewPuzzle(ActionEvent e)
     {
@@ -41,8 +43,9 @@ public class Controller {
             char[] arr = puzzle.getLetters();
             String word = new String(arr);
 
-            pdislay.setText(word.substring(0,5));
+            pdislay.setText(word.substring(0,6));
             requiredLetter.setText(String.valueOf(word.charAt(6)));
+            guessed.clear();
         }
     }
 
@@ -50,7 +53,7 @@ public class Controller {
     {
         if(puzzle != null)
         {
-            puzzle.
+
         }
     }
 
@@ -61,7 +64,7 @@ public class Controller {
             char[] arr = puzzle.getLetters();
             String word = new String(arr);
             puzzle.shuffleLetters();
-            pdislay.setText(word.substring(0,5));
+            pdislay.setText(word.substring(0,6));
         }
     }
 
@@ -72,7 +75,7 @@ public class Controller {
             String guess = gfield.getText();
             if(puzzle.guessWord(guess))
             {
-                guessed.insertText(0,guess + ",");
+                guessed.insertText(0,guess);
                 gfield.clear();
             }
 

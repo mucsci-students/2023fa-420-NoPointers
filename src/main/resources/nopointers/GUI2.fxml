@@ -1,13 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.mfxcomponents.controls.buttons.MFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nopointers.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nopointers.Controller">
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+      <VBox prefHeight="653.0" prefWidth="1150.0" VBox.vgrow="ALWAYS">
          <children>
-            <MFXButton maxHeight="46.0" maxWidth="46.0" onAction="#NewPuzzle" prefHeight="46.0" prefWidth="46.0" scaleX="3.0" scaleY="3.0" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css" text="a" translateX="250.0" translateY="200.0" />
+            <Pane prefHeight="797.0" prefWidth="1280.0" styleClass="root" stylesheets="@../StyleSheets/BG.css">
+               <children>
+                  <Button fx:id="l4" layoutX="525.0" layoutY="420.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <ColorAdjust hue="0.37" saturation="1.0" />
+                     </effect></Button>
+                  <Button fx:id="l3" layoutX="611.0" layoutY="474.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                     <effect>
+                        <ColorAdjust brightness="0.05" hue="0.01" saturation="0.55" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="l5" layoutX="525.0" layoutY="323.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                     <effect>
+                        <ColorAdjust hue="0.52" saturation="0.68" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="l0" layoutX="611.0" layoutY="261.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                     <effect>
+                        <ColorAdjust brightness="0.21" contrast="-0.21" hue="-0.47" saturation="0.54" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="l2" layoutX="696.0" layoutY="420.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <ColorAdjust hue="0.12" saturation="0.78" />
+                     </effect>
+                     <font>
+                        <Font size="18.0" />
+                     </font></Button>
+                  <Button fx:id="l1" layoutX="696.0" layoutY="323.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <ColorAdjust hue="0.94" saturation="0.46" />
+                     </effect></Button>
+                  <Button fx:id="requiredLetter" layoutX="611.0" layoutY="368.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css" underline="true">
+                     <effect>
+                        <ColorAdjust brightness="0.33" saturation="-0.16" />
+                     </effect>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button layoutX="47.0" layoutY="735.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="150.0" text="Save" />
+                  <Button layoutX="219.0" layoutY="735.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="150.0" text="Load" />
+                  <Button fx:id="shuffle" layoutX="455.0" layoutY="536.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="58.0" prefWidth="62.0" text="Shuffle" />
+                  <Button fx:id="newPuzzle" layoutX="765.0" layoutY="536.0" mnemonicParsing="false" onAction="#guess" prefHeight="58.0" prefWidth="62.0" text="Guess" />
+                  <TextField fx:id="input" layoutX="493.0" layoutY="89.0" onAction="#guess">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </Pane>
          </children>
       </VBox>
    </children>

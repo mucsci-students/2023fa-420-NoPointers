@@ -8,46 +8,65 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import nopointers.Hexagon;
+
+
+
+import java.util.ArrayList;
 
 
 public class Controller {
     private Puzzle puzzle;
 
     @FXML
-    Button newpuzz = new Button();
+    TextField input = new TextField();
 
     @FXML
-    Button guessBox = new Button();
+    Button l0 = new Button();
 
     @FXML
-    TextArea guessed = new TextArea();
+    Button l1 = new Button();
 
     @FXML
-    Label pdislay = new Label();
+    Button l2 = new Button();
 
     @FXML
-    TextField gfield = new TextField();
+    Button l3 = new Button();
 
     @FXML
-    Label requiredLetter = new Label();
+    Button l4 = new Button();
 
     @FXML
-    Button hex = new Button();
+    Button l5 = new Button();
 
+    @FXML
+    Button requiredLetter = new Button();
+
+    @FXML
+    Button newPuzzle = new Button();
+
+    @FXML
+    Button shuffle = new Button();
     public void NewPuzzle(ActionEvent e)
     {
+
         puzzle = new Puzzle();
+        String word = new String(puzzle.getLetters());
         if(puzzle != null)
         {
-            char[] arr = puzzle.getLetters();
-            String word = new String(arr);
-
-            pdislay.setText(word.substring(0,6));
-            requiredLetter.setText(String.valueOf(word.charAt(6)));
-            guessed.clear();
+          setButtons();
         }
     }
+
+
+    @FXML
+    private void handleButtonClick(ActionEvent event) {
+        // Get the text from the button that was clicked
+        String buttonText = ((Button) event.getSource()).getText();
+
+        // Update the label with the button's text
+        input.setText(input.getText() + buttonText);
+    }
+
 
     public void save(ActionEvent e)
     {
@@ -56,15 +75,26 @@ public class Controller {
 
         }
     }
-
+    public void setButtons()
+    {
+        String word = new String(puzzle.getLetters());
+        if(puzzle != null)
+        {
+            l0.setText(String.valueOf(word.charAt(0)));
+            l1.setText(String.valueOf(word.charAt(1)));
+            l2.setText(String.valueOf(word.charAt(2)));
+            l3.setText(String.valueOf(word.charAt(3)));
+            l4.setText(String.valueOf(word.charAt(4)));
+            l5.setText(String.valueOf(word.charAt(5)));
+            requiredLetter.setText(String.valueOf(word.charAt(6)));
+        }
+    }
     public void shuffle(ActionEvent e)
     {
         if(puzzle != null)
         {
-            char[] arr = puzzle.getLetters();
-            String word = new String(arr);
             puzzle.shuffleLetters();
-            pdislay.setText(word.substring(0,6));
+            setButtons();
         }
     }
 
@@ -72,11 +102,9 @@ public class Controller {
     {
         if(puzzle != null)
         {
-            String guess = gfield.getText();
-            if(puzzle.guessWord(guess))
+            if(puzzle.guessWord(input.getText()))
             {
-                guessed.insertText(0,guess);
-                gfield.clear();
+                System.out.println("W");
             }
 
         }

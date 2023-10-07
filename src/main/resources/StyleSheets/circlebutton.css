@@ -1,12 +1,9 @@
 .circular-button {
-    -fx-background-color: #2196F3; /* Material Design Blue */
-    -fx-text-fill: white;
+ 
+
     -fx-background-radius: 50em; /* Makes the button circular */
-    -fx-min-width: 40px;
-    -fx-min-height: 40px;
-    -fx-max-width: 40px;
-    -fx-max-height: 40px;
-    -fx-font-size: 16px;
+   
+    -fx-font-size: 20px;
     -fx-padding: 10px;
     -fx-border-radius: 50em; /* Optional: Adds a circular border */
 }

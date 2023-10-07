@@ -34,7 +34,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         if(args != null) {
-            if (args.length > 0 && args[0].equalsIgnoreCase("cl")) {
+            if (args.length > 0 && args[0].equalsIgnoreCase("cli")) {
                 commandLine();
             } else {
                 launch(args);

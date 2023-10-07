@@ -25,22 +25,25 @@ import java.util.concurrent.TimeUnit;
  */
 public class CLI {
 
-    private Scanner sc;
-    private Puzzle puzzle;
+    private Scanner scanner;
+    //private Puzzle puzzle;
+    private GameState gameState;
 
     public CLI() {
-        Scanner sc = new Scanner(System.in);
-        System.out.flush();
-        start(sc);
+        gameState = new GameState();
+        this.scanner = new Scanner(System.in);
+        start(scanner);
+        scanner.close();
 
     }
 
-
+    /**
+     *
+     * @param sc A scanner that will take input from system.in
+     */
     public void start(Scanner sc) {
         boolean isRun = true;
         intro();
-        System.out.flush();
-
         while (isRun) {
             System.out.print("> ");
             String command = sc.nextLine().toLowerCase().trim();
@@ -64,67 +67,78 @@ public class CLI {
                 System.out.println("Please enter a command");
                 break;
             case "show":
-                if (puzzle != null) {
-                    puzzle.showPuzzle();
-                    break;
-                }
-                System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
+                //if (puzzle != null) {
+                //puzzle.showPuzzle();
+                //break;
+                //}
+                //System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
+                showPuzzle();
                 break;
             case "save":
-                if (puzzle != null) {
-                    save();
-                    System.out.println("Puzzle Saved!");
-                    break;
-                }
-                System.out.println("No Puzzle to Save");
+                //if (puzzle != null) {
+                //save();
+                //System.out.println("Puzzle Saved!");
+                //break;
+                //}
+                //System.out.println("No Puzzle to Save");
+                gameState.savePuzzle();
                 break;
             case "guess":
-                if (puzzle == null) {
-                    System.out.println("No puzzle to guess on!\nPlease generate a puzzle.");
-                    break;
-                }
-                if (args[1].isBlank() || args[1].length() < 4) {
-                    System.out.println("Guess is too short!");
-                    break;
-                }
-                puzzle.guessWord(args[1]);
+                //if (puzzle == null) {
+                //System.out.println("No puzzle to guess on!\nPlease generate a puzzle.");
+                //break;
+                //}
+                //if (args[1].isBlank() || args[1].length() < 4) {
+                //System.out.println("Guess is too short!");
+                //break;
+                //}
+                //puzzle.guess(args[1]);
+                GuessOutcome outcome = gameState.guess(args[1]);
+                handleOutcome(outcome);
                 break;
             case "shuffle":
-                if (puzzle == null) {
-                    System.out.println("No puzzle to shuffle!");
-                    break;
-                }
-                puzzle.shuffleLetters();
+                //if (puzzle == null) {
+                //System.out.println("No puzzle to shuffle!");
+                //break;
+                //}
+                //puzzle.shuffleLetters();
+                gameState.shuffle();
                 break;
             case "rules":
                 rules();
                 break;
             case "load":
-                load(getdefaultPath());
+                //load(getdefaultPath());
+                gameState.loadPuzzle();
                 break;
             case "new":
-                newPuzzle();
+                //newPuzzle();
+                gameState.newRandomPuzzle();
                 break;
             case "help":
                 commands();
                 break;
             case "rank":
-                if(puzzle != null)
-                {
-                    puzzle.displayRank();
-                    break;
-                }
-                System.out.println("No puzzle to rank!");
+                //if(puzzle != null)
+                //{
+                //puzzle.displayRank();
+                //break;
+                //}
+                //System.out.println("No puzzle to rank!");
+                gameState.rank();
                 break;
             case "custom":
-                if (args.length < 2 || args[1] == null || args[1].length() < 7) {
+                //if (args.length < 2 || args[1] == null || args[1].length() < 7) {
+                //System.out.println("Invalid Pangram!");
+                //break;
+                //}
+                //if (Connect.checkPangram(args[1])) {
+                //newPuzzleBase(args[1]);
+                //puzzle.shuffleLetters();
+                //break;
+                //}
+                if (!gameState.newUserPuzzle(args[1])) {
                     System.out.println("Invalid Pangram!");
-                    break;
-                }
-                if (Connect.checkPangram(args[1])) {
-                    newPuzzleBase(args[1]);
-                    puzzle.shuffleLetters();
-                    break;
                 }
                 break;
             default:
@@ -132,21 +146,27 @@ public class CLI {
         }
     }
 
-    /**
-     * Displays a loading animation on our terminal.
-     */
-    void time() {
-        for (int i = 0; i < 100; ++i) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(1);
-                System.out.print("\u001b[1000D");
-                System.out.flush();
-                TimeUnit.MILLISECONDS.sleep(1);
-                System.out.print((i + 1) + "%");
-                System.out.flush();
-            } catch (InterruptedException e) {
-
-                e.printStackTrace();
+    private void handleOutcome(GuessOutcome outcome) {
+        switch (outcome) {
+            case SUCCESS -> {
+                System.out.println("Correct! Word added to guessed words.");
+                showPuzzle();
+            }
+            case TOO_SHORT -> {
+                System.out.println("Guess is too short!");
+            }
+            case EMPTY_INPUT -> {
+                System.out.println("No puzzle to guess on!\nPlease generate a puzzle.");
+            }
+            case INCORRECT -> {
+                System.out.println("Not a valid word.");
+            }
+            case ALREADY_FOUND -> {
+                System.out.println("Word already found!");
+            }
+            case MISSING_REQUIRED -> {
+                System.out.println("Incorrect. Does not use required letter.");
+                System.out.println("The Required letter is [" + gameState.requiredLetter() + "]");
             }
         }
     }
@@ -156,10 +176,11 @@ public class CLI {
      *
      * @return The default path to user.home.
      */
-    private Path getdefaultPath() {
-        String home = System.getProperty("user.home");
-        return Paths.get(home).resolve("puzzle.json");
-    }
+    //private Path getdefaultPath() {
+    //String home = System.getProperty("user.home");
+    //return Paths.get(home).resolve("puzzle.json");
+    //}
+
     /**
      * @precondtion If the user has no puzzle generated a new puzzle is generated.
      *              If the user has already generated a puzzle a new puzzle
@@ -170,94 +191,149 @@ public class CLI {
      *
      * @poscondition We have generated a new puzzle for the user to solve.
      */
-    void newPuzzle() {
-        System.out.println("Generating New Puzzle...");
-        time();
-        this.puzzle = new Puzzle();
-        System.out.println("\nNew Puzzle Generated!");
-    }
+    //void newPuzzle() {
+    //System.out.println("Generating New Puzzle...");
+    //time();
+    //this.puzzle = new Puzzle();
+    //System.out.println("\nNew Puzzle Generated!");
+    //}
+    /**
+     * Displays a loading animation on our terminal.
+     */
+    //void time() {
+    //for (int i = 0; i < 100; ++i) {
+    //try {
+    //TimeUnit.MILLISECONDS.sleep(1);
+    //System.out.print("\u001b[1000D");
+    //System.out.flush();
+    //TimeUnit.MILLISECONDS.sleep(1);
+    //System.out.print((i + 1) + "%");
+    //System.out.flush();
+    //} catch (InterruptedException e) {
+
+    //e.printStackTrace();
+    //}
+    //}
+    //}
 
     /**
      * @precondtion The user has a puzzle currently generated. Saves the users
      *              "puzzle" as a jSON file in the users home directory.
      * @postcondition The users puzzle is saved in the home directory.
      */
-    void save() {
-        save(getdefaultPath());
-    }
+    //void save() {
+    //save(getdefaultPath());
+    //}
 
     /**
      * @precondtion The user has a puzzle to save in the first place.
      *
-     * @param path The path we want to save the puzzle to.
+    //* @param path The path we want to save the puzzle to.
      *
      *             Saves the users current puzzle to a path if the path is valid.
      *
      * @postcondition The users puzzle is saved to the given path.
      */
-    private void save(Path path) {
+    //private void save(Path path) {
 
-        JsonArray ja = new JsonArray();
-        ja.add(puzzle.toJsonObject());
-        String jsonText = ja.toJson();
-        try {
-            Files.write(path, jsonText.getBytes(), StandardOpenOption.CREATE);
-        } catch (IOException e) {
+    //JSONArray ja = new JSONArray();
+    //ja.add(puzzle.toJsonObject());
+    //String jsonText = ja.toJSONString();
+    //try {
+    //Files.write(path, jsonText.getBytes(), StandardOpenOption.CREATE);
+    //} catch (IOException e) {
 
-            throw new RuntimeException(e);
-        }
+    //throw new RuntimeException(e);
+    //}
 
-    }
+    //}
 
     /**
      *
-     * @param path Loads the saved puzzle from a JSON file from the given path.
+     //* @param path Loads the saved puzzle from a JSON file from the given path.
      */
-    private void load(Path path) {
-        String jsonText = null;
-        JsonArray ja = null;
+    //private void load(Path path) {
+    //String jsonText = null;
+    //JsonArray ja = null;
 
-        try {
-            jsonText = new String(Files.readAllBytes(path));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    //try {
+    //jsonText = new String(Files.readAllBytes(path));
+    //} catch (IOException e) {
+    //throw new RuntimeException(e);
+    //}
 
-        try {
-            ja = (JsonArray) Jsoner.deserialize(jsonText);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    //try {
+    //ja = (JsonArray) Jsoner.deserialize(jsonText);
+    //} catch (JsonException e) {
+    //throw new RuntimeException(e);
+    //}
+    //JSONParser parser = new JSONParser();
+    //for (Object object : ja) {
+    //JsonObject jo = (JsonObject) object;
+    //Puzzle newPuzzle = Puzzle.fromJsonObject(jo);
+    //puzzle = newPuzzle;
+    //}
 
-        for (Object object : ja) {
-            JsonObject jo = (JsonObject) object;
-            Puzzle newPuzzle = Puzzle.fromJsonObject(jo);
-            puzzle = newPuzzle;
-        }
-
-    }
-    private void newPuzzleBase(String input) {
-        // TODO Auto-generated method stub
-        System.out.println("Generating New Puzzle...");
-        time();
-        this.puzzle = new Puzzle(input);
-        System.out.println("\nNew Puzzle Generated!");
-    }
+    //}
+    //private void newPuzzleBase(String input) {
+    //System.out.println("Generating New Puzzle...");
+    //time();
+    //this.puzzle = new Puzzle(input);
+    //System.out.println("\nNew Puzzle Generated!");
+    //}
 
     //
+    // Method to be called on from Show Puzzle Command. Prints out the puzzle
+    // letters to user.
+    public void showPuzzle() {
+        if (!gameState.hasPuzzle()) {
+            System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
+            return;
+        }
+        // Print out the seven letters with the required letter in brackets [].
+        for (int i = 0; i < gameState.letters().length; ++i) {
+            if (i == 6)
+                System.out.print("[");
+            System.out.print(gameState.letters()[i]);
+        }
+        System.out.print("]\n");
+        System.out.println("Guessed Words: " + gameState.guessed().toString());
+        System.out.println("                  .'* *.'\n"
+                + "               __/_*_*(_\n"
+                + "              / _______ \\\n"
+                + "             _\\_)/___\\(_/_ \n"
+                + "            / _((\\- -/))_ \\\n"
+                + "            \\ \\())(-)(()/ /\n"
+                + "             ' \\(((()))/ '\n"
+                + "            / ' \\)).))/ ' \\\n"
+                + "           / _ \\ - | - /_  \\\n"
+                + "          (   ( .;''';. .'  )\n"
+                + "          _\\\"__ /    )\\ __\"/_\n"
+                + "            \\/  \\   ' /  \\/\n"
+                + "             .'  '...' ' )\n"
+                + "              / /  |  \\ \\\n"
+                + "             / .   .   . \\\n"
+                + "            /   .     .   \\\n"
+                + "           /   /   |   \\   \\\n"
+                + "         .'   /    |    '.  '.\n"
+                + "     _.-'    /     |     '-. '-._ \n"
+                + " _.-'       |      |       '-.  '-. \n"
+                + "(________mrf\\____.| .________)____)");
+    }
+
+
 
     private void intro() {
         System.out.println("\033[34;1m");
-        System.out.println("\n" +
-                " ▄█     █▄   ▄██████▄     ▄████████ ████████▄       ▄█     █▄   ▄█   ▄███████▄     ▄████████    ▄████████ ████████▄  \n" +
-                "███     ███ ███    ███   ███    ███ ███   ▀███     ███     ███ ███  ██▀     ▄██   ███    ███   ███    ███ ███   ▀███ \n" +
-                "███     ███ ███    ███   ███    ███ ███    ███     ███     ███ ███▌       ▄███▀   ███    ███   ███    ███ ███    ███ \n" +
-                "███     ███ ███    ███  ▄███▄▄▄▄██▀ ███    ███     ███     ███ ███▌  ▀█▀▄███▀▄▄   ███    ███  ▄███▄▄▄▄██▀ ███    ███ \n" +
-                "███     ███ ███    ███ ▀▀███▀▀▀▀▀   ███    ███     ███     ███ ███▌   ▄███▀   ▀ ▀███████████ ▀▀███▀▀▀▀▀   ███    ███ \n" +
-                "███     ███ ███    ███ ▀███████████ ███    ███     ███     ███ ███  ▄███▀         ███    ███ ▀███████████ ███    ███ \n" +
-                "███ ▄█▄ ███ ███    ███   ███    ███ ███   ▄███     ███ ▄█▄ ███ ███  ███▄     ▄█   ███    ███   ███    ███ ███   ▄███ \n" +
-                " ▀███▀███▀   ▀██████▀    ███    ███ ████████▀       ▀███▀███▀  █▀    ▀████████▀   ███    █▀    ███    ███ ████████▀  \n" +
-                "                         ███    ███                                                            ███    ███            \n");
+        System.out.println("\t ▄█     █▄   ▄██████▄     ▄████████ ████████▄        ▄█     █▄   ▄█   ▄███████▄     ▄████████    ▄████████ ████████▄     ▄████████ \n"
+                + "\t███     ███ ███    ███   ███    ███ ███   ▀███      ███     ███ ███  ██▀     ▄██   ███    ███   ███    ███ ███   ▀███   ███    ███ \n"
+                + "\t███     ███ ███    ███   ███    ███ ███    ███      ███     ███ ███▌       ▄███▀   ███    ███   ███    ███ ███    ███   ███    █▀  \n"
+                + "\t███     ███ ███    ███  ▄███▄▄▄▄██▀ ███    ███      ███     ███ ███▌  ▀█▀▄███▀▄▄   ███    ███  ▄███▄▄▄▄██▀ ███    ███   ███        \n"
+                + "\t███     ███ ███    ███ ▀▀███▀▀▀▀▀   ███    ███      ███     ███ ███▌   ▄███▀   ▀ ▀███████████ ▀▀███▀▀▀▀▀   ███    ███ ▀███████████ \n"
+                + "\t███     ███ ███    ███ ▀███████████ ███    ███      ███     ███ ███  ▄███▀         ███    ███ ▀███████████ ███    ███          ███ \n"
+                + "\t███ ▄█▄ ███ ███    ███   ███    ███ ███   ▄███      ███ ▄█▄ ███ ███  ███▄     ▄█   ███    ███   ███    ███ ███   ▄███    ▄█    ███ \n"
+                + " \t▀███▀███▀   ▀██████▀    ███    ███ ████████▀        ▀███▀███▀  █▀    ▀████████▀   ███    █▀    ███    ███ ████████▀   ▄████████▀  \n"
+                + "\t                         ███    ███                                                             ███    ███                         ");
         System.out.println("\n\t\t\t Welcome \u001b[24m To Word Wizards! To begin playing enter a command below!\n\n\n");
         System.out.println("\t\t\t \u001b[4m New \u001b[24m \254  Creates a New Puzzle\n\n");
         System.out.println("\t\t\t \u001b[4m Save \u001b[24m \254 Saves Your Current Puzzle to Your Home Directory\n\n");
@@ -302,5 +378,6 @@ public class CLI {
         System.out.println("============================================================================================================");
 
     }
+
 
 }

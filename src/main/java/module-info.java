@@ -8,6 +8,7 @@ module nopointers {
     requires org.json;
     requires json.simple;
     requires MaterialFX;
-    opens nopointers to javafx.fxml;
+    requires com.google.gson;
+    opens nopointers to com.google.gson, javafx.fxml;
     exports nopointers;
 }

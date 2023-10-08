@@ -1,11 +1,17 @@
 package nopointers;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import java.util.Random;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import javafx.event.ActionEvent;
 import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 public class Puzzle {
 
     //Rank related structures
@@ -36,18 +42,31 @@ public class Puzzle {
 
     // Fields of Puzzle Class
     // The 6 optional letters
+    @SerializedName(value = "baseWord")
+    @Expose (serialize = true, deserialize = true)
     private char[] letters;
-    // The required letter
-    private char requiredLetter;
-    private ArrayList<String> validWords;
+
+    @SerializedName(value = "foundWords")
+    @Expose (serialize = true, deserialize = true)
     private ArrayList<String> guessed;
 
+    // The required letter
+    @SerializedName(value = "requiredLetter")
+    @Expose (serialize = true, deserialize = true)
+    private char requiredLetter;
+    private ArrayList<String> validWords;
+
+    @SerializedName(value = "playerPoints")
+    @Expose (serialize = true, deserialize = true)
     private int score;
     private final int maxScore;
 
     // Builder (New puzzle)
     public Puzzle() {
+
         char[] pangram = Connect.selectPangram();
+
+
         this.letters = pangram;
         this.guessed = new ArrayList<>();
         this.validWords = new ArrayList<>();
@@ -56,6 +75,7 @@ public class Puzzle {
 
         score = 0;
         maxScore = calculateMaxScore ();
+
     }
 
     public Puzzle(char requiredLetter, char[] letters, ArrayList<String> guessed) {
@@ -111,6 +131,7 @@ public class Puzzle {
             found.add ('y');
         return found;
     }
+
     private char selectRequiredLetter () {
         ArrayList<Character> vowels = findVowels();
 
@@ -131,14 +152,7 @@ public class Puzzle {
     }
 
     // Helper method to get required vowel letter that must be used in all guesses
-    private char getRequiredLetter() {
-        char[] array = { 'a', 'e', 'i', 'o', 'u' };
-        Random r = new Random();
-        char c = array[r.nextInt(5)];
-        // Need to find way to check if our picked vowel is already in the other 6
-        // letters.
-        return c;
-    }
+
     //
     // Method to be called on from Show Puzzle Command. Prints out the puzzle
     // letters to user.
@@ -176,7 +190,7 @@ public class Puzzle {
 
 
     // Method to be called on from Guess Command. Takes input from user and checks
-    // it it is in the
+    //  it is in the
     // list of possible words found in the dictionary.
     public boolean guessWord(String guess) {
         if (validWords.contains(guess)) {
@@ -242,17 +256,98 @@ public class Puzzle {
         }
     }
 
+
+
+
+    public void displayRank () {
+        System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " + ranks[getRank()]);
+        if (getRank () == 9)
+            return;
+        System.out.println ("Next rank: " + ranks[getRank() + 1] + " at " + (int) (levels[getRank () + 1] * maxScore / 100) + "pts");
+    }
+    private void addCorrectWord (String guess) {
+        guessed.add(guess);
+        int prevRank = getRank ();
+        score += calculatePoints(guess);
+        if (getRank() != prevRank)
+            System.out.println ("Level up!");
+        displayRank ();
+    }
+    private int calculateMaxScore () {
+        int total = 0;
+        for (String word : validWords) {
+            int points = word.length();
+            if (points == 4)
+                points = 1;
+            if (Connect.checkPangram(word))
+                points += 7;
+            total += points;
+        }
+        return total;
+    }
+    private int calculatePoints (String guess) {
+        int points = guess.length();
+        if (points == 4)
+            points = 1;
+
+        if (Connect.checkPangram(guess))
+            points += 7;
+
+        return points;
+    }
+    public String toGSONObject()
+    {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String json = gson.toJson(this);
+        return json;
+    }
+
     public JSONObject toJsonObject() {
         String used = "";
         for (int i = 0; i < letters.length; ++i) {
             used += letters[i];
         }
         JSONObject jo = new JSONObject();
-        String reqletter = "" + requiredLetter;
+        String reqletter = "" + getRequiredLetter();
         jo.put("required letter", reqletter);
         jo.put("letters used", used);
-        jo.put("Guessed Words", guessed);
+        jo.put("Guessed Words", getGuessed());
         return jo;
+    }
+    public String[] getRanks() {
+        return ranks;
+    }
+
+    public void setRanks(String[] ranks) {
+        this.ranks = ranks;
+    }
+
+    public int[] getLevels() {
+        return levels;
+    }
+
+    public void setLevels(int[] levels) {
+        this.levels = levels;
+    }
+
+    public ArrayList<String> getValidWords() {
+        return validWords;
+    }
+
+    public void setValidWords(ArrayList<String> validWords) {
+        this.validWords = validWords;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getMaxScore() {
+        return maxScore;
     }
 
     public char[] getLetters() {
@@ -301,40 +396,12 @@ public class Puzzle {
         else
             return 0;
     }
-    public void displayRank () {
-        System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " + ranks[getRank()]);
-        if (getRank () == 9)
-            return;
-        System.out.println ("Next rank: " + ranks[getRank() + 1] + " at " + (int) (levels[getRank () + 1] * maxScore / 100) + "pts");
-    }
-    private void addCorrectWord (String guess) {
-        guessed.add(guess);
-        int prevRank = getRank ();
-        score += calculatePoints(guess);
-        if (getRank() != prevRank)
-            System.out.println ("Level up!");
-        displayRank ();
-    }
-    private int calculateMaxScore () {
-        int total = 0;
-        for (String word : validWords) {
-            int points = word.length();
-            if (points == 4)
-                points = 1;
-            if (Connect.checkPangram(word))
-                points += 7;
-            total += points;
-        }
-        return total;
-    }
-    private int calculatePoints (String guess) {
-        int points = guess.length();
-        if (points == 4)
-            points = 1;
-
-        if (Connect.checkPangram(guess))
-            points += 7;
-
-        return points;
+    private char getRequiredLetter() {
+        char[] array = { 'a', 'e', 'i', 'o', 'u' };
+        Random r = new Random();
+        char c = array[r.nextInt(5)];
+        // Need to find way to check if our picked vowel is already in the other 6
+        // letters.
+        return c;
     }
 }

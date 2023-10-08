@@ -1,5 +1,6 @@
 package nopointers;
 
+import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,14 +9,17 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-
-
+import javax.swing.*;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 
 
 public class Controller {
-    private Puzzle puzzle;
+    public Puzzle puzzle;
 
     @FXML
     TextField input = new TextField();
@@ -46,6 +50,21 @@ public class Controller {
 
     @FXML
     Button shuffle = new Button();
+
+    @FXML
+    Button guess = new Button();
+
+    @FXML
+    TextArea foundWords = new TextArea();
+
+    @FXML
+    Button saveButton = new Button();
+
+    @FXML
+    Button loadButton = new Button();
+    @FXML
+    Button deleteButton = new Button();
+
     public void NewPuzzle(ActionEvent e)
     {
 
@@ -54,6 +73,7 @@ public class Controller {
         if(puzzle != null)
         {
           setButtons();
+
         }
     }
 
@@ -67,14 +87,15 @@ public class Controller {
         input.setText(input.getText() + buttonText);
     }
 
-
-    public void save(ActionEvent e)
+    public void delete(ActionEvent e)
     {
-        if(puzzle != null)
+        if(input.getLength() > 0)
         {
-
+            input.setText(input.getText().substring(0,input.getLength() - 1));
         }
     }
+
+
     public void setButtons()
     {
         String word = new String(puzzle.getLetters());
@@ -87,6 +108,21 @@ public class Controller {
             l4.setText(String.valueOf(word.charAt(4)));
             l5.setText(String.valueOf(word.charAt(5)));
             requiredLetter.setText(String.valueOf(word.charAt(6)));
+            input.clear();
+        }
+    }
+
+    public void load(ActionEvent e)
+    {
+        String home = System.getProperty("user.home");
+        Path path = Paths.get(home).resolve("puzzle.json");
+        try {
+            Gson gson = new Gson();
+            String json = new String(Files.readAllBytes(path));
+            puzzle = gson.fromJson(json, Puzzle.class);
+            setButtons();
+        } catch (IOException err) {
+            System.out.println("No Save Found");
         }
     }
     public void shuffle(ActionEvent e)
@@ -98,13 +134,31 @@ public class Controller {
         }
     }
 
+    public void save(ActionEvent e)
+    {
+        if(puzzle != null)
+        {
+         String s = new String(puzzle.toGSONObject());
+         String home = System.getProperty("user.home");
+
+         System.out.println(s);
+            try {
+                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE);
+            } catch (IOException error) {
+                throw new RuntimeException(error);
+            }
+        }
+    }
+
     public void guess(ActionEvent e)
     {
         if(puzzle != null)
         {
             if(puzzle.guessWord(input.getText()))
             {
-                System.out.println("W");
+                foundWords.insertText(0,input.getText() + "\n");
+
+                input.clear();
             }
 
         }

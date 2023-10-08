@@ -4,27 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c97543d9-8988-4d6c-a98e-4aeb280c48f9" name="Changes" comment="Changes to GUI adding Buttons">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" afterDir="false" />
+    <list default="true" id="c97543d9-8988-4d6c-a98e-4aeb280c48f9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Images/arrow-circle-icon-12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/Shuffle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Puzzle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/BG.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/BG.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/circlebutton.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/circlebutton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ExportToHTMLSettings">
-    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../222\exportToHTML" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -50,18 +51,25 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="FxmlFile" />
       </list>
     </option>
-  </component>
-  <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="origin/develop" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;hihi4605&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="a32e0148-eb4f-4041-a747-1c3ba638a9fd" />
+        <option name="url" value="https://github.com/mucsci-students/2023fa-420-NoPointers.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -80,23 +88,22 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/chris/IdeaProjects/demo1/src",
+    "last_opened_file_path": "C:/Users/chris/IdeaProjects/2023fa-420-NoPointers/src/main/resources/Images",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.4229885",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\chris\IdeaProjects\2023fa-420-NoPointers\src\main\resources\Images" />
+      <recent name="C:\Users\chris\IdeaProjects\2023fa-420-NoPointers\src\main\resources\StyleSheets\Backgrounds" />
       <recent name="C:\Users\chris\IdeaProjects\demo1\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\chris\IdeaProjects\2023fa-420-NoPointers\src\main\resources\Images" />
       <recent name="C:\Users\chris\IdeaProjects\demo1\src\main\resources\Images" />
-    </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="nopointers" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.demo1 [run]">
@@ -174,19 +181,6 @@
       <option name="JAR_PATH" value="$PROJECT_DIR$/build/libs/demo1-1.0-SNAPSHOT.jar" />
       <method v="2" />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="demo1" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="demo1" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Gradle.demo1 [build]" />
       <item itemvalue="Gradle.demo1 [jar]" />
@@ -213,21 +207,21 @@
       <option name="presentableId" value="Default" />
       <updated>1696181189307</updated>
     </task>
-    <task id="LOCAL-00001" summary="Changes to GUI adding Buttons">
+    <task id="LOCAL-00001" summary="Added button functionality &#10;User Interface updates">
       <option name="closed" value="true" />
-      <created>1696556333343</created>
+      <created>1696438578799</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1696556333343</updated>
+      <updated>1696438578799</updated>
     </task>
-    <task id="LOCAL-00002" summary="Changes to GUI adding Buttons">
+    <task id="LOCAL-00002" summary="Added button functionality &#10;User Interface updates">
       <option name="closed" value="true" />
-      <created>1696563227906</created>
+      <created>1696655818950</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1696563227906</updated>
+      <updated>1696655818950</updated>
     </task>
     <option name="localTasksCounter" value="3" />
     <servers />
@@ -244,23 +238,8 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Changes to GUI adding Buttons" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes to GUI adding Buttons" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/nopointers/CLI.java</url>
-          <line>172</line>
-          <properties class="nopointers.CLI" method="newPuzzle">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Added button functionality &#10;User Interface updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added button functionality &#10;User Interface updates" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

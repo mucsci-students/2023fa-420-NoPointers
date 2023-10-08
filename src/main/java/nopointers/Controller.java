@@ -62,8 +62,49 @@ public class Controller {
 
     @FXML
     Button loadButton = new Button();
+
     @FXML
     Button deleteButton = new Button();
+
+    @FXML
+    Text score = new Text();
+
+    @FXML
+    TextArea help = new TextArea();
+
+    @FXML
+    Button custom = new Button();
+
+    @FXML
+    Label error = new Label();
+
+    @FXML
+    Text rank = new Text();
+
+    @FXML
+    Button quit = new Button();
+
+
+    public void quit(ActionEvent e)
+    {
+        System.exit(0);
+    }
+
+    public void customPuzzle(ActionEvent e)
+    {
+
+        String s = input.getText().trim().toLowerCase();
+        if(s.length() < 7)
+        {
+            error.setText("Not a valid custom puzzle!");
+            return;
+        }
+        Puzzle custom = new Puzzle(s);
+        puzzle = custom;
+        setButtons();
+        error.setVisible(false);
+
+    }
 
     public void NewPuzzle(ActionEvent e)
     {
@@ -73,7 +114,26 @@ public class Controller {
         if(puzzle != null)
         {
           setButtons();
+          foundWords.clear();
+        }
+    }
 
+    public void setHelp(ActionEvent e)
+    {
+        help.setText("Welcome To Word Wizards Press New to generate a puzzle or create your own with by pressing Custom!\n\n" +
+                " In order to input your guess you can click the orbs or type your guess in the text box! \n\n" +
+                "If you need a new perspective you can shuffle the puzzle as well." +
+                "\n\n♦The Puzzle You must use the required word in the pangram at least once in your guess. \n\n" +
+                "Your word guess must be greater than 4 letters. You can only use the letters in the generated puzzle. \n\n" +
+                "Words longer than the minimum 4 letters will be awarded bonus points among other criteria. \n" +
+                "Your guess MUST be a valid word to get points.");
+        if(!help.isVisible())
+        {
+            help.setVisible(true);
+        }
+        else
+        {
+            help.setVisible(false);
         }
     }
 
@@ -108,6 +168,7 @@ public class Controller {
             l4.setText(String.valueOf(word.charAt(4)));
             l5.setText(String.valueOf(word.charAt(5)));
             requiredLetter.setText(String.valueOf(word.charAt(6)));
+            score.setText(String.valueOf(puzzle.getScore()));
             input.clear();
             foundWords.clear();
 
@@ -163,8 +224,11 @@ public class Controller {
             if(puzzle.guessWord(input.getText()))
             {
                 foundWords.insertText(0,input.getText() + "\n");
-
+                score.setText(String.valueOf(puzzle.getScore()));
                 input.clear();
+                int currentRank = puzzle.getRank();
+                String[] arr = puzzle.getRanks();
+                rank.setText(arr[puzzle.getRank()]);
             }
 
         }

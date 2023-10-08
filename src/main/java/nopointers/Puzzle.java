@@ -130,64 +130,22 @@ public class Puzzle {
         return letters[6];
     }
 
-    // Helper method to get required vowel letter that must be used in all guesses
-    private char getRequiredLetter() {
-        char[] array = { 'a', 'e', 'i', 'o', 'u' };
-        Random r = new Random();
-        char c = array[r.nextInt(5)];
-        // Need to find way to check if our picked vowel is already in the other 6
-        // letters.
-        return c;
-    }
-    //
-    // Method to be called on from Show Puzzle Command. Prints out the puzzle
-    // letters to user.
-    public void showPuzzle() {
-        // Print out the seven letters with the required letter in brackets [].
-        for (int i = 0; i < letters.length; ++i) {
-            if (i == 6)
-                System.out.print("[");
-            System.out.print(letters[i]);
-        }
-        System.out.print("]\n");
-        System.out.println("Guessed Words: " + guessed.toString());
-        System.out.println("                  .'* *.'\n"
-                + "               __/_*_*(_\n"
-                + "              / _______ \\\n"
-                + "             _\\_)/___\\(_/_ \n"
-                + "            / _((\\- -/))_ \\\n"
-                + "            \\ \\())(-)(()/ /\n"
-                + "             ' \\(((()))/ '\n"
-                + "            / ' \\)).))/ ' \\\n"
-                + "           / _ \\ - | - /_  \\\n"
-                + "          (   ( .;''';. .'  )\n"
-                + "          _\\\"__ /    )\\ __\"/_\n"
-                + "            \\/  \\   ' /  \\/\n"
-                + "             .'  '...' ' )\n"
-                + "              / /  |  \\ \\\n"
-                + "             / .   .   . \\\n"
-                + "            /   .     .   \\\n"
-                + "           /   /   |   \\   \\\n"
-                + "         .'   /    |    '.  '.\n"
-                + "     _.-'    /     |     '-. '-._ \n"
-                + " _.-'       |      |       '-.  '-. \n"
-                + "(________mrf\\____.| .________)____)");
-    }
+
+
 
 
     // Method to be called on from Guess Command. Takes input from user and checks
     // it it is in the
     // list of possible words found in the dictionary.
-    public boolean guessWord(String guess) {
+    public GuessOutcome guessWord(String guess) {
         if (validWords.contains(guess)) {
             if (guessed.contains(guess)) {
-                System.out.println("Word already found!");
-                return false;
+
+                return GuessOutcome.ALREADY_FOUND;
             }
-            System.out.println("Correct! Word added to guessed words.");
+
             addCorrectWord(guess);
-            showPuzzle();
-            return true;
+            return GuessOutcome.SUCCESS;
         }
         boolean foundRequired = false;
         for (int i = 0; i < guess.length(); ++i) {
@@ -197,9 +155,8 @@ public class Puzzle {
             }
         }
         if (!foundRequired) {
-            System.out.println("Incorrect. Does not use required letter.");
-            System.out.println("The Required letter is [" + this.requiredLetter + "]");
-            return false;
+
+            return GuessOutcome.MISSING_REQUIRED;
         }
 
         for (int i = 0; i < letters.length; ++i) {
@@ -211,16 +168,22 @@ public class Puzzle {
                 }
             }
             if (!found) {
-                System.out.println("Not a valid word.");
-                return false;
+
+                return GuessOutcome.INCORRECT;
             }
 
         }
 
-        System.out.println("Not a valid word.");
-        return false;
+
+        return GuessOutcome.INCORRECT;
 
     }
+
+    public char getRequiredLetter() {
+        return this.requiredLetter;
+    }
+
+
 
     public void addGuess(String word) {
         guessed.add(word);

@@ -112,7 +112,7 @@
                </children>
             </VBox>
             <VBox layoutX="370.0" layoutY="377.0" />
-          <Button fx:id="b" layoutX="323.0" layoutY="293.0" mnemonicParsing="false" onAction="#NewPuzzle" prefHeight="64.0" prefWidth="77.0" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="New" textAlignment="CENTER" textFill="WHITE">
+          <Button fx:id="b" layoutX="323.0" layoutY="293.0" mnemonicParsing="false" onAction="#NewPuzzle" prefHeight="64.0" prefWidth="77.0" styleClass="wizard-button" stylesheets="@../StyleSheets/SizeButtons.css" text="New" textAlignment="CENTER" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -120,7 +120,7 @@
                   <Font name="Ink Free" size="25.0" />
                </font>
             </Button>
-            <Button fx:id="b2" layoutX="321.0" layoutY="377.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="64.0" prefWidth="78.0" style="-fx-font-size: 16;" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="Shuffle" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="b2" layoutX="321.0" layoutY="377.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="64.0" prefWidth="78.0" style="-fx-font-size: 16;" styleClass="wizard-button" stylesheets="@../StyleSheets/SizeButtons.css" text="Shuffle" textAlignment="CENTER" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -133,7 +133,7 @@
                   <Font name="Harrington" size="72.0" />
                </font>
             </Label>
-            <Button fx:id="b21" layoutX="170.0" layoutY="180.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="31.0" prefWidth="77.0" style="-fx-font-size: 12;" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="Save" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="b21" layoutX="170.0" layoutY="180.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="31.0" prefWidth="77.0" style="-fx-font-size: 12;" styleClass="wizard-button" stylesheets="@../StyleSheets/SizeButtons.css" text="Save" textAlignment="CENTER" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -141,7 +141,7 @@
                   <Font name="SansSerif Regular" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="b211" layoutX="84.0" layoutY="181.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="31.0" prefWidth="77.0" style="-fx-font-size: 12;" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="Load" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="b211" layoutX="84.0" layoutY="181.0" mnemonicParsing="false" onAction="#shuffle" prefHeight="31.0" prefWidth="77.0" style="-fx-font-size: 12;" styleClass="wizard-button" stylesheets="@../StyleSheets/SizeButtons.css" text="Load" textAlignment="CENTER" textFill="WHITE">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -149,11 +149,16 @@
                   <Font name="SansSerif Regular" size="15.0" />
                </font>
             </Button>
-            <Button layoutX="321.0" layoutY="457.0" mnemonicParsing="false" onAction="#NewPuzzle" prefHeight="67.0" prefWidth="82.0" styleClass="wizard-button" stylesheets="@../StyleSheets/Size%20Buttons.css" text="Help">
+            <Button layoutX="321.0" layoutY="457.0" mnemonicParsing="false" onAction="#NewPuzzle" prefHeight="67.0" prefWidth="82.0" styleClass="wizard-button" stylesheets="@../StyleSheets/SizeButtons.css" text="Help">
                <font>
                   <Font size="32.0" />
                </font></Button>
             <TextArea layoutX="70.0" layoutY="277.0" prefHeight="200.0" prefWidth="200.0" visible="false" />
+            <Label fx:id="errorDisplay" layoutX="456.0" layoutY="222.0" prefHeight="17.0" prefWidth="307.0" textFill="#fa0606">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </center>

@@ -109,6 +109,8 @@ public class Controller {
             l5.setText(String.valueOf(word.charAt(5)));
             requiredLetter.setText(String.valueOf(word.charAt(6)));
             input.clear();
+            foundWords.clear();
+
         }
     }
 
@@ -121,6 +123,10 @@ public class Controller {
             String json = new String(Files.readAllBytes(path));
             puzzle = gson.fromJson(json, Puzzle.class);
             setButtons();
+            for(String s : puzzle.getGuessed())
+            {
+                foundWords.insertText(0, s + "\n");
+            }
         } catch (IOException err) {
             System.out.println("No Save Found");
         }

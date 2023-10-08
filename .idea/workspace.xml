@@ -5,21 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c97543d9-8988-4d6c-a98e-4aeb280c48f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/discord.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Images/arrow-circle-icon-12.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/Shuffle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Puzzle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/BG.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/BG.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/circlebutton.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/circlebutton.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -53,6 +44,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/develop" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -223,7 +217,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696655818950</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Added button functionality &#10;User Interface updates">
+      <option name="closed" value="true" />
+      <created>1696776886845</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1696776886845</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

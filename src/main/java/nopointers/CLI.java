@@ -67,41 +67,20 @@ public class CLI {
                 System.out.println("Please enter a command");
                 break;
             case "show":
-                //if (puzzle != null) {
-                //puzzle.showPuzzle();
-                //break;
-                //}
-                //System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
+
                 showPuzzle();
                 break;
             case "save":
-                //if (puzzle != null) {
-                //save();
-                //System.out.println("Puzzle Saved!");
-                //break;
-                //}
-                //System.out.println("No Puzzle to Save");
+
                 gameState.savePuzzle();
                 break;
             case "guess":
-                //if (puzzle == null) {
-                //System.out.println("No puzzle to guess on!\nPlease generate a puzzle.");
-                //break;
-                //}
-                //if (args[1].isBlank() || args[1].length() < 4) {
-                //System.out.println("Guess is too short!");
-                //break;
-                //}
-                //puzzle.guess(args[1]);
+
                 GuessOutcome outcome = gameState.guess(args[1]);
                 handleOutcome(outcome);
                 break;
             case "shuffle":
-                //if (puzzle == null) {
-                //System.out.println("No puzzle to shuffle!");
-                //break;
-                //}
-                //puzzle.shuffleLetters();
+
                 gameState.shuffle();
                 break;
             case "rules":
@@ -119,24 +98,11 @@ public class CLI {
                 commands();
                 break;
             case "rank":
-                //if(puzzle != null)
-                //{
-                //puzzle.displayRank();
-                //break;
-                //}
-                //System.out.println("No puzzle to rank!");
+
                 gameState.rank();
                 break;
             case "custom":
-                //if (args.length < 2 || args[1] == null || args[1].length() < 7) {
-                //System.out.println("Invalid Pangram!");
-                //break;
-                //}
-                //if (Connect.checkPangram(args[1])) {
-                //newPuzzleBase(args[1]);
-                //puzzle.shuffleLetters();
-                //break;
-                //}
+
                 if (!gameState.newUserPuzzle(args[1])) {
                     System.out.println("Invalid Pangram!");
                 }
@@ -171,116 +137,13 @@ public class CLI {
         }
     }
 
-    /**
-     * A default path if the user doesn't pass a custom path.
-     *
-     * @return The default path to user.home.
-     */
-    //private Path getdefaultPath() {
-    //String home = System.getProperty("user.home");
-    //return Paths.get(home).resolve("puzzle.json");
-    //}
 
-    /**
-     * @precondtion If the user has no puzzle generated a new puzzle is generated.
-     *              If the user has already generated a puzzle a new puzzle
-     *              overwrites the current one.
-     *
-     *              A command that invokes the new puzzle constroctor and sets it as
-     *              our current puzzle.
-     *
-     * @poscondition We have generated a new puzzle for the user to solve.
-     */
-    //void newPuzzle() {
-    //System.out.println("Generating New Puzzle...");
-    //time();
-    //this.puzzle = new Puzzle();
-    //System.out.println("\nNew Puzzle Generated!");
-    //}
-    /**
-     * Displays a loading animation on our terminal.
-     */
-    //void time() {
-    //for (int i = 0; i < 100; ++i) {
-    //try {
-    //TimeUnit.MILLISECONDS.sleep(1);
-    //System.out.print("\u001b[1000D");
-    //System.out.flush();
-    //TimeUnit.MILLISECONDS.sleep(1);
-    //System.out.print((i + 1) + "%");
-    //System.out.flush();
-    //} catch (InterruptedException e) {
 
-    //e.printStackTrace();
-    //}
-    //}
-    //}
 
-    /**
-     * @precondtion The user has a puzzle currently generated. Saves the users
-     *              "puzzle" as a jSON file in the users home directory.
-     * @postcondition The users puzzle is saved in the home directory.
-     */
-    //void save() {
-    //save(getdefaultPath());
-    //}
 
-    /**
-     * @precondtion The user has a puzzle to save in the first place.
-     *
-    //* @param path The path we want to save the puzzle to.
-     *
-     *             Saves the users current puzzle to a path if the path is valid.
-     *
-     * @postcondition The users puzzle is saved to the given path.
-     */
-    //private void save(Path path) {
 
-    //JSONArray ja = new JSONArray();
-    //ja.add(puzzle.toJsonObject());
-    //String jsonText = ja.toJSONString();
-    //try {
-    //Files.write(path, jsonText.getBytes(), StandardOpenOption.CREATE);
-    //} catch (IOException e) {
 
-    //throw new RuntimeException(e);
-    //}
 
-    //}
-
-    /**
-     *
-     //* @param path Loads the saved puzzle from a JSON file from the given path.
-     */
-    //private void load(Path path) {
-    //String jsonText = null;
-    //JsonArray ja = null;
-
-    //try {
-    //jsonText = new String(Files.readAllBytes(path));
-    //} catch (IOException e) {
-    //throw new RuntimeException(e);
-    //}
-
-    //try {
-    //ja = (JsonArray) Jsoner.deserialize(jsonText);
-    //} catch (JsonException e) {
-    //throw new RuntimeException(e);
-    //}
-    //JSONParser parser = new JSONParser();
-    //for (Object object : ja) {
-    //JsonObject jo = (JsonObject) object;
-    //Puzzle newPuzzle = Puzzle.fromJsonObject(jo);
-    //puzzle = newPuzzle;
-    //}
-
-    //}
-    //private void newPuzzleBase(String input) {
-    //System.out.println("Generating New Puzzle...");
-    //time();
-    //this.puzzle = new Puzzle(input);
-    //System.out.println("\nNew Puzzle Generated!");
-    //}
 
     //
     // Method to be called on from Show Puzzle Command. Prints out the puzzle

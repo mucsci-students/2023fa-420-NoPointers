@@ -208,16 +208,7 @@ public class Controller {
 
     public void guess(ActionEvent e)
     {
-        //if(puzzle != null)
-        //{
-            //String guess = gfield.getText();
-           // if(puzzle.guessWord(guess))
-            //{
-                //guessed.insertText(0,guess);
-                // gfield.clear();
-            //}
 
-        //}
         
         String guess = input.getText();
         GuessOutcome outcome = gameState.guess(guess);

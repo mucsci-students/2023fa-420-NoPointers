@@ -10,13 +10,14 @@ run
             standardInput = System.in
 
         }
-
 jar {
     manifest {
         attributes(
+
                 'Main-Class': 'nopointers.Main'
         )
     }
+
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
@@ -73,6 +74,10 @@ dependencies {
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
             }
+
+    implementation 'org.kordamp.ikonli:ikonli-javafx:12.3.1'
+    implementation 'io.github.palexdev:materialfx:11.16.1'
+    implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 test {

@@ -59,6 +59,9 @@ public class Puzzle {
     @SerializedName(value = "playerPoints")
     @Expose (serialize = true, deserialize = true)
     private int score;
+
+    @SerializedName(value = "maxPoints")
+    @Expose (serialize = true, deserialize = true)
     private final int maxScore;
 
     // Builder (New puzzle)

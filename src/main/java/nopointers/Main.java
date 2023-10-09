@@ -21,7 +21,7 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         Puzzle puzzle = new Puzzle();
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Word-Wizard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GUI2.fxml"));
 
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Word Wizards");

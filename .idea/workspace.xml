@@ -5,28 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c97543d9-8988-4d6c-a98e-4aeb280c48f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/nopointers/GameState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/nopointers/GuessOutcome.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Puzzle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Puzzle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/Size Buttons.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/SizeButtons.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="ExportToHTMLSettings">
-    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../222\exportToHTML" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -51,20 +41,33 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
   </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/develop" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;hihi4605&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="a32e0148-eb4f-4041-a747-1c3ba638a9fd" />
+        <option name="url" value="https://github.com/mucsci-students/2023fa-420-NoPointers.git" />
+      </UrlAndAccount>
+    </option>
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="1" />
-  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2WAhFURFV8dKg5LxHgiCoErxs7C" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -73,38 +76,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/chris/IdeaProjects/2023fa-420-NoPointers/src/main/resources/Images",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.4229885",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\chris\IdeaProjects\2023fa-420-NoPointers\src\main\resources\Images" />
+      <recent name="C:\Users\chris\IdeaProjects\2023fa-420-NoPointers\src\main\resources\StyleSheets\Backgrounds" />
       <recent name="C:\Users\chris\IdeaProjects\demo1\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\chris\IdeaProjects\2023fa-420-NoPointers\src\main\resources\Images" />
       <recent name="C:\Users\chris\IdeaProjects\demo1\src\main\resources\Images" />
     </key>
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="nopointers" />
-    </key>
   </component>
   <component name="RunManager" selected="Gradle.demo1 [run]">
-    <configuration name="CLI" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="run --args=&quot;cli&quot;" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list />
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="demo1 [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -124,6 +120,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="demo1 [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -145,6 +142,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="demo1 [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -166,6 +164,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="WordWizards.jar" type="JarApplication" temporary="true">
@@ -177,7 +176,6 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Gradle.CLI" />
       <item itemvalue="Gradle.demo1 [build]" />
       <item itemvalue="Gradle.demo1 [jar]" />
       <item itemvalue="Gradle.demo1 [run]" />
@@ -187,8 +185,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.demo1 [run]" />
-        <item itemvalue="Gradle.demo1 [jar]" />
         <item itemvalue="Gradle.demo1 [build]" />
+        <item itemvalue="Gradle.demo1 [jar]" />
         <item itemvalue="JAR Application.WordWizards.jar" />
         <item itemvalue="JAR Application.demo1-1.0-SNAPSHOT.jar" />
       </list>
@@ -203,6 +201,31 @@
       <option name="presentableId" value="Default" />
       <updated>1696181189307</updated>
     </task>
+    <task id="LOCAL-00001" summary="Added button functionality &#10;User Interface updates">
+      <option name="closed" value="true" />
+      <created>1696438578799</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1696438578799</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added button functionality &#10;User Interface updates">
+      <option name="closed" value="true" />
+      <created>1696655818950</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1696655818950</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added button functionality &#10;User Interface updates">
+      <option name="closed" value="true" />
+      <created>1696776886845</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1696776886845</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -215,27 +238,10 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/nopointers/CLI.java</url>
-          <line>27</line>
-          <properties class="nopointers.CLI">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/nopointers/Controller.java</url>
-          <line>111</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added button functionality &#10;User Interface updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added button functionality &#10;User Interface updates" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

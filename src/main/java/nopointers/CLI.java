@@ -350,6 +350,7 @@ public class CLI {
         System.out.println(padding + "============================================================================");
         System.out.println(padding + " New \u001b[24m \254  Creates a New Puzzle\n");
         System.out.println(padding + " Save \u001b[24m \254 Saves Your current puzzle to your Home Directory\n");
+        System.out.println(padding + " Exit \u001b[24m \254  Exits the application\n");
         System.out.println(padding + " Load \u001b[24m \254 Loads a Puzzle From Your Home Directory\n");
         System.out.println(padding + " Rules \u001b[24m \254 Display the rules of the game\n");
         System.out.println(

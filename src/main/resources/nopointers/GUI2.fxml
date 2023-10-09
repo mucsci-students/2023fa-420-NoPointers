@@ -131,7 +131,7 @@
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="20.0" />
+                        <Font name="Algerian" size="16.0" />
                      </font></Button>
                   <Text fill="#ffe100" layoutX="391.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Word Wizards">
                      <font>

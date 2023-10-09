@@ -12,6 +12,8 @@ import com.github.cliftonlabs.json_simple.JsonArray;
 //import com.github.cliftonlabs.json_simple.JsonException;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
+import com.google.gson.Gson;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -45,12 +47,14 @@ public class GameState {
             System.out.println("Puzzle Saved!");
 
         }
-        System.out.println("No Puzzle to Save");
+        else {
+            System.out.println("No Puzzle to Save");
+        }
     }
 
     // Load method to be called on by controllers.
-    public void loadPuzzle() {
-        load(getdefaultPath());
+    public boolean loadPuzzle() {
+        return load();
     }
     // Create new puzzle method to be called on by controllers.
     public void newRandomPuzzle() {
@@ -90,6 +94,12 @@ public class GameState {
     public char[] getLetters() {
         return puzzle.getLetters();
     }
+
+    public int getRank() { return puzzle.getRank(); }
+
+    public String[] getRanks() { return puzzle.getRanks(); }
+
+    public int getScore() { return puzzle.getScore(); }
 
     // Shuffle method
     public void shuffle() {
@@ -155,24 +165,8 @@ public class GameState {
         System.out.println("\nNew Puzzle Generated!");
     }
 
-    /**
-     * A default path if the user doesn't pass a custom path.
-     *
-     * @return The default path to user.home.
-     */
-    private Path getdefaultPath() {
-        String home = System.getProperty("user.home");
-        return Paths.get(home).resolve("puzzle.json");
-    }
 
-    /**
-     * @precondtion The user has a puzzle currently generated. Saves the users
-     *              "puzzle" as a jSON file in the users home directory.
-     * @postcondition The users puzzle is saved in the home directory.
-     */
-    void save() {
-        save(getdefaultPath());
-    }
+
 
     /**
      * @precondtion The user has a puzzle to save in the first place.
@@ -183,16 +177,19 @@ public class GameState {
      *
      * @postcondition The users puzzle is saved to the given path.
      */
-    private void save(Path path) {
+    private void save() {
 
-        JsonArray ja = new JsonArray();
-        ja.add(puzzle.toJsonObject());
-        String jsonText = ja.toJson();
-        try {
-            Files.write(path, jsonText.getBytes(), StandardOpenOption.CREATE);
-        } catch (IOException e) {
+        if(puzzle != null)
+        {
+            String s = new String(puzzle.toGSONObject());
+            String home = System.getProperty("user.home");
 
-            throw new RuntimeException(e);
+            System.out.println(s);
+            try {
+                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE);
+            } catch (IOException error) {
+                throw new RuntimeException(error);
+            }
         }
 
     }
@@ -201,26 +198,17 @@ public class GameState {
      *
      * @param path Loads the saved puzzle from a JSON file from the given path.
      */
-    private void load(Path path) {
-        String jsonText = null;
-        JsonArray ja = null;
-
+    private boolean load() {
+        String home = System.getProperty("user.home");
+        Path path = Paths.get(home).resolve("puzzle.json");
         try {
-            jsonText = new String(Files.readAllBytes(path));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            ja = (JsonArray) Jsoner.deserialize(jsonText);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        for (Object object : ja) {
-            JsonObject jo = (JsonObject) object;
-            Puzzle newPuzzle = Puzzle.fromJsonObject(jo);
-            puzzle = newPuzzle;
+            Gson gson = new Gson();
+            String json = new String(Files.readAllBytes(path));
+            puzzle = gson.fromJson(json, Puzzle.class);
+            return true;
+        } catch (IOException err) {
+            System.out.println("No Save Found");
+            return false;
         }
     }
 }

@@ -366,12 +366,12 @@ public class Puzzle {
         else
             return 0;
     }
-    private char getRequiredLetter() {
-        char[] array = { 'a', 'e', 'i', 'o', 'u' };
-        Random r = new Random();
-        char c = array[r.nextInt(5)];
+    //private char getRequiredLetter() {
+        //char[] array = { 'a', 'e', 'i', 'o', 'u' };
+        //Random r = new Random();
+        //char c = array[r.nextInt(5)];
         // Need to find way to check if our picked vowel is already in the other 6
         // letters.
-        return c;
-    }
+        //return c;
+    //}
 }

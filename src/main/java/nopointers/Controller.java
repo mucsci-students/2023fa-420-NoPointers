@@ -19,9 +19,9 @@ import java.util.ArrayList;
 
 
 public class Controller {
-    //private Puzzle puzzle;
+
     private GameState gameState;
-    public Puzzle puzzle;
+
 
     @FXML
     TextField input = new TextField();
@@ -86,6 +86,9 @@ public class Controller {
     @FXML
     Button quit = new Button();
 
+    public Controller() {
+        this.gameState = new GameState();
+    }
 
     public void quit(ActionEvent e)
     {
@@ -95,33 +98,29 @@ public class Controller {
     public void customPuzzle(ActionEvent e)
     {
 
+
         String s = input.getText().trim().toLowerCase();
-        if(s.length() < 7)
-        {
-            error.setText("Not a valid custom puzzle!");
-            return;
+        if (gameState.newUserPuzzle(s)) {
+            setButtons();
+            error.setVisible(false);
         }
-        Puzzle custom = new Puzzle(s);
-        puzzle = custom;
-        setButtons();
-        error.setVisible(false);
+        else {
+            error.setText("Not a valid custom puzlle!");
+            error.setVisible(true);
+        }
 
     }
 
-    public Controller() {
-        this.gameState = new GameState();
-    }
 
     public void NewPuzzle(ActionEvent e)
     {
 
-        puzzle = new Puzzle();
-        String word = new String(puzzle.getLetters());
-        if(puzzle != null)
-        {
-          setButtons();
-          foundWords.clear();
-        }
+
+
+        gameState.newRandomPuzzle();
+        String word = new String(gameState.getLetters());
+        setButtons();
+        foundWords.clear();
     }
 
     public void setHelp(ActionEvent e)
@@ -164,8 +163,8 @@ public class Controller {
 
     public void setButtons()
     {
-        String word = new String(puzzle.getLetters());
-        if(puzzle != null)
+        String word = new String(gameState.getLetters());
+        if(gameState != null)
         {
             l0.setText(String.valueOf(word.charAt(0)));
             l1.setText(String.valueOf(word.charAt(1)));
@@ -174,7 +173,7 @@ public class Controller {
             l4.setText(String.valueOf(word.charAt(4)));
             l5.setText(String.valueOf(word.charAt(5)));
             requiredLetter.setText(String.valueOf(word.charAt(6)));
-            score.setText(String.valueOf(puzzle.getScore()));
+            score.setText(String.valueOf(gameState.getScore()));
             input.clear();
             foundWords.clear();
 
@@ -183,58 +182,33 @@ public class Controller {
 
     public void load(ActionEvent e)
     {
-        String home = System.getProperty("user.home");
-        Path path = Paths.get(home).resolve("puzzle.json");
-        try {
-            Gson gson = new Gson();
-            String json = new String(Files.readAllBytes(path));
-            puzzle = gson.fromJson(json, Puzzle.class);
+        if (gameState.loadPuzzle()) {
             setButtons();
-            for(String s : puzzle.getGuessed())
+            for(String s : gameState.guessed())
             {
                 foundWords.insertText(0, s + "\n");
             }
-        } catch (IOException err) {
-            System.out.println("No Save Found");
+        }
+        else {
+            error.setText("No puzzle to load.");
+            error.setVisible(true);
         }
     }
     public void shuffle(ActionEvent e)
     {
-        if(puzzle != null)
-        {
-            puzzle.shuffleLetters();
-            setButtons();
-        }
+
+        gameState.shuffle();
+        setButtons();
     }
 
     public void save(ActionEvent e)
     {
-        if(puzzle != null)
-        {
-         String s = new String(puzzle.toGSONObject());
-         String home = System.getProperty("user.home");
-
-         System.out.println(s);
-            try {
-                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE);
-            } catch (IOException error) {
-                throw new RuntimeException(error);
-            }
-        }
+        gameState.savePuzzle();
     }
 
     public void guess(ActionEvent e)
     {
-        //if(puzzle != null)
-        //{
-            //String guess = gfield.getText();
-           // if(puzzle.guessWord(guess))
-            //{
-                //guessed.insertText(0,guess);
-                // gfield.clear();
-            //}
 
-        //}
         
         String guess = input.getText();
         GuessOutcome outcome = gameState.guess(guess);
@@ -242,26 +216,26 @@ public class Controller {
         switch (outcome) {
             case SUCCESS -> {
                 foundWords.insertText(0,input.getText() + "\n");
-                score.setText(String.valueOf(puzzle.getScore()));
+                score.setText(String.valueOf(gameState.getScore()));
                 input.clear();
-                int currentRank = puzzle.getRank();
-                String[] arr = puzzle.getRanks();
-                rank.setText(arr[puzzle.getRank()]);
+                int currentRank = gameState.getRank();
+                String[] arr = gameState.getRanks();
+                rank.setText(arr[gameState.getRank()]);
             }
             case TOO_SHORT -> {
-                errorDisplay.setText("Guess is too short!");
+                error.setText("Guess is too short!");
             }
             case EMPTY_INPUT -> {
-                errorDisplay.setText("No puzzle to guess on! Please generate a puzzle.");
+                error.setText("No puzzle to guess on! Please generate a puzzle.");
             }
             case INCORRECT -> {
-                errorDisplay.setText("Not a valid word.");
+                error.setText("Not a valid word.");
             }
             case ALREADY_FOUND -> {
-                errorDisplay.setText("Word already found!");
+                error.setText("Word already found!");
             }
             case MISSING_REQUIRED -> {
-                errorDisplay.setText("Incorrect. Does not use required letter: " + gameState.requiredLetter());
+                error.setText("Incorrect. Does not use required letter: " + gameState.requiredLetter());
             }
         }
 

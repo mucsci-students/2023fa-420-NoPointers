@@ -1,0 +1,9 @@
+.circular-button {
+ 
+
+    -fx-background-radius: 50em; /* Makes the button circular */
+    -fx-background-color: #e2dddd;
+    -fx-font-size: 20px;
+    -fx-padding: 10px;
+    -fx-border-radius: 50em; /* Optional: Adds a circular border */
+}

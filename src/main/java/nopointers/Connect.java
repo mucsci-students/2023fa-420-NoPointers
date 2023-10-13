@@ -100,6 +100,8 @@ public class Connect {
     }
 
     public static char[] convertToArray (String word) {
+        if (word.isBlank() || word.length() != 7)
+            return null;
         HashSet<Character> s = new HashSet<>();
         for(char c: word.toCharArray())
         {
@@ -115,6 +117,8 @@ public class Connect {
         return arr;
     }
     public static char[] convertToArray (char[] word) {
+        if (word.length != 7)
+            return null;
         HashSet<Character> s = new HashSet<>();
         for(char c : word)
         {

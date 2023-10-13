@@ -59,9 +59,6 @@ public class Puzzle {
     @SerializedName(value = "playerPoints")
     @Expose (serialize = true, deserialize = true)
     private int score;
-
-    @SerializedName(value = "maxPoints")
-    @Expose (serialize = true, deserialize = true)
     private final int maxScore;
 
     // Builder (New puzzle)
@@ -88,6 +85,31 @@ public class Puzzle {
 
 
         this.validWords = Connect.getWords(letters);
+
+        score = 0;
+        maxScore = calculateMaxScore ();
+    }
+
+    //Build puzzle with a selected required letter. Used only for test purposes.
+    public Puzzle(String baseWord, char requiredLetter) {
+        letters = Connect.convertToArray(baseWord);
+
+        int requiredIndex = 0;
+        for (int i = 0; i < 7; ++i) {
+            if (letters[i] != requiredLetter)
+                continue;
+
+            requiredIndex = i;
+            break;
+        }
+        this.requiredLetter = letters[requiredIndex];
+        letters[requiredIndex] = letters[6];
+        letters[6] = requiredLetter;
+
+        this.guessed = new ArrayList<String>();
+        this.validWords = new ArrayList<String>();
+
+        validWords = Connect.getWords(letters);
 
         score = 0;
         maxScore = calculateMaxScore ();
@@ -343,8 +365,9 @@ public class Puzzle {
         this.requiredLetter = requiredLetter;
 
     }
-
-
+    public double getScorePercent () {
+        return (double) score / maxScore;
+    }
     public int getRank () {
         double overallScorePercent = (double) score / maxScore;
 
@@ -370,11 +393,11 @@ public class Puzzle {
             return 0;
     }
     //private char getRequiredLetter() {
-        //char[] array = { 'a', 'e', 'i', 'o', 'u' };
-        //Random r = new Random();
-        //char c = array[r.nextInt(5)];
-        // Need to find way to check if our picked vowel is already in the other 6
-        // letters.
-        //return c;
+    //char[] array = { 'a', 'e', 'i', 'o', 'u' };
+    //Random r = new Random();
+    //char c = array[r.nextInt(5)];
+    // Need to find way to check if our picked vowel is already in the other 6
+    // letters.
+    //return c;
     //}
 }

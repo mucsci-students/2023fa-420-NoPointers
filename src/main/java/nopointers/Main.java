@@ -46,6 +46,7 @@ public class Main extends Application {
     public static void commandLine()
     {
         CLI c = new CLI();
+
         Platform.exit();
     }
 }

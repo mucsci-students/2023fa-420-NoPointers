@@ -4,12 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c97543d9-8988-4d6c-a98e-4aeb280c48f9" name="Changes" comment="">
+    <list default="true" id="c97543d9-8988-4d6c-a98e-4aeb280c48f9" name="Changes" comment="Serialize maxPoints">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Connect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Connect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/StyleSheets/circlebutton.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/StyleSheets/circlebutton.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +54,11 @@
     <option name="BRANCH" value="origin/develop" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubPullRequestsUISettings">
@@ -57,9 +69,15 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedIndex" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="2WAhFURFV8dKg5LxHgiCoErxs7C" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -68,6 +86,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  }
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\chris\IdeaProjects\2023fa-420-NoPointers\src\main\resources\Images" />
@@ -97,6 +123,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="demo1 [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -118,6 +145,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="demo1 [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -139,6 +167,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="demo1 [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -160,6 +189,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="WordWizards.jar" type="JarApplication" temporary="true">
@@ -221,7 +251,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696776886845</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Serialize maxPoints">
+      <option name="closed" value="true" />
+      <created>1696821911593</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1696821911593</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -234,20 +272,16 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added button functionality &#10;User Interface updates" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added button functionality &#10;User Interface updates" />
+    <MESSAGE value="Fixed JVM version to be 21" />
+    <MESSAGE value="Serialize maxPoints" />
+    <option name="LAST_COMMIT_MESSAGE" value="Serialize maxPoints" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/nopointers/Controller.java</url>
-          <line>102</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/nopointers/GameState.java</url>
           <line>69</line>

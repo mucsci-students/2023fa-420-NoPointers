@@ -37,9 +37,6 @@ ext {
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
 
 application {
     mainModule = 'nopointers'
@@ -68,6 +65,7 @@ dependencies {
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
             }
+    implementation 'org.jline:jline:3.23.0'
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation("com.googlecode.json-simple:json-simple:1.1.1")

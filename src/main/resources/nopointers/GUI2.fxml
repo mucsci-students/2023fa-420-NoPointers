@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.Pane?>
@@ -24,28 +25,28 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <InnerShadow />
+                        <Bloom threshold="0.08" />
                      </effect></Button>
                   <Button fx:id="l3" layoutX="620.0" layoutY="429.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <InnerShadow />
+                        <Bloom threshold="0.08" />
                      </effect></Button>
                   <Button fx:id="l5" layoutX="534.0" layoutY="278.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <InnerShadow />
+                        <Bloom threshold="0.0" />
                      </effect></Button>
                   <Button fx:id="l0" layoutX="620.0" layoutY="216.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <InnerShadow />
+                        <Bloom threshold="0.0" />
                      </effect></Button>
                   <Button fx:id="l2" layoutX="705.0" layoutY="375.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
@@ -55,21 +56,24 @@
                         <Font size="18.0" />
                      </font>
                      <effect>
-                        <InnerShadow />
+                        <Bloom threshold="0.0" />
                      </effect></Button>
                   <Button fx:id="l1" layoutX="705.0" layoutY="278.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <InnerShadow />
+                        <Bloom threshold="0.23" />
                      </effect></Button>
-                  <Button fx:id="requiredLetter" layoutX="620.0" layoutY="323.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" style="-fx-background-color: #ebd405;" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css" underline="true">
+                  <Button fx:id="requiredLetter" layoutX="620.0" layoutY="323.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" style="-fx-background-color: #D7580A;" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css" underline="true">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <InnerShadow />
+                        <InnerShadow>
+                           <input>
+                              <Bloom threshold="0.0" />
+                           </input></InnerShadow>
                      </effect></Button>
                   <Button fx:id="saveButton" layoutX="47.0" layoutY="735.0" mnemonicParsing="false" onAction="#save" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Save">
                      <effect>

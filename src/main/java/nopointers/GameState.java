@@ -171,9 +171,8 @@ public class GameState {
     /**
      * @precondtion The user has a puzzle to save in the first place.
      *
-     * @param path The path we want to save the puzzle to.
      *
-     *             Saves the users current puzzle to a path if the path is valid.
+     * Saves the users current puzzle to a path if the path is valid.
      *
      * @postcondition The users puzzle is saved to the given path.
      */
@@ -196,7 +195,6 @@ public class GameState {
 
     /**
      *
-     * @param path Loads the saved puzzle from a JSON file from the given path.
      */
     private boolean load() {
         String home = System.getProperty("user.home");

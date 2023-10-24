@@ -4,7 +4,7 @@ module nopointers {
 
     requires java.sql;
 
-
+    requires org.jline;
     requires org.json;
     requires json.simple;
     requires MaterialFX;

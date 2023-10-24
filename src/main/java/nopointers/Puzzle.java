@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder;
 public class Puzzle {
 
     //Rank related structures
+
     String[] ranks = {
             "Student",
             "Apprentice",

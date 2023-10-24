@@ -171,7 +171,6 @@ public class GameState {
     /**
      * @precondtion The user has a puzzle to save in the first place.
      *
-     *
      * Saves the users current puzzle to a path if the path is valid.
      *
      * @postcondition The users puzzle is saved to the given path.
@@ -180,7 +179,7 @@ public class GameState {
 
         if(puzzle != null)
         {
-            String s = new String(puzzle.toGSONObject());
+            String s = puzzle.toGSONObject();
             String home = System.getProperty("user.home");
 
             System.out.println(s);

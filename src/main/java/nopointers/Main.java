@@ -3,14 +3,8 @@ package nopointers;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,9 +19,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Word Wizards");
-
         stage.setScene(scene);
-
         stage.show();
 
     }

@@ -20,6 +20,8 @@ import java.util.concurrent.TimeUnit;
 public class GameState {
     // Fields
     private Puzzle puzzle;
+    //private Memento memento;
+
 
 
     // Guess method to be called on by controller. Calls on puzzle's guessWord method.
@@ -43,6 +45,7 @@ public class GameState {
     // Save method for controllers to call on.
     public void savePuzzle () {
         if (puzzle != null) {
+            //memento.save();
             save();
             System.out.println("Puzzle Saved!");
 
@@ -177,11 +180,13 @@ public class GameState {
      *
      * @postcondition The users puzzle is saved to the given path.
      */
-    private void save() {
+
+    public void save() {
 
         if(puzzle != null)
         {
-            String s = new String(puzzle.toGSONObject());
+            Puzzle.Memento m = puzzle.saveToMemento();
+            String s = new String(m.toGSONObject());
             String home = System.getProperty("user.home");
 
             System.out.println(s);
@@ -198,17 +203,32 @@ public class GameState {
      *
      * @param path Loads the saved puzzle from a JSON file from the given path.
      */
-    private boolean load() {
+
+    public boolean load() {
         String home = System.getProperty("user.home");
         Path path = Paths.get(home).resolve("puzzle.json");
         try {
             Gson gson = new Gson();
             String json = new String(Files.readAllBytes(path));
-            puzzle = gson.fromJson(json, Puzzle.class);
+            //puzzle = gson.fromJson(json, Puzzle.class);
+            Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
+            puzzle = new Puzzle();
+            puzzle.restoreFromMemento(m); 
             return true;
         } catch (IOException err) {
             System.out.println("No Save Found");
             return false;
         }
     }
+
+    //private class Memento {
+        //private GameState gameState;
+        //private Puzzle puzzle;
+
+        //private Memento (GameState gameState, Puzzle puzzle) {
+            //this.gameState = gameState;
+            //this.puzzle = puzzle;
+        //}
+    //}
 }
+

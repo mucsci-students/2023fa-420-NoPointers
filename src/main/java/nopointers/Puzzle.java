@@ -59,7 +59,8 @@ public class Puzzle {
     @SerializedName(value = "playerPoints")
     @Expose (serialize = true, deserialize = true)
     private int score;
-    private final int maxScore;
+    //private final int maxScore;
+    private int maxScore;
 
     // Builder (New puzzle)
     public Puzzle() {
@@ -361,6 +362,8 @@ public class Puzzle {
         this.guessed = guessed;
     }
 
+    public void setMaxScore(int maxScore) {this.maxScore = maxScore;}
+
     public void setRequiredLetter(char requiredLetter) {
         this.requiredLetter = requiredLetter;
 
@@ -391,6 +394,76 @@ public class Puzzle {
             return 1;
         else
             return 0;
+    }
+
+    public void restoreFromMemento(Memento memento) {
+        letters = memento.getLetters();
+        guessed = memento.getGuessed();
+        requiredLetter = memento.getRequiredLetter();
+        score = memento.getScore();
+    }
+
+    public Memento saveToMemento() {
+        Memento saved = new Memento(this);
+        return saved;
+    }
+
+    public class Memento {
+
+        @SerializedName(value = "baseWord")
+        @Expose (serialize = true, deserialize = true)
+        private char[] letters;
+
+        @SerializedName(value = "foundWords")
+        @Expose (serialize = true, deserialize = true)
+        private ArrayList<String> guessed;
+
+        // The required letter
+        @SerializedName(value = "requiredLetter")
+        @Expose (serialize = true, deserialize = true)
+        private char requiredLetter;
+
+
+        @SerializedName(value = "playerPoints")
+        @Expose (serialize = true, deserialize = true)
+        private int score;
+
+
+        // Constructor.
+        public Memento (Puzzle puzzle) {
+            this.letters = puzzle.letters;
+            this.guessed = puzzle.guessed;
+            this.requiredLetter = puzzle.requiredLetter;
+            this.score = puzzle.score;
+        }
+
+        public char getRequiredLetter() {
+            return requiredLetter;
+        }
+
+        public ArrayList<String> getGuessed() {return guessed;}
+
+        public char[] getLetters() {return letters;}
+
+        public int getScore() {
+            return score;
+        }
+
+        public String toGSONObject()
+        {
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            String json = gson.toJson(this);
+            return json;
+        }
+
+        //public void restore() {
+            //puzzle.setLetters(letters);
+            //puzzle.setGuessed(guessed);
+            //puzzle.setRequiredLetter(requiredLetter);
+            //puzzle.setValidWords(validWords);
+            //puzzle.setScore(score);
+            //puzzle.setMaxScore(maxScore);
+        //}
     }
     //private char getRequiredLetter() {
     //char[] array = { 'a', 'e', 'i', 'o', 'u' };

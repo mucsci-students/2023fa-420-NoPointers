@@ -33,6 +33,10 @@ public class Main extends Application {
                 launch(args);
             }
         }
+        // New Stuff
+        GameStateModel model = new GameStateModel();
+        CLIView cliView = new CLIView();
+        CLIController cliController = new CLIController(model, cliView);
 
     }
 

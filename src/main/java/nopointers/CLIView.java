@@ -5,10 +5,10 @@ import java.util.Scanner;
 public class CLIView {
 
     private Scanner scanner;
-    private CLIController controller;
+    //private CLIController controller;
 
     public CLIView() {
-        this.controller = new CLIController();
+        //this.controller = new CLIController();
         this.scanner = new Scanner(System.in);
         start(scanner);
         scanner.close();
@@ -47,5 +47,9 @@ public class CLIView {
     public void output(String input) {
         System.out.println(input);
     }
+
+    //public void registerController(CLIController controller) {
+
+    //}
 
 }

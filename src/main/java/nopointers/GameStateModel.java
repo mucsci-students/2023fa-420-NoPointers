@@ -22,6 +22,11 @@ public class GameStateModel {
     private Puzzle puzzle;
 
 
+    public GameStateModel() {
+        this.puzzle = getPuzzle();
+    }
+
+
     // Guess method to be called on by controller. Calls on puzzle's guessWord method.
     public GuessOutcome guess (String input) {
         if (puzzle == null) {
@@ -100,6 +105,11 @@ public class GameStateModel {
     public String[] getRanks() { return puzzle.getRanks(); }
 
     public int getScore() { return puzzle.getScore(); }
+
+    private Puzzle getPuzzle() {
+        Puzzle newPuzzle = new Puzzle();
+        return newPuzzle;
+    }
 
     // Shuffle method
     public void shuffle() {

@@ -18,9 +18,9 @@ public class CLIController {
     private GameStateModel gameStateModel;
     private CLIView view;
 
-    public CLIController() {
-        this.gameStateModel = new GameStateModel();
-        this.view = new CLIView();
+    public CLIController(GameStateModel model, CLIView view) {
+        this.gameStateModel = model;
+        this.view = view;
 
     }
 

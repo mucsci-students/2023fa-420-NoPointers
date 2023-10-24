@@ -5,19 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c97543d9-8988-4d6c-a98e-4aeb280c48f9" name="Changes" comment="Added button functionality &#10;User Interface updates">
-      <change afterPath="$PROJECT_DIR$/src/main/java/nopointers/CLIView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/nopointers/GUIView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/CLI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/CLIController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/GUIController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/GameStateModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/CLIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/CLIController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/CLIView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/CLIView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/GameStateModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/GameStateModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/nopointers/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/GUI2.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/nopointers/Word-Wizard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/nopointers/GameStateTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/nopointers/GameStateModelTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,7 +247,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/nopointers/GameStateModel.java</url>
-          <line>69</line>
+          <line>74</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import java.util.concurrent.TimeUnit;
 
 
-public class GameState {
+public class GameStateModel {
     // Fields
     private Puzzle puzzle;
 

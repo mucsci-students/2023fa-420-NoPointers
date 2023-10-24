@@ -1,70 +1,44 @@
 package nopointers;
 
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 
 
-import com.github.cliftonlabs.json_simple.JsonArray;
 //import com.github.cliftonlabs.json_simple.JsonException;
-import com.github.cliftonlabs.json_simple.JsonObject;
-import com.github.cliftonlabs.json_simple.Jsoner;
 
-
-
-
-import java.util.concurrent.TimeUnit;
 /**
  *
  * @author Christian Michel
  * @
  */
-public class CLI {
+public class CLIController {
 
-    private Scanner scanner;
+    //private Scanner scanner;
     //private Puzzle puzzle;
-    private GameState gameState;
+    private GameStateModel gameStateModel;
+    private CLIView view;
 
-    public CLI() {
-        gameState = new GameState();
-        this.scanner = new Scanner(System.in);
-        start(scanner);
-        scanner.close();
+    public CLIController() {
+        this.gameStateModel = new GameStateModel();
+        this.view = new CLIView();
 
     }
 
-    /**
-     *
-     * @param sc A scanner that will take input from system.in
-     */
-    public void start(Scanner sc) {
-        boolean isRun = true;
-        intro();
-        while (isRun) {
-            System.out.print("> ");
-            String command = sc.nextLine().toLowerCase().trim();
-            parser(command);
-            System.out.flush();
-        }
-    }
+
 
     /**
      *
      * @param command The command from the user that will be parsed.
      * @postcondition The users command is parsed and executed.
      */
-    private void parser(String command) {
-        String[] args = command.split(" ");
-        switch (args[0]) {
+    public void handleCommand(String command) {
+
+        switch (command) {
             case "exit":
-                System.out.println("\033[49m");
+                view.output("\033[49m");
                 System.exit(0);
             case "":
-                System.out.println("Please enter a command");
+                view.output("Please enter a command");
                 break;
             case "show":
 
@@ -72,67 +46,67 @@ public class CLI {
                 break;
             case "save":
 
-                gameState.savePuzzle();
+                gameStateModel.savePuzzle();
                 break;
             case "guess":
 
-                GuessOutcome outcome = gameState.guess(args[1]);
+                GuessOutcome outcome = gameStateModel.guess(view.getInput(command));
                 handleOutcome(outcome);
                 break;
             case "shuffle":
 
-                gameState.shuffle();
+                gameStateModel.shuffle();
                 break;
             case "rules":
                 rules();
                 break;
             case "load":
                 //load(getdefaultPath());
-                gameState.loadPuzzle();
+                gameStateModel.loadPuzzle();
                 break;
             case "new":
                 //newPuzzle();
-                gameState.newRandomPuzzle();
+                gameStateModel.newRandomPuzzle();
                 break;
             case "help":
                 commands();
                 break;
             case "rank":
 
-                gameState.rank();
+                gameStateModel.rank();
                 break;
             case "custom":
 
-                if (!gameState.newUserPuzzle(args[1])) {
-                    System.out.println("Invalid Pangram!");
+                if (!gameStateModel.newUserPuzzle(view.getInput(command))) {
+                    view.output("Invalid Pangram!");
                 }
                 break;
             default:
-                System.out.println(command + ": Unknown Command");
+                view.output(command + ": Unknown Command");
         }
     }
 
     private void handleOutcome(GuessOutcome outcome) {
         switch (outcome) {
             case SUCCESS -> {
-                System.out.println("Correct! Word added to guessed words.");
+                view.output("Correct! Word added to guessed words.");
                 showPuzzle();
             }
             case TOO_SHORT -> {
-                System.out.println("Guess is too short!");
+                view.output("Guess is too short!");
             }
             case EMPTY_INPUT -> {
-                System.out.println("No puzzle to guess on!\nPlease generate a puzzle.");
+                view.output("No puzzle to guess on!\nPlease generate a puzzle.");
             }
             case INCORRECT -> {
-                System.out.println("Not a valid word.");
+                view.output("Not a valid word.");
             }
             case ALREADY_FOUND -> {
-                System.out.println("Word already found!");
+                view.output("Word already found!");
             }
             case MISSING_REQUIRED -> {
-                System.out.println("Incorrect. Does not use required letter.");
-                System.out.println("The Required letter is [" + gameState.requiredLetter() + "]");
+                view.output("Incorrect. Does not use required letter.");
+                view.output("The Required letter is [" + gameStateModel.requiredLetter() + "]");
             }
         }
     }
@@ -149,19 +123,20 @@ public class CLI {
     // Method to be called on from Show Puzzle Command. Prints out the puzzle
     // letters to user.
     public void showPuzzle() {
-        if (!gameState.hasPuzzle()) {
-            System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
+        if (!gameStateModel.hasPuzzle()) {
+            view.output("No puzzle to show please load a puzzle or generate a new puzzle");
             return;
         }
         // Print out the seven letters with the required letter in brackets [].
-        for (int i = 0; i < gameState.letters().length; ++i) {
+        for (int i = 0; i < gameStateModel.letters().length; ++i) {
             if (i == 6)
-                System.out.print("[");
-            System.out.print(gameState.letters()[i]);
+                view.output("[");
+            //System.out.println(gameStateModel.letters()[i]);
+            view.output( gameStateModel.requiredLetter() + " ");
         }
-        System.out.print("]\n");
-        System.out.println("Guessed Words: " + gameState.guessed().toString());
-        System.out.println("                  .'* *.'\n"
+        view.output("]\n");
+        view.output("Guessed Words: " + gameStateModel.guessed().toString());
+        view.output("                  .'* *.'\n"
                 + "               __/_*_*(_\n"
                 + "              / _______ \\\n"
                 + "             _\\_)/___\\(_/_ \n"
@@ -186,7 +161,7 @@ public class CLI {
 
 
 
-    private void intro() {
+    public void intro() {
         System.out.println("\033[34;1m");
         System.out.println("\t ▄█     █▄   ▄██████▄     ▄████████ ████████▄        ▄█     █▄   ▄█   ▄███████▄     ▄████████    ▄████████ ████████▄     ▄████████ \n"
                 + "\t███     ███ ███    ███   ███    ███ ███   ▀███      ███     ███ ███  ██▀     ▄██   ███    ███   ███    ███ ███   ▀███   ███    ███ \n"

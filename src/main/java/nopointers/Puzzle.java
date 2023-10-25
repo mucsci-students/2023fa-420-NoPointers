@@ -42,22 +42,18 @@ public class Puzzle {
 
     // Fields of Puzzle Class
     // The 6 optional letters
-    @SerializedName(value = "baseWord")
-    @Expose (serialize = true, deserialize = true)
+
     private char[] letters;
 
-    @SerializedName(value = "foundWords")
-    @Expose (serialize = true, deserialize = true)
+
     private ArrayList<String> guessed;
 
     // The required letter
-    @SerializedName(value = "requiredLetter")
-    @Expose (serialize = true, deserialize = true)
+
     private char requiredLetter;
     private ArrayList<String> validWords;
 
-    @SerializedName(value = "playerPoints")
-    @Expose (serialize = true, deserialize = true)
+
     private int score;
     //private final int maxScore;
     private int maxScore;

@@ -39,6 +39,6 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       with:
-        directory: ./build/reports/tests/test
+        directory: ./build/test-results
         flags: test
         

@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -7,13 +7,10 @@ import java.util.List;
 // S.O.S.
 // I can't take it anymore
 public class Hints {
-    public void main(String args){
-        ArrayList<String> validwords = new ArrayList<>(List.of("abed","abye","aced","bade","bead","cade","dace"
-        ,"bayed","beady","decay"));
-        String[] letters= new String[] {"b","c","y","a","e","d"};
-        System.out.print(print(validwords));
-    }
 
+    public Hints(){
+
+    }
     /**
      * Method that return the string version of the text
      * in the hints button. Uses a lot of string building
@@ -24,7 +21,7 @@ public class Hints {
      * @return A string containing the entire contents on the
      * hints tab.
      */
-    public String print(ArrayList<String> lst){
+    public String print(ArrayList<String> lst, String[] arr){
         StringBuilder res = new StringBuilder();
         res.append("Center letter is bold.\n\n");
         res.append("WORDS:" + lst.size() + ",POINTS: ");//+ var
@@ -34,9 +31,9 @@ public class Hints {
             res+= "(" + var + "Perfect)";
         }
         */
-        res.append("\n\n" + buildMatrix(lst) + "\n");
+        res.append("\n\n" + buildMatrix(lst, arr) + "\n");
         res.append("Two letter list:\n\n");
-
+        res.append(twoLetLst(lst));
         return res.toString();
     }
 
@@ -49,7 +46,7 @@ public class Hints {
      * @param lst Arraylist of valid words
      * @return A string of the 2D matrix
      */
-    public String buildMatrix(ArrayList<String> lst) {
+    public String buildMatrix(ArrayList<String> lst, String[] arr) {
         String largestString = "";
         for (String str : lst) {
             if (str.length() > largestString.length()) {
@@ -57,7 +54,7 @@ public class Hints {
             }
         }
         String[] lettersArr = firstLet(lst);
-        String[][] matrix = new String[lettersArr.length+2][largestString.length()-1];
+        String[][] matrix = new String[lettersArr.length+1][largestString.length()-1];
         int row = matrix.length;
         int col = matrix[0].length;
         int num = 4;
@@ -181,7 +178,7 @@ public class Hints {
      * @return The original matrix with colons and gamma.
      */
     public String[][] intToStr(String[][] strMat, int[][] intMat){
-        for (int i = 1; i < strMat.length; i++) {
+        for (int i = 0; i < strMat.length; i++) {
             for (int j = 1; j < strMat[0].length; j++) {
                 strMat[i][j] = String.valueOf(intMat[i-1][j-1]);
             }
@@ -208,5 +205,43 @@ public class Hints {
             str.append("\n");
         }
         return str.toString();
+    }
+    /**
+     * This method is a helper function for print
+     *
+     * It returns a string of the two letter list
+     * such as the one in the example.
+     *
+     * @param lst The list of valid words
+     * @return A string of everything in the hints after
+     * the matrix
+     */
+    public String twoLetLst (ArrayList<String> lst){
+        Map<String,Integer> map = new HashMap<String,Integer>();
+        for (String str : lst) {
+            String firSec = str.substring(0,2);
+            if(!map.containsKey(firSec))
+                map.put(firSec,1);
+            else{
+                int val = map.get(firSec);
+                map.replace(firSec, val+1);
+            }
+        }
+        StringBuilder res = new StringBuilder();
+        String temp = "";
+        for(Map.Entry<String,Integer> iter : map.entrySet()){
+            String fir = iter.getKey().substring(0);
+            if(fir != temp){
+                res.append("\n");
+                temp = fir;
+            }
+            else{
+                res.append(" ");
+            }
+            res.append(iter.getKey());
+            res.append("-");
+            res.append(iter.getValue().toString());
+        }
+        return res.toString();
     }
 }

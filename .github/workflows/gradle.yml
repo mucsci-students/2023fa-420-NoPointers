@@ -14,7 +14,9 @@ on:
     branches: [ "develop" ]
 
 permissions:
+  actions: read
   contents: read
+  security-events: write
 
 jobs:
   build:
@@ -38,7 +40,7 @@ jobs:
       id: jacoco
       uses: madrapps/jacoco-report@v1.6.1
       with:
-        paths: /build/reports/jacoco/testCoverage/testCoverage.xml
+        paths: ${{ github.workspace }}/build/reports/jacoco/testCoverage/testCoverage.xml
         token: ${{ secrets.GITHUB_TOKEN }}
         min-coverage-overall: 0
         min-coverage-changed-files: 0

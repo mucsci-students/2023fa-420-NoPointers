@@ -238,7 +238,7 @@ public class Hints {
             else{
                 res.append(" ");
             }
-            res.append(iter.getKey());
+            res.append(iter.getKey().toString().toUppercase());
             res.append("-");
             res.append(iter.getValue().toString());
         }

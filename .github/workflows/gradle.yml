@@ -39,7 +39,6 @@ jobs:
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       with:
-        directory: ./coverage/reports
-        file: coverage.xml
+        directory: ./build/reports/tests/test
         flags: test
         

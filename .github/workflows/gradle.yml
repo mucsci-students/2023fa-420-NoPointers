@@ -33,11 +33,19 @@ jobs:
       with:
          gradle-version: 8.3
     - name: Run tests
-      run: gradle build
+      run: gradle testCoverage
+    - name: Add coverage to PR
+       id: jacoco
+       uses: madrapps/jacoco-report@v1.6.1
+       with:
+         paths: |
+           ${{ github.workspace }}/**/build/reports/jacoco/prodNormalDebugCoverage/prodNormalDebugCoverage.xml,
+           ${{ github.workspace }}/**/build/reports/jacoco/**/debugCoverage.xml
+         token: ${{ secrets.GITHUB_TOKEN }}
+         min-coverage-overall: 0
+         min-coverage-changed-files: 0
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      with:
-        directory: build/test-results/test
         

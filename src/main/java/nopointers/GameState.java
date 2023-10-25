@@ -191,7 +191,7 @@ public class GameState {
 
             System.out.println(s);
             try {
-                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE);
+                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             } catch (IOException error) {
                 throw new RuntimeException(error);
             }

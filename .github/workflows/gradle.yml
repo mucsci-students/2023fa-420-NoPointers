@@ -49,6 +49,8 @@ jobs:
         min-coverage-changed-files: 0
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
+      with:
+        directory: ./build/reports/jacoco
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         

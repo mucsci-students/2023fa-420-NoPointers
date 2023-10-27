@@ -23,7 +23,7 @@ public class Hints {
      * @return A string containing the entire contents on the
      * hints tab.
      */
-    public String print(ArrayList<String> lst, String[] arr){
+    public String print(ArrayList<String> lst){
         StringBuilder res = new StringBuilder();
         res.append("Center letter is bold.\n\n");
         res.append("WORDS:" + lst.size() + ",POINTS: ");//+ var
@@ -65,7 +65,7 @@ public class Hints {
             num++;
         }
         for(int i = 1; i <= col; i++){
-            matrix[i][0] = lettersArr[i-1];
+            matrix[i][0] = lettersArr[i-1].toUpperCase();
         }
         matrix = addColonsAndSum(matrix);
         int[][] mat = new int [matrix.length-1][matrix[0].length-1];

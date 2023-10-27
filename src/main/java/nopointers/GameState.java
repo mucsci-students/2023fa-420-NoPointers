@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class GameState {
     // Fields
     private Puzzle puzzle;
-    //private Memento memento;
+
 
 
 
@@ -174,7 +174,7 @@ public class GameState {
     /**
      * @precondtion The user has a puzzle to save in the first place.
      *
-     * @param path The path we want to save the puzzle to.
+     *
      *
      *             Saves the users current puzzle to a path if the path is valid.
      *
@@ -185,6 +185,7 @@ public class GameState {
 
         if(puzzle != null)
         {
+            // Save current puzzle to a Memento.
             Puzzle.Memento m = puzzle.saveToMemento();
             String s = new String(m.toGSONObject());
             String home = System.getProperty("user.home");
@@ -201,7 +202,7 @@ public class GameState {
 
     /**
      *
-     * @param path Loads the saved puzzle from a JSON file from the given path.
+     * Loads the saved puzzle from a JSON file from the given path.
      */
 
     public boolean load() {
@@ -210,9 +211,10 @@ public class GameState {
         try {
             Gson gson = new Gson();
             String json = new String(Files.readAllBytes(path));
-            //puzzle = gson.fromJson(json, Puzzle.class);
+            // Load json to a Memento
             Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
             puzzle = new Puzzle();
+            // Make current puzzle's fields to those of the saved Memento
             puzzle.restoreFromMemento(m); 
             return true;
         } catch (IOException err) {
@@ -221,14 +223,6 @@ public class GameState {
         }
     }
 
-    //private class Memento {
-        //private GameState gameState;
-        //private Puzzle puzzle;
 
-        //private Memento (GameState gameState, Puzzle puzzle) {
-            //this.gameState = gameState;
-            //this.puzzle = puzzle;
-        //}
-    //}
 }
 

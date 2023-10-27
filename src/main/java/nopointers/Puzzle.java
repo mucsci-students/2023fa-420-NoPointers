@@ -391,19 +391,19 @@ public class Puzzle {
         else
             return 0;
     }
-
+    // Changes current puzzle's fields to be of those stored in the saved Memento
     public void restoreFromMemento(Memento memento) {
         letters = memento.getLetters();
         guessed = memento.getGuessed();
         requiredLetter = memento.getRequiredLetter();
         score = memento.getScore();
     }
-
+    // Save fields of current puzzle to a Memento
     public Memento saveToMemento() {
         Memento saved = new Memento(this);
         return saved;
     }
-
+    // Memento implementation. Used to save/load details of puzzle to/from a json file.
     public class Memento {
 
         @SerializedName(value = "baseWord")
@@ -452,21 +452,7 @@ public class Puzzle {
             return json;
         }
 
-        //public void restore() {
-            //puzzle.setLetters(letters);
-            //puzzle.setGuessed(guessed);
-            //puzzle.setRequiredLetter(requiredLetter);
-            //puzzle.setValidWords(validWords);
-            //puzzle.setScore(score);
-            //puzzle.setMaxScore(maxScore);
-        //}
+
     }
-    //private char getRequiredLetter() {
-    //char[] array = { 'a', 'e', 'i', 'o', 'u' };
-    //Random r = new Random();
-    //char c = array[r.nextInt(5)];
-    // Need to find way to check if our picked vowel is already in the other 6
-    // letters.
-    //return c;
-    //}
+
 }

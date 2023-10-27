@@ -35,14 +35,16 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
          gradle-version: 8.3
-    - name: Run build
-      run: gradle build
+    - name: Run tests
+      run: gradle test
     - name: Add coverage to PR
       id: jacoco
       uses: madrapps/jacoco-report@v1.6.1
       with:
         paths: ./build/reports/testCoverage.xml
         token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Run JaCoCo test report
+      run: gradle jacocoTestReport
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       with:

@@ -3,9 +3,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-//If anyone is reading this please send help
-// S.O.S.
-// I can't take it anymore
+// To implement Hints create a hints object and
+// call .print(list of valid words)
+// Hints hint = new Hints();
+// hint.print(validWords);
 public class Hints {
 
     public Hints(){
@@ -17,7 +18,8 @@ public class Hints {
      * and calls many helper functions. Read descriptions to
      * understand how everything works.
      *
-     *
+     * @param lst
+     * @param arr String array of
      * @return A string containing the entire contents on the
      * hints tab.
      */
@@ -31,8 +33,8 @@ public class Hints {
             res+= "(" + var + "Perfect)";
         }
         */
-        res.append("\n\n" + buildMatrix(lst, arr) + "\n");
-        res.append("Two letter list:\n\n");
+        res.append("\n\n" + buildMatrix(lst) + "\n");
+        res.append("Two letter list:\n");
         res.append(twoLetLst(lst));
         return res.toString();
     }
@@ -46,7 +48,7 @@ public class Hints {
      * @param lst Arraylist of valid words
      * @return A string of the 2D matrix
      */
-    public String buildMatrix(ArrayList<String> lst, String[] arr) {
+    public String buildMatrix(ArrayList<String> lst) {
         String largestString = "";
         for (String str : lst) {
             if (str.length() > largestString.length()) {
@@ -54,21 +56,22 @@ public class Hints {
             }
         }
         String[] lettersArr = firstLet(lst);
-        String[][] matrix = new String[lettersArr.length+1][largestString.length()-1];
+        String[][] matrix = new String[lettersArr.length+2][largestString.length()-1];
         int row = matrix.length;
         int col = matrix[0].length;
         int num = 4;
-        for(int i = 1; i < row; i++){
+        for(int i = 1; i < row-2; i++){
             matrix[0][i] = String.valueOf(num);
             num++;
         }
-        for(int i = 1; i < col; i++){
+        for(int i = 1; i <= col; i++){
             matrix[i][0] = lettersArr[i-1];
         }
         matrix = addColonsAndSum(matrix);
         int[][] mat = new int [matrix.length-1][matrix[0].length-1];
         mat = numMatrix(mat,lettersArr,lst);
         matrix = intToStr(matrix, mat);
+        matrix[0][0] = "  ";
         return matrixToString(matrix);
     }
 
@@ -91,13 +94,13 @@ public class Hints {
      * in all  the valid words
      */
     public String[] firstLet(ArrayList<String> arr){
-        HashSet<String> set = new HashSet<String>();
+        HashSet<String> set = new HashSet<>();
         for (String str : arr) {
             String fir = Character.toString(str.charAt(0));
             set.add(fir);
         }
         int n = set.size();
-        String array[] = new String[n];
+        String[] array = new String[n];
         int i = 0;
         for (String x : set)
             array[i++] = x;
@@ -126,22 +129,23 @@ public class Hints {
                 if(fir.equals(strArr[i]))
                     num = i;
             }
-            matrix[size-3][num+1]++;
+            matrix[num][size-4]++;
         }
+
         //Does the summations and fills the bottom row and column
         int num = 0;
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length-1; j++) {
                 num+= matrix[i][j];
             }
-            matrix[i][matrix[0].length] = num;
+            matrix[i][matrix[0].length-1] = num;
             num = 0;
         }
         for (int i = 0; i < matrix[0].length; i++) {
             for (int j = 0; j < matrix.length-1; j++) {
-                num+= matrix[i][j];
+                num+= matrix[j][i];
             }
-            matrix[i][matrix.length] = num;
+            matrix[matrix.length-1][i] = num;
             num = 0;
         }
         return matrix;
@@ -158,9 +162,9 @@ public class Hints {
      * @return The original matrix with colons and gamma.
      */
     public String[][] addColonsAndSum(String[][] matrix){
-        matrix[matrix.length][0] = matrix[0][matrix[0].length] = "\u2211";
-        for(int i = 0; i < matrix[0].length; i++){
-            matrix[0][i] = matrix[0][i] + ":";
+        matrix[matrix.length-1][0] = matrix[0][matrix[0].length-1] = "\u2211";
+        for(int i = 1; i <= matrix[0].length+1; i++){
+            matrix[i][0] = matrix[i][0] + ":";
         }
         return matrix;
     }
@@ -174,11 +178,11 @@ public class Hints {
      * the entries from int to string
      *
      * @param strMat The string matrix being built.
-     * @param intMat
+     * @param intMat The integer matrix
      * @return The original matrix with colons and gamma.
      */
     public String[][] intToStr(String[][] strMat, int[][] intMat){
-        for (int i = 0; i < strMat.length; i++) {
+        for (int i = 1; i < strMat.length; i++) {
             for (int j = 1; j < strMat[0].length; j++) {
                 strMat[i][j] = String.valueOf(intMat[i-1][j-1]);
             }
@@ -217,7 +221,7 @@ public class Hints {
      * the matrix
      */
     public String twoLetLst (ArrayList<String> lst){
-        Map<String,Integer> map = new HashMap<String,Integer>();
+        Map<String,Integer> map = new TreeMap<String,Integer>();
         for (String str : lst) {
             String firSec = str.substring(0,2);
             if(!map.containsKey(firSec))
@@ -230,15 +234,15 @@ public class Hints {
         StringBuilder res = new StringBuilder();
         String temp = "";
         for(Map.Entry<String,Integer> iter : map.entrySet()){
-            String fir = iter.getKey().substring(0);
-            if(fir != temp){
+            String fir = iter.getKey().substring(0,1);
+            if(!fir.equals(temp)){
                 res.append("\n");
                 temp = fir;
             }
             else{
                 res.append(" ");
             }
-            res.append(iter.getKey().toString().toUppercase());
+            res.append(iter.getKey().toString().toUpperCase());
             res.append("-");
             res.append(iter.getValue().toString());
         }

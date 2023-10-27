@@ -184,7 +184,12 @@ public class Hints {
     public String[][] intToStr(String[][] strMat, int[][] intMat){
         for (int i = 1; i < strMat.length; i++) {
             for (int j = 1; j < strMat[0].length; j++) {
-                strMat[i][j] = String.valueOf(intMat[i-1][j-1]);
+                if(intMat[i-1][j-1] == 0){
+                    strMat[i][j] = "-";
+                }
+                else{
+                    strMat[i][j] = String.valueOf(intMat[i-1][j-1]);
+                }
             }
         }
         return strMat;

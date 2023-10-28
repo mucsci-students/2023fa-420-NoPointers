@@ -18,8 +18,8 @@ public class Hints {
      * and calls many helper functions. Read descriptions to
      * understand how everything works.
      *
-     * @param lst
-     * @param arr String array of
+     * @param lst An Arraylist of valid words for a specific 
+     * puzzle.
      * @return A string containing the entire contents on the
      * hints tab.
      */

@@ -211,4 +211,10 @@ public class GameState {
             return false;
         }
     }
+
+    public String hints(){
+        String res = puzzle.print();
+        return res;
+    }
+
 }

@@ -240,6 +240,10 @@ public class Controller {
         }
 
     }
+    public void hints(ActionEvent e){
+        gameState.hints();
+    }
+
 
 
 

@@ -14,7 +14,10 @@ on:
     branches: [ "develop" ]
 
 permissions:
+  id-token: write
   contents: read
+  issues: write
+  pull-requests: write
 
 jobs:
   build:
@@ -34,7 +37,12 @@ jobs:
          gradle-version: 8.3
     - name: Run tests
       run: gradle test
+    - name: Run JaCoCo test report
+      run: gradle jacocoTestReport
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
+      with:
+        file: build/reports/jacoco/test/jacocoTestReport.xml
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        

@@ -260,7 +260,7 @@ public class Connect {
             return false;
         }
     }
-    public static  pangramCount() {
+    public static int pangramCount() {
         String url = "jdbc:sqlite::resource:words.db";
         String sql = "SELECT COUNT(*) FROM pangrams;";
 

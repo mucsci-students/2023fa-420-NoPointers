@@ -412,11 +412,10 @@ public class Puzzle {
         res.append("\n");
         res.append("WORDS:" + validWords.size() + ",POINTS: " Integer.toString(maxScore));//+ var
         res.append("PANGRAMS: ");
-        /*
-        if(/* There is a perfect pangram print this text*//*){
+	res.append(Connect.pangramCount);
+        if(){
             res+= "(" + var + "Perfect)";
         }
-        */
         res.append("\n\n" + buildMatrix(validWords) + "\n");
         res.append("Two letter list:\n");
         res.append(twoLetLst(lst));

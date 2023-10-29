@@ -413,8 +413,8 @@ public class Puzzle {
         res.append("WORDS:" + validWords.size() + ",POINTS: " Integer.toString(maxScore));//+ var
         res.append("PANGRAMS: ");
 	res.append(Connect.pangramCount);
-        if(){
-            res+= "(" + var + "Perfect)";
+        if(Connect.countPerfectPangrams() > 0){
+	    res.append("(" + Connect.countPerfectPangrams() + "Perfect)");
         }
         res.append("\n\n" + buildMatrix(validWords) + "\n");
         res.append("Two letter list:\n");

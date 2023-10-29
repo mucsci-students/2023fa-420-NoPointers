@@ -86,6 +86,9 @@ public class Controller {
     @FXML
     Button quit = new Button();
 
+    @FXML
+    Button hints = new Button();
+
     public Controller() {
         this.gameState = new GameState();
     }
@@ -240,8 +243,8 @@ public class Controller {
         }
 
     }
-    public void hints(ActionEvent e){
-        gameState.hints();
+    public String hints(ActionEvent e){
+        return gameState.hints();
     }
 
 

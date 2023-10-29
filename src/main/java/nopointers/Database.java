@@ -73,19 +73,17 @@ public class Database {
         ArrayList<String> wordList = new ArrayList<>();
         try {
             // Create a connection to the database
-            if (connection != null) {
-                Statement stmt;
+            Statement stmt;
 
-                stmt = connection.createStatement();
+            stmt = connection.createStatement();
 
-                ResultSet rs = stmt.executeQuery(getSqlString(letters));
+            ResultSet rs = stmt.executeQuery(getSqlString(letters));
 
-                while (rs.next()) {
-                    wordList.add(rs.getString(1));
-                }
-
-                stmt.close();
+            while (rs.next()) {
+                wordList.add(rs.getString(1));
             }
+
+            stmt.close();
         } catch (SQLException e) {
             // Database access error
             return wordList;
@@ -93,32 +91,29 @@ public class Database {
         return wordList;
     }
 
-    /** Checks if the given word is a pangram
+    /** Checks if the given word is a pangram.
      * @authors kstigelman
      *
-     * @param word
-     * @return
+     * @param word The given word.
+     * @return Whether or not the word exists in the pangram database.
      */
     public boolean checkPangram(String word) {
         String sql = "SELECT * FROM pangrams WHERE pangram = '" + word + "';";
         try {
             // Create a connection to the database
             boolean isPangram = false;
-            if (connection != null) {
-                Statement stmt;
+            Statement stmt;
 
-                stmt = connection.createStatement();
+            stmt = connection.createStatement();
 
-                ResultSet rs = stmt.executeQuery(sql);
-                isPangram = rs.next();
-                stmt.close();
-                return isPangram;
-            }
+            ResultSet rs = stmt.executeQuery(sql);
+            isPangram = rs.next();
+            stmt.close();
+            return isPangram;
         } catch (SQLException e) {
             // Database access error
             return false;
         }
-        return false;
     }
 
     /** Converts a word string to a character array. The word must have 7 unique letters to succeed.
@@ -180,35 +175,32 @@ public class Database {
 
         try {
             String word = "";
-            if (connection != null) {
-                Statement stmt;
+            Statement stmt;
 
-                stmt = connection.createStatement();
+            stmt = connection.createStatement();
 
-                ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery(sql);
 
-                if (rs.next())
-                    word = rs.getString(1);
+            if (rs.next())
+                word = rs.getString(1);
 
-                stmt.close();
-                HashSet<Character> s = new HashSet<>();
-                for(char c: word.toCharArray())
-                {
-                    s.add(c);
-                }
-                ArrayList<Character> lst = new ArrayList<Character>();
-                lst.addAll(s);
-                char[] arr = new char[7];
-                for(int i = 0; i < lst.size(); ++i)
-                {
-                    arr[i] = lst.get(i);
-                }
-                return arr;
+            stmt.close();
+            HashSet<Character> s = new HashSet<>();
+            for(char c: word.toCharArray())
+            {
+                s.add(c);
             }
+            ArrayList<Character> lst = new ArrayList<Character>();
+            lst.addAll(s);
+            char[] arr = new char[7];
+            for(int i = 0; i < lst.size(); ++i)
+            {
+                arr[i] = lst.get(i);
+            }
+            return arr;
         } catch (SQLException e) {
             // Database access error
             return null;
         }
-        return null;
     }
 }

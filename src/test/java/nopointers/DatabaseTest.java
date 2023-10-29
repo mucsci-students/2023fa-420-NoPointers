@@ -4,6 +4,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -27,19 +28,24 @@ public class DatabaseTest {
      */
     @Test
     public void getWordsTest () {
-        char[] letters = { 'p', 'a', 'n', 'g', 'r', 'm', 's' };
-        ArrayList<String> words = database.getWords(letters);
+        try {
+            char[] letters = { 'p', 'a', 'n', 'g', 'r', 'm', 's' };
+            ArrayList<String> words = database.getWords(letters);
 
-        assertNotNull(words, "The ArrayList should not be null.");
-        assertFalse (words.isEmpty(), "The valid words list should not be empty.");
+            assertNotNull(words, "The ArrayList should not be null.");
+            assertFalse (words.isEmpty(), "The valid words list should not be empty.");
 
-        //Set the letters to an invalid pangram (all letter 'a')
-        Arrays.fill(letters, 'a');
+            //Set the letters to an invalid pangram (all letter 'a')
+            Arrays.fill(letters, 'a');
 
-        words = database.getWords(letters);
+            words = database.getWords(letters);
 
-        assertNotNull(words, "The ArrayList should not be null.");
-        assertTrue (words.isEmpty(), "The valid words list should not be empty.");
+            assertNotNull(words, "The ArrayList should not be null.");
+            assertTrue (words.isEmpty(), "The valid words list should not be empty.");
+        }
+        catch (Exception e) {
+            fail("SQL Error: " + e.getMessage());
+        }
     }
 
     /** Tests reducing a word down to a character array
@@ -48,7 +54,6 @@ public class DatabaseTest {
      */
     @Test
     public void convertToArrayTest () {
-
         assertNull(database.convertToArray(""));
         assertNull(database.convertToArray("".toCharArray()));
 
@@ -73,16 +78,21 @@ public class DatabaseTest {
      */
     @RepeatedTest(10)
     public void selectPangramTest () {
-        char[] pangram = database.selectPangram();
+        try {
+            char[] pangram = database.selectPangram();
 
-        assertNotNull(pangram, "Array of pangram letters is not null");
-        assertEquals(7, pangram.length, "Pangram array must have 7 letters");
+            assertNotNull(pangram, "Array of pangram letters is not null");
+            assertEquals(7, pangram.length, "Pangram array must have 7 letters");
 
-        HashSet<Character> chars = new HashSet<>();
-        for (int i = 0; i < pangram.length; ++i)
-            chars.add(pangram[i]);
+            HashSet<Character> chars = new HashSet<>();
+            for (int i = 0; i < pangram.length; ++i)
+                chars.add(pangram[i]);
 
-        assertEquals(7, chars.size(), "Selected pangram has exactly 7 unique letters");
+            assertEquals(7, chars.size(), "Selected pangram has exactly 7 unique letters");
+        }
+        catch (Exception e) {
+            fail("SQL Error: " + e.getMessage());
+        }
     }
     /** Tests checking to see if words are valid 7 letter pangrams.
      *
@@ -90,11 +100,16 @@ public class DatabaseTest {
      */
     @Test
     public void checkPangramTest () {
-        assertTrue(database.checkPangram("pangrams"));
-        assertTrue(database.checkPangram("ultrastructural"));
-        assertFalse(database.checkPangram("assemblz"));
-        assertFalse(database.checkPangram("metaphoric"));
-        assertFalse(database.checkPangram("apple"));
-        assertFalse(database.checkPangram(""));
+        try {
+            assertTrue(database.checkPangram("pangrams"));
+            assertTrue(database.checkPangram("ultrastructural"));
+            assertFalse(database.checkPangram("assemblz"));
+            assertFalse(database.checkPangram("metaphoric"));
+            assertFalse(database.checkPangram("apple"));
+            assertFalse(database.checkPangram(""));
+        }
+        catch (Exception e) {
+            fail("SQL Error: " + e.getMessage());
+        }
     }
 }

@@ -260,4 +260,30 @@ public class Connect {
             return false;
         }
     }
+    public static  pangramCount() {
+        String url = "jdbc:sqlite::resource:words.db";
+        String sql = "SELECT COUNT(*) FROM pangrams;";
+
+        try {
+            Connection conn = DriverManager.getConnection(url);
+            int res = 0;
+            if (conn != null) {
+                Statement stmt;
+
+                stmt = conn.createStatement();
+
+                ResultSet rs = stmt.executeQuery(sql);
+
+                if (rs.next())
+                    res = rs.getInt(1);
+
+                stmt.close();
+                conn.close();
+                return re;
+            }
+        } catch (SQLException e) {
+            System.err.println("Database access error: " + e.getMessage());
+        }
+        return null;
+    }
 }

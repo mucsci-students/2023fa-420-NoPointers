@@ -114,25 +114,11 @@ public class Controller {
     }
 
 
-    //public void NewPuzzle(ActionEvent e)
-    //{
-
-
-
-        //gameState.newRandomPuzzle();
-        //String word = new String(gameState.getLetters());
-       // setButtons();
-        //foundWords.clear();
-    //}
     public void NewPuzzle(ActionEvent e)
     {
-
+        // Create a new puzzle via the New button with a NewPuzzle command.
         executeCommand(new NewPuzzleCommand(this, gameState));
 
-        //gameState.newRandomPuzzle();
-        //String word = new String(gameState.getLetters());
-        //setButtons();
-        //foundWords.clear();
     }
 
     public void setHelp(ActionEvent e)

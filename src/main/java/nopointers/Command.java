@@ -9,11 +9,11 @@ public abstract class Command {
     Command (Controller controller, GameState gameState) {
         this.controller = controller;
         this.gameState = gameState;
-        //this.puzzle = puzzle;
+
     }
 
     void backup() {
-        //memento = puzzle.saveToMemento();
+
         memento = gameState.getMemento();
     }
 

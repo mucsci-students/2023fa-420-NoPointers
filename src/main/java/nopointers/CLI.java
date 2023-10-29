@@ -107,6 +107,10 @@ public class CLI {
                     System.out.println("Invalid Pangram!");
                 }
                 break;
+            case "hints":
+                String res = gameState.hints();
+                System.out.print(res);
+                break;
             default:
                 System.out.println(command + ": Unknown Command");
         }

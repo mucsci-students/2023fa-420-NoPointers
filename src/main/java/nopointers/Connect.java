@@ -72,7 +72,7 @@ public class Connect {
             }
         } catch (SQLException e) {
             // Database access error
-            return null;
+            return wordList;
         }
         return wordList;
     }

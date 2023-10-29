@@ -279,11 +279,13 @@ public class Connect {
 
                 stmt.close();
                 conn.close();
-                return re;
+                return res;
             }
         } catch (SQLException e) {
             System.err.println("Database access error: " + e.getMessage());
         }
         return null;
     }
+
+    
 }

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class Controller {
 
     private GameState gameState;
-
+    private CommandHistory history = new CommandHistory();
 
     @FXML
     TextField input = new TextField();
@@ -86,6 +86,8 @@ public class Controller {
     @FXML
     Button quit = new Button();
 
+    Controller controller = this;
+
     public Controller() {
         this.gameState = new GameState();
     }
@@ -112,15 +114,25 @@ public class Controller {
     }
 
 
+    //public void NewPuzzle(ActionEvent e)
+    //{
+
+
+
+        //gameState.newRandomPuzzle();
+        //String word = new String(gameState.getLetters());
+       // setButtons();
+        //foundWords.clear();
+    //}
     public void NewPuzzle(ActionEvent e)
     {
 
+        executeCommand(new NewPuzzleCommand(this, gameState));
 
-
-        gameState.newRandomPuzzle();
-        String word = new String(gameState.getLetters());
-        setButtons();
-        foundWords.clear();
+        //gameState.newRandomPuzzle();
+        //String word = new String(gameState.getLetters());
+        //setButtons();
+        //foundWords.clear();
     }
 
     public void setHelp(ActionEvent e)
@@ -241,6 +253,20 @@ public class Controller {
 
     }
 
+    private void executeCommand (Command command) {
+        if (command.execute()) {
+            history.push(command);
+        }
+    }
 
+    private void undo() {
+        if (history.isEmpty()) {
+            return;
+        }
+        Command command = history.pop();
+        if (command != null) {
+            command.undo();
+        }
+    }
 
 }

@@ -22,7 +22,7 @@ public class GameState {
     private Puzzle puzzle;
     private Database database;
 
-    public GameState() {
+    private GameState(GameStateBuilder builder) {
         this.puzzle = new Puzzle();
         database = Database.getInstance();
     }
@@ -225,6 +225,22 @@ public class GameState {
             System.out.println("No Save Found");
             return false;
         }
+    }
+
+    // Builder implementation for GameState
+    public static class GameStateBuilder {
+        private Puzzle puzzle;
+        private Database database;
+
+        public GameStateBuilder(Database database) {
+            this.puzzle = new Puzzle();
+            this.database = database;
+        }
+
+        public GameState build() {
+            return new GameState(this);
+        }
+
     }
 
 

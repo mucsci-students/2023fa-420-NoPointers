@@ -30,7 +30,10 @@ public class CLI {
     private GameState gameState;
 
     public CLI() {
-        gameState = new GameState();
+        //gameState = new GameState();
+        //gameState = new GameState.GameStateBuilder(Database.getInstance());
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        gameState = builder.build();
         this.scanner = new Scanner(System.in);
         start(scanner);
         scanner.close();

@@ -29,7 +29,9 @@ class GameStateTest {
      */
     @BeforeEach
     public void generate () {
-        gameState = new GameState();
+        //gameState = new GameState();
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        gameState = builder.build();
         gameState.newRandomPuzzle();
     }
 
@@ -40,7 +42,9 @@ class GameStateTest {
     @Test
     @DisplayName("Ensure a guess returns the correct GuessOutcome enum value")
     public void testGuess () {
-        gameState = new GameState();
+        //gameState = new GameState();
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        gameState = builder.build();
         assertEquals(gameState.guess("t"), GuessOutcome.EMPTY_INPUT, "Puzzle not initialized.");
         gameState.newRandomPuzzle();
         assertEquals(gameState.guess("t"), GuessOutcome.TOO_SHORT, "Guess is too short");

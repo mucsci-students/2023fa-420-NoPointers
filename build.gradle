@@ -25,6 +25,8 @@ jar {
 group 'com.example'
 version '1.0-SNAPSHOT'
 
+apply plugin: 'jacoco'
+
 repositories {
     mavenCentral()
 }
@@ -81,11 +83,18 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
 }
 
+jacoco {
+    reportsDir = file("./coverageReport")
+}
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport
 }
 jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
     dependsOn test // tests are required to run before generating the report
 }
 

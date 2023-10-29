@@ -67,4 +67,19 @@ class GameStateTest {
         gameState.shuffle();
         assertFalse (Arrays.equals (beforeShuffle, gameState.getLetters()), "Letters should be in a new shuffled order");
     }
+
+
+    @Test
+    public void testLoadPuzzle () {
+
+    }
+
+    @Test
+    public void newRandomPuzzle () {
+        gameState = new GameState();
+        gameState.newRandomPuzzle();
+        assertTrue (gameState.hasPuzzle(), "When generating a new random puzzle, the game state should have a non-null puzzle.");
+    }
+
+
 }

@@ -1,0 +1,3 @@
+ignore:
+  - "src/main/java/nopointers/Main.java"
+  - "src/main/java/nopointers/CLI.java"

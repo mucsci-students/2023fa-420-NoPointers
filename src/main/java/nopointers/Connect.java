@@ -71,7 +71,8 @@ public class Connect {
                 conn.close();
             }
         } catch (SQLException e) {
-            System.err.println("Database creation error: " + e.getMessage());
+            // Database access error
+            return null;
         }
         return wordList;
     }
@@ -94,7 +95,8 @@ public class Connect {
                 return isPangram;
             }
         } catch (SQLException e) {
-            System.err.println("Database access error: " + e.getMessage());
+            // Database access error
+            return false;
         }
         return false;
     }
@@ -169,95 +171,9 @@ public class Connect {
                 return arr;
             }
         } catch (SQLException e) {
-            System.err.println("Database access error: " + e.getMessage());
+            // Database access error
+            return null;
         }
         return null;
-    }
-
-    public static void search(int size, String letters) {
-        String url = "jdbc:sqlite:words.db";
-
-        try {
-            // Create a connection to the database
-            Connection conn = DriverManager.getConnection(url);
-
-            /*Function.create(conn, "REGEXP", new Function() {
-                @Override
-                protected void xFunc() throws SQLException {
-                    String expression = value_text(0);
-                    String value = value_text(1);
-
-                    if (value == null)
-                        value = "";
-
-                    Pattern pattern = Pattern.compile(expression);
-                    boolean b = pattern.matcher(value).find();
-
-                    result(b ? 1 : 0);
-                }
-            });*/
-
-            if (conn != null) {
-                Statement stmt;
-
-                stmt = conn.createStatement();
-                String SQLQuery = letters;
-
-                ResultSet rs = stmt.executeQuery(letters);
-                int count = 0;
-                while (rs.next()) {
-                    System.out.print(rs.getString(1) + ", ");
-                    ++count;
-                }
-                System.out.print(count);
-                stmt.close();
-
-                conn.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("Database creation error: " + e.getMessage());
-        }
-
-    }
-
-    public static boolean access(String word) {
-        // Database URL
-        String url = "jdbc:sqlite:words.db";
-        int size = word.length();
-
-        boolean res = false;
-        try {
-            // Create a connection to the database
-            Connection conn = DriverManager.getConnection(url);
-            if (conn != null) {
-                res = findWord(size, word, conn);
-
-                conn.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("Database creation error: " + e.getMessage());
-            return false;
-        }
-        return res;
-    }
-
-    public static boolean findWord(int size, String wordString, Connection conn) {
-        if (size < 4) {
-            return false;
-        }
-
-        Statement stmt;
-        try {
-            stmt = conn.createStatement();
-            String SQLQuery = "SELECT * FROM " + numToWords[size] + "words WHERE word = \"" + wordString + "\";";
-            ResultSet rs = stmt.executeQuery(SQLQuery);
-            boolean found = rs.next();
-            stmt.close();
-            return found;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            // e.printStackTrace();
-            return false;
-        }
     }
 }

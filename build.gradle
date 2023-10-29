@@ -1,3 +1,4 @@
+
 plugins {
     id 'java'
     id 'application'
@@ -5,6 +6,7 @@ plugins {
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
+
 }
 run
         {
@@ -55,6 +57,7 @@ dependencies {
     implementation (group: 'org.openjfx', name: 'javafx-controls', version: '22-ea+11')
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
+                exclude group: 'org.jline'
             }
     implementation('org.xerial:sqlite-jdbc:3.43.0.0')
             {
@@ -63,23 +66,35 @@ dependencies {
     implementation('com.github.cliftonlabs:json-simple:4.0.1')
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
+                exclude group: 'org.jline'
             }
     implementation ('org.json:json:20230227')
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
             }
 
-    implementation 'org.jline:jline:3.23.0'
+    implementation (group: 'org.jline', name: 'jline', version: '3.21.0')
+
+
+    implementation (group: 'org.fusesource.jansi', name: 'jansi', version: '2.4.0')
+    {
+
+    }
+
+
+
+
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
+                exclude group: 'org.jline'
             }
 
-    // https://mavenlibs.com/maven/dependency/org.fusesource.jansi/jansi
-    implementation 'org.fusesource.jansi:jansi:2.4.0'
+
+
 
     implementation 'org.kordamp.ikonli:ikonli-javafx:12.3.1'
     implementation 'io.github.palexdev:materialfx:11.16.1'

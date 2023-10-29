@@ -1,16 +1,18 @@
 package nopointers;
 
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-
-import org.jline.reader.*;
+import org.jline.reader.Highlighter;
+import org.jline.reader.History;
+import org.jline.reader.LineReader;
+import org.jline.reader.ParsedLine;
 import org.jline.reader.impl.LineReaderImpl;
 import org.jline.reader.impl.completer.AggregateCompleter;
-import org.jline.reader.impl.completer.StringsCompleter;
 import org.jline.terminal.Terminal;
-import org.jline.terminal.TerminalBuilder;
+
+import java.io.IOException;
+import java.util.Scanner;
+
+import static org.jline.terminal.TerminalBuilder.builder;
 
 
 
@@ -20,14 +22,15 @@ import org.jline.terminal.TerminalBuilder;
  * @
  */
 public class CLI {
-    private LineReader reader;
+    private LineReaderImpl reader;
     private Terminal terminal;
     private ParsedLine parser;
     private History history;
     private Highlighter highlighter;
-
     //private Puzzle puzzle;
     private GameState gameState;
+
+    public Scanner sc = new Scanner(System.in);
 
     public CLI() throws IOException {
         gameState = new GameState();
@@ -42,13 +45,14 @@ public class CLI {
         intro();
 
         try {
-            terminal = TerminalBuilder.builder().system(true).build();
-            AggregateCompleter comp = new AutoCompleter().updateCompleter();
-            reader = LineReaderBuilder.builder().terminal(terminal).completer(comp).highlighter(highlighter).history(history).variable(LineReader.MENU_COMPLETE, true).build();
-        } catch (IOException e) {
-            System.out.println(e);
-        }
 
+            terminal = builder().system(true).jansi(true).jna(false).exec(false).dumb(false).build();
+            AggregateCompleter comp = new AutoCompleter().updateCompleter();
+            reader = new LineReaderImpl(terminal);
+            reader.setCompleter(comp);
+        } catch (IOException e) {
+            System.out.println("Terminal Error!");
+        }
 
         while (true) {
             System.out.print(">");

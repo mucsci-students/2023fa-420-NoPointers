@@ -109,16 +109,6 @@ public class Puzzle {
         maxScore = calculateMaxScore ();
     }
 
-    public static Puzzle fromJsonObject(JsonObject jo) {
-        String requiredLetter = (String) jo.get("required letter");
-        char reql = requiredLetter.charAt(0);
-        char[] letters = jo.get("letters used").toString().toCharArray();
-
-        ArrayList<String> guessed = (ArrayList<String>)jo.get("Guessed Words");
-        return new Puzzle(reql, letters, guessed);
-
-    }
-
     private ArrayList<Character> findVowels () {
         ArrayList<Character> found = new ArrayList<>();
         char[] vowels = {'a', 'e', 'i', 'o', 'u'};

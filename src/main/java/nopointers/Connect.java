@@ -284,7 +284,7 @@ public class Connect {
         } catch (SQLException e) {
             System.err.println("Database access error: " + e.getMessage());
         }
-        return null;
+        return 0;
     }
     
     public static int countPerfectPangrams() {

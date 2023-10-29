@@ -89,7 +89,9 @@ public class Controller {
     Controller controller = this;
 
     public Controller() {
-        this.gameState = new GameState();
+        //this.gameState = new GameState();
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        this.gameState = builder.build();
     }
 
     public void quit(ActionEvent e)

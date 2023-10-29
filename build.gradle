@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'application'
+    id 'java-library'
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
@@ -8,6 +9,7 @@ plugins {
 run
         {
             standardInput = System.in
+            args = ["cli"]
 
         }
 jar {
@@ -49,6 +51,7 @@ javafx {
 }
 
 dependencies {
+
     implementation (group: 'org.openjfx', name: 'javafx-controls', version: '22-ea+11')
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
@@ -65,13 +68,18 @@ dependencies {
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
             }
+
     implementation 'org.jline:jline:3.23.0'
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
             }
+
+    // https://mavenlibs.com/maven/dependency/org.fusesource.jansi/jansi
+    implementation 'org.fusesource.jansi:jansi:2.4.0'
 
     implementation 'org.kordamp.ikonli:ikonli-javafx:12.3.1'
     implementation 'io.github.palexdev:materialfx:11.16.1'

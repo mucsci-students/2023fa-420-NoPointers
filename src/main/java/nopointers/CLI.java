@@ -2,22 +2,15 @@ package nopointers;
 
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import org.jline.reader.impl.LineReaderImpl;
+import org.jline.reader.impl.completer.StringsCompleter;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 
 
-import com.github.cliftonlabs.json_simple.JsonArray;
-//import com.github.cliftonlabs.json_simple.JsonException;
-import com.github.cliftonlabs.json_simple.JsonObject;
-import com.github.cliftonlabs.json_simple.Jsoner;
-
-
-
-
-import java.util.concurrent.TimeUnit;
 /**
  *
  * @author Christian Michel
@@ -25,32 +18,34 @@ import java.util.concurrent.TimeUnit;
  */
 public class CLI {
 
-    private Scanner scanner;
+
     //private Puzzle puzzle;
     private GameState gameState;
 
-    public CLI() {
+    public CLI() throws IOException {
         gameState = new GameState();
-        this.scanner = new Scanner(System.in);
-        start(scanner);
-        scanner.close();
-
-    }
+        start();
+        }
 
     /**
-     *
-     * @param sc A scanner that will take input from system.in
+     * Launches the pari
+     * @throws IOException
      */
-    public void start(Scanner sc) {
-        boolean isRun = true;
+    public void start() throws IOException {
         intro();
-        while (isRun) {
-            System.out.print("> ");
-            String command = sc.nextLine().toLowerCase().trim();
+
+        Terminal terminal = TerminalBuilder.terminal();
+        ArrayList<String> commands = new ArrayList<String>(Arrays.asList("new","custom","show","guess","shuffle","load","help","exit"));
+        StringsCompleter completer = new StringsCompleter(commands);
+        LineReaderImpl reader = new LineReaderImpl(terminal);
+        reader.setCompleter(completer);
+
+        while (true) {
+            System.out.print(">");
+            String command = reader.readLine().toLowerCase();
             parser(command);
-            System.out.flush();
+            }
         }
-    }
 
     /**
      *
@@ -67,15 +62,12 @@ public class CLI {
                 System.out.println("Please enter a command");
                 break;
             case "show":
-
                 showPuzzle();
                 break;
             case "save":
-
                 gameState.savePuzzle();
                 break;
             case "guess":
-
                 GuessOutcome outcome = gameState.guess(args[1]);
                 handleOutcome(outcome);
                 break;
@@ -87,12 +79,11 @@ public class CLI {
                 rules();
                 break;
             case "load":
-                //load(getdefaultPath());
                 gameState.loadPuzzle();
                 break;
             case "new":
-                //newPuzzle();
                 gameState.newRandomPuzzle();
+                showPuzzle();
                 break;
             case "help":
                 commands();
@@ -187,7 +178,6 @@ public class CLI {
 
 
     private void intro() {
-        System.out.println("\033[34;1m");
         System.out.println("\t ▄█     █▄   ▄██████▄     ▄████████ ████████▄        ▄█     █▄   ▄█   ▄███████▄     ▄████████    ▄████████ ████████▄     ▄████████ \n"
                 + "\t███     ███ ███    ███   ███    ███ ███   ▀███      ███     ███ ███  ██▀     ▄██   ███    ███   ███    ███ ███   ▀███   ███    ███ \n"
                 + "\t███     ███ ███    ███   ███    ███ ███    ███      ███     ███ ███▌       ▄███▀   ███    ███   ███    ███ ███    ███   ███    █▀  \n"

@@ -92,6 +92,8 @@ public class Controller {
     @FXML
     Button quit = new Button();
 
+    @FXML
+    Button g = new Button();
     public Controller() {
         this.gameState = new GameState();
     }
@@ -117,6 +119,7 @@ public class Controller {
         }
 
     }
+
 
 
     public void NewPuzzle(ActionEvent e)
@@ -148,7 +151,6 @@ public class Controller {
             help.setVisible(false);
         }
     }
-
 
     @FXML
     private void handleButtonClick(ActionEvent event) {

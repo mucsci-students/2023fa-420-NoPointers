@@ -20,11 +20,12 @@ public class Main extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Word Wizards");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         if(args != null) {
             if (args.length > 0 && args[0].equalsIgnoreCase("cli")) {
                 commandLine();
@@ -35,8 +36,8 @@ public class Main extends Application {
 
     }
 
-    public static void commandLine()
-    {
+    public static void commandLine() throws IOException {
+
         CLI c = new CLI();
 
         Platform.exit();

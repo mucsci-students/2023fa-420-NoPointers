@@ -20,9 +20,11 @@ import java.util.concurrent.TimeUnit;
 public class GameState {
     // Fields
     private Puzzle puzzle;
+    private Database database;
 
     public GameState() {
         this.puzzle = new Puzzle();
+        database = Database.getInstance();
     }
 
 
@@ -72,7 +74,7 @@ public class GameState {
         if (input == null || input.length() < 7) {
             return false;
 
-        } else if (Connect.checkPangram(input)) {
+        } else if (database.checkPangram(input)) {
             newPuzzleBase(input);
             puzzle.shuffleLetters();
             return true;

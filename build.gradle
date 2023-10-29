@@ -83,9 +83,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
 }
 
-jacoco {
-    reportsDir = file("./coverageReport")
-}
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport

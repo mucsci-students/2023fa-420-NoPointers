@@ -45,15 +45,16 @@ public class GameState {
     }
 
     // Save method for controllers to call on.
-    public void savePuzzle () {
+    public boolean savePuzzle () {
         if (puzzle != null) {
             //memento.save();
             save();
             System.out.println("Puzzle Saved!");
-
+            return true;
         }
         else {
             System.out.println("No Puzzle to Save");
+            return false;
         }
     }
 
@@ -68,7 +69,7 @@ public class GameState {
 
     // Create new puzzle from user input method to be called on by controllers
     public boolean newUserPuzzle(String input) {
-        if (input.length() < 2 || input == null || input.length() < 7) {
+        if (input == null || input.length() < 7) {
             return false;
 
         } else if (Connect.checkPangram(input)) {
@@ -81,10 +82,6 @@ public class GameState {
 
     public char requiredLetter() {
         return puzzle.getRequiredLetter();
-    }
-
-    public char[] letters() {
-        return puzzle.getLetters();
     }
 
     public ArrayList<String> guessed() {

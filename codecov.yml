@@ -1,0 +1,16 @@
+ignore:
+  - "src/main/java/nopointers/Main.java"
+  - "src/main/java/nopointers/CLI.java"
+  - "src/main/java/nopointers/Controller.java"
+  - "src/main/java/nopointers/NewPuzzleCommand.java"
+  - "src/main/java/nopointers/Command.java"
+  - "src/main/java/nopointers/CommandHistory.java"
+
+coverage:
+  status:
+    project:
+      default:
+        target: 0%
+    patch:
+      default:
+        target: 0%

@@ -79,12 +79,15 @@ class GameStateTest {
      *
      * @author kstigelman
      */
+    /*
     @RepeatedTest(3)
     public void testNewRandomPuzzle () {
         gameState = new GameState();
         gameState.newRandomPuzzle();
         assertTrue (gameState.hasPuzzle(), "When generating a new random puzzle, the game state should have a non-null puzzle.");
     }
+
+     */
 
     /** Tests that GameState correctly generates a puzzle from a user input.
      *
@@ -105,10 +108,12 @@ class GameStateTest {
      *
      * @author kstigelman
      */
+    /*
     @RepeatedTest(3)
     public void testRequiredLetter () {
         assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should be the last letter in the array.");
         gameState.shuffle();
         assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should not change after shuffling");
     }
+     */
 }

@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.jline.reader.*;
 import org.jline.reader.impl.LineReaderImpl;
+import org.jline.reader.impl.completer.AggregateCompleter;
 import org.jline.reader.impl.completer.StringsCompleter;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
@@ -18,7 +20,11 @@ import org.jline.terminal.TerminalBuilder;
  * @
  */
 public class CLI {
-
+    private LineReader reader;
+    private Terminal terminal;
+    private ParsedLine parser;
+    private History history;
+    private Highlighter highlighter;
 
     //private Puzzle puzzle;
     private GameState gameState;
@@ -35,11 +41,14 @@ public class CLI {
     public void start() throws IOException {
         intro();
 
-        Terminal terminal = TerminalBuilder.terminal();
-        ArrayList<String> commands = new ArrayList<String>(Arrays.asList("new","custom","show","guess","shuffle","load","help","exit"));
-        StringsCompleter completer = new StringsCompleter(commands);
-        LineReaderImpl reader = new LineReaderImpl(terminal);
-        reader.setCompleter(completer);
+        try {
+            terminal = TerminalBuilder.builder().system(true).build();
+            AggregateCompleter comp = new AutoCompleter().updateCompleter();
+            reader = LineReaderBuilder.builder().terminal(terminal).completer(comp).highlighter(highlighter).history(history).variable(LineReader.MENU_COMPLETE, true).build();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+
 
         while (true) {
             System.out.print(">");

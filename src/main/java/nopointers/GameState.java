@@ -21,7 +21,9 @@ public class GameState {
     // Fields
     private Puzzle puzzle;
 
-
+    public GameState() {
+        this.puzzle = new Puzzle();
+    }
 
 
     // Guess method to be called on by controller. Calls on puzzle's guessWord method.
@@ -93,6 +95,9 @@ public class GameState {
         return (puzzle != null);
     }
 
+    public Puzzle.Memento getMemento() {return puzzle.saveToMemento();}
+
+    public void restoreFromMemento(Puzzle.Memento m) {puzzle.restoreFromMemento(m);}
 
     public char[] getLetters() {
         return puzzle.getLetters();

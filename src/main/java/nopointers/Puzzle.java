@@ -3,6 +3,7 @@ package nopointers;
 import java.io.File;
 import java.util.ArrayList;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
@@ -57,18 +58,17 @@ public class Puzzle {
     private int score;
     //private final int maxScore;
     private int maxScore;
+    private Database database;
 
     // Builder (New puzzle)
     public Puzzle() {
+        database = Database.getInstance();
 
-        char[] pangram = Connect.selectPangram();
-
-
-        this.letters = pangram;
+        this.letters = database.selectPangram();
         this.guessed = new ArrayList<>();
         this.validWords = new ArrayList<>();
         requiredLetter = selectRequiredLetter();
-        validWords = Connect.getWords(letters);
+        validWords = database.getWords(letters);
 
         score = 0;
         maxScore = calculateMaxScore ();
@@ -76,12 +76,13 @@ public class Puzzle {
     }
 
     public Puzzle(char requiredLetter, char[] letters, ArrayList<String> guessed) {
+        database = Database.getInstance();
         this.requiredLetter = requiredLetter;
-        this.letters = Connect.convertToArray(letters);
+        this.letters = database.convertToArray(letters);
         this.guessed = guessed;
 
 
-        this.validWords = Connect.getWords(letters);
+        this.validWords = database.getWords(letters);
 
         score = 0;
         maxScore = calculateMaxScore ();
@@ -89,7 +90,8 @@ public class Puzzle {
 
     //Build puzzle with a selected required letter. Used only for test purposes.
     public Puzzle(String baseWord, char requiredLetter) {
-        letters = Connect.convertToArray(baseWord);
+        database = Database.getInstance();
+        letters = database.convertToArray(baseWord);
 
         int requiredIndex = 0;
         for (int i = 0; i < 7; ++i) {
@@ -106,7 +108,7 @@ public class Puzzle {
         this.guessed = new ArrayList<String>();
         this.validWords = new ArrayList<String>();
 
-        validWords = Connect.getWords(letters);
+        validWords = database.getWords(letters);
 
         score = 0;
         maxScore = calculateMaxScore ();
@@ -114,13 +116,14 @@ public class Puzzle {
 
     // Builder using input from user (New puzzle from base)
     public Puzzle(String input) {
+        database = Database.getInstance();
         validWords = new ArrayList<>();
         // Take 6 non-requited letters from input
         // Take requiredLetter from input Have user specify what is required letter?
         // Or just make a system like having the last letter be the requited letter?
-        this.letters = Connect.convertToArray(input);
+        this.letters = database.convertToArray(input);
         this.requiredLetter = selectRequiredLetter();
-        validWords = Connect.getWords(letters);
+        validWords = database.getWords(letters);
         this.guessed = new ArrayList<>();
 
         score = 0;
@@ -271,7 +274,7 @@ public class Puzzle {
             int points = word.length();
             if (points == 4)
                 points = 1;
-            if (Connect.checkPangram(word))
+            if (database.checkPangram(word))
                 points += 7;
             total += points;
         }
@@ -282,7 +285,7 @@ public class Puzzle {
         if (points == 4)
             points = 1;
 
-        if (Connect.checkPangram(guess))
+        if (database.checkPangram(guess))
             points += 7;
 
         return points;

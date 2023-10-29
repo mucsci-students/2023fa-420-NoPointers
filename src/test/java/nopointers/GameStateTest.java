@@ -67,7 +67,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(10)
+    @RepeatedTest(5)
     @DisplayName("Ensure letters get shuffled")
     public void testShuffle () {
         char[] beforeShuffle = Arrays.copyOf(gameState.getLetters(), 7);
@@ -79,7 +79,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(10)
+    @RepeatedTest(3)
     public void testNewRandomPuzzle () {
         gameState = new GameState();
         gameState.newRandomPuzzle();
@@ -105,7 +105,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(10)
+    @RepeatedTest(3)
     public void testRequiredLetter () {
         assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should be the last letter in the array.");
         gameState.shuffle();

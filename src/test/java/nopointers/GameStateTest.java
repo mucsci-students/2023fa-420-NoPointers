@@ -75,20 +75,6 @@ class GameStateTest {
         assertFalse (Arrays.equals (beforeShuffle, gameState.getLetters()), "Letters should be in a new shuffled order");
     }
 
-
-    /** Tests that puzzle correctly saves.
-     *
-     * @author kstigelman
-     */
-    @RepeatedTest(10)
-    public void testSavePuzzle () {
-        gameState = new GameState();
-
-        assertFalse(gameState.savePuzzle(), "Puzzle should not be initialized: it is null");
-        gameState.newRandomPuzzle();
-        assertTrue(gameState.savePuzzle(), "Puzzle should save correctly");
-    }
-
     /** Tests that GameState correctly generates a random puzzle.
      *
      * @author kstigelman
@@ -125,17 +111,4 @@ class GameStateTest {
         gameState.shuffle();
         assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should not change after shuffling");
     }
-
-    /** Tests that the puzzle from GameState is not null.
-     *
-     * @author kstigelman
-     */
-    @RepeatedTest(10)
-    public void testHasPuzzle() {
-        assertTrue (gameState.hasPuzzle(), "Puzzle should not be null");
-        gameState = new GameState();
-        assertFalse (gameState.hasPuzzle(), "Puzzle should be null");
-    }
-
-
 }

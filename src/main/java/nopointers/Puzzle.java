@@ -193,47 +193,13 @@ public class Puzzle {
             addCorrectWord(guess);
             return GuessOutcome.SUCCESS;
         }
-        boolean foundRequired = false;
-        for (int i = 0; i < guess.length(); ++i) {
-            if (guess.charAt(i) == requiredLetter) {
-                foundRequired = true;
-                break;
-            }
-        }
-        if (!foundRequired) {
-
-            return GuessOutcome.MISSING_REQUIRED;
-        }
-
-        for (int i = 0; i < letters.length; ++i) {
-            boolean found = false;
-            for (int j = 0; j < guess.length(); ++j) {
-                if (guess.charAt(j) == letters[i]) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-
-                return GuessOutcome.INCORRECT;
-            }
-
-        }
-
-
-        return GuessOutcome.INCORRECT;
-
+        return GuessOutcome.MISSING_REQUIRED;
     }
 
     public char getRequiredLetter() {
         return this.requiredLetter;
     }
 
-
-
-    public void addGuess(String word) {
-        guessed.add(word);
-    }
 
     // Method to be called on from Shuffle Command. Shuffles the order of the
     // non-required letters.
@@ -250,9 +216,6 @@ public class Puzzle {
             letters[rand] = temp;
         }
     }
-
-
-
 
     public void displayRank () {
         System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " + ranks[getRank()]);
@@ -290,30 +253,12 @@ public class Puzzle {
 
         return points;
     }
-    public String toGSONObject()
-    {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        String json = gson.toJson(this);
-        return json;
-    }
 
-    public JSONObject toJsonObject() {
-        String used = "";
-        for (int i = 0; i < letters.length; ++i) {
-            used += letters[i];
-        }
-        JSONObject jo = new JSONObject();
-        String reqletter = "" + getRequiredLetter();
-        jo.put("required letter", reqletter);
-        jo.put("letters used", used);
-        jo.put("Guessed Words", getGuessed());
-        return jo;
-    }
     public String[] getRanks() {
         return ranks;
     }
 
-    public void setRanks(String[] ranks) {
+    /*public void setRanks(String[] ranks) {
         this.ranks = ranks;
     }
 
@@ -323,40 +268,42 @@ public class Puzzle {
 
     public void setLevels(int[] levels) {
         this.levels = levels;
-    }
+    }*/
 
     public ArrayList<String> getValidWords() {
         return validWords;
     }
-
+    /*
     public void setValidWords(ArrayList<String> validWords) {
         this.validWords = validWords;
-    }
+    }*/
 
     public int getScore() {
         return score;
     }
-
+    /*
     public void setScore(int score) {
         this.score = score;
     }
 
     public int getMaxScore() {
         return maxScore;
-    }
+    }*/
 
     public char[] getLetters() {
         return letters;
     }
 
+    /*
     public void setLetters(char[] letters) {
         this.letters = letters;
-    }
+    }*/
 
     public ArrayList<String> getGuessed() {
         return guessed;
     }
 
+    /*
     public void setGuessed(ArrayList<String> guessed) {
         this.guessed = guessed;
     }
@@ -366,7 +313,8 @@ public class Puzzle {
     public void setRequiredLetter(char requiredLetter) {
         this.requiredLetter = requiredLetter;
 
-    }
+    }*/
+
     public double getScorePercent () {
         return (double) score / maxScore;
     }
@@ -440,9 +388,13 @@ public class Puzzle {
             return requiredLetter;
         }
 
-        public ArrayList<String> getGuessed() {return guessed;}
+        public ArrayList<String> getGuessed() {
+            return guessed;
+        }
 
-        public char[] getLetters() {return letters;}
+        public char[] getLetters() {
+            return letters;
+        }
 
         public int getScore() {
             return score;

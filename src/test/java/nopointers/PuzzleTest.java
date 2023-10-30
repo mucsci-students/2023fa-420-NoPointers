@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -88,5 +89,33 @@ class PuzzleTest {
             puzzle.guessWord(s);
 
         assertEquals(1.0, puzzle.getScorePercent(), "Puzzle should have 100% at all words found");
+    }
+
+    /** Tests that the required letter is correct.
+     *
+     * @author kstigelman
+     */
+    @RepeatedTest(3)
+    @DisplayName("Ensure the required letter is correctly selected.")
+    public void testRequiredLetter () {
+        assertEquals(puzzle.getLetters()[6], puzzle.getRequiredLetter(), "The required letter should be the last letter in the array.");
+        puzzle.shuffleLetters();
+        assertEquals(puzzle.getLetters()[6], puzzle.getRequiredLetter(), "The required letter should not change after shuffling");
+    }
+
+    @RepeatedTest(5)
+    public void testMementoMethods () {
+        Puzzle.Memento memento = puzzle.saveToMemento();
+        char[] letters = memento.getLetters();
+        ArrayList<String> guessed = memento.getGuessed();
+        char requiredLetter = memento.getRequiredLetter();
+        int score = memento.getScore();
+
+        puzzle = new Puzzle ();
+        puzzle.restoreFromMemento(memento);
+        assertEquals(letters, puzzle.getLetters(), "Saved memento's letters should match the restored puzzle's letters.");
+        assertEquals(guessed, puzzle.getGuessed(), "Saved memento's guessed list should match the restored puzzle's guessed list.");
+        assertEquals(requiredLetter, puzzle.getRequiredLetter(), "Saved memento's required letter should match the restored puzzle's required letter.");
+        assertEquals(score, puzzle.getScore(), "Saved memento's score should match the restored puzzle's score.");
     }
 }

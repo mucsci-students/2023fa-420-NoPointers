@@ -83,6 +83,10 @@ class GameStateTest {
 
         assertEquals(gameState.guess(validWords.get(0)), GuessOutcome.SUCCESS, "Word should be a valid word.");
         assertEquals(gameState.guess(String.valueOf(gameState.getLetters()[0])), GuessOutcome.TOO_SHORT, "Word should be a valid word.");
+
+        Puzzle.Memento memento = gameState.getMemento();
+        assertEquals(memento.getGuessed(), gameState.guessed(), "The game state's guessed words and the memento's guessed words should be the same.");
+        assertEquals(memento.getScore(), gameState.getScore(), "The game state's score should match the memento's score.");
     }
 
     /** Tests that the order of letters successfully shuffles.
@@ -99,6 +103,9 @@ class GameStateTest {
         char[] beforeShuffle = Arrays.copyOf(gameState.getLetters(), 7);
         assertTrue (gameState.shuffle(), "New Puzzle should be created. Shuffle should succeed.");
         assertFalse (Arrays.equals (beforeShuffle, gameState.getLetters()), "Letters should be in a new shuffled order.");
+
+        Puzzle.Memento memento = gameState.getMemento();
+        assertEquals(memento.getLetters(), gameState.getLetters(), "The game state's letters and the memento's letters should be the same.");
     }
 
     /** Tests that GameState correctly generates a random puzzle.
@@ -133,11 +140,26 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(3)
+    @RepeatedTest(5)
     @DisplayName("Ensure the required letter is correctly selected.")
     public void testRequiredLetter () {
         assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should be the last letter in the array.");
         gameState.shuffle();
-        assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should not change after shuffling");
+        assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should not change after shuffling.");
+
+        Puzzle.Memento memento = gameState.getMemento();
+        assertEquals(memento.getRequiredLetter(), gameState.requiredLetter(), "The game state's required letter and the memento's required letter should be the same.");
+    }
+
+    /** Tests the game state's memento gson object.
+     *
+     * @author kstigelman
+     */
+    @RepeatedTest(10)
+    @DisplayName("Ensure memento's gson method produces a string")
+    public void testMementoGSON () {
+        Puzzle.Memento memento = gameState.getMemento();
+        assertNotNull(memento.toGSONObject(), "GSON should not be null.");
+        assertFalse(memento.toGSONObject().isBlank(), "GSON should not be blank.");
     }
 }

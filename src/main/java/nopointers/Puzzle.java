@@ -407,18 +407,20 @@ public class Puzzle {
     public String print(){
         StringBuilder res = new StringBuilder();
         res.append("Center letter is bold.\n\n");
-        res.append(Character.toString(requiredLetter));
-        for(int i = 0; i < letters.length; i++){
-	        res.append(Character.toString(letters[i]));
+        res.append("\u001B"+Character.toString(requiredLetter).toUpperCase() + " ");
+        for(int i = 0; i < 6; i++){
+	        res.append(Character.toString(letters[i]).toUpperCase());
             res.append(" ");
 	    }
         res.append("\n");
-        res.append("WORDS:" + validWords.size() + ",POINTS: " + Integer.toString(maxScore));//+ var
-        res.append("PANGRAMS: ");
+        res.append("WORDS:" + validWords.size() + ", POINTS: " + Integer.toString(maxScore));//+ var
+        res.append(", PANGRAMS: ");
 	    res.append(Connect.pangramCount());
+        /*
         if(Connect.countPerfectPangrams() > 0){
 	    res.append("(" + Connect.countPerfectPangrams() + "Perfect)");
         }
+        */
         res.append("\n\n" + buildMatrix(validWords) + "\n");
         res.append("Two letter list:\n");
         res.append(twoLetLst(validWords));
@@ -446,11 +448,11 @@ public class Puzzle {
         int row = matrix.length;
         int col = matrix[0].length;
         int num = 4;
-        for(int i = 1; i < row-2; i++){
+        for(int i = 1; i < col-1; i++){
             matrix[0][i] = String.valueOf(num);
             num++;
         }
-        for(int i = 1; i <= col; i++){
+        for(int i = 1; i < row-1; i++){
             matrix[i][0] = lettersArr[i-1].toUpperCase();
         }
         matrix = addColonsAndSum(matrix);
@@ -549,7 +551,7 @@ public class Puzzle {
      */
     public String[][] addColonsAndSum(String[][] matrix){
         matrix[matrix.length-1][0] = matrix[0][matrix[0].length-1] = "\u2211";
-        for(int i = 1; i <= matrix[0].length+1; i++){
+        for(int i = 1; i < matrix.length; i++){
             matrix[i][0] = matrix[i][0] + ":";
         }
         return matrix;

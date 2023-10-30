@@ -300,7 +300,7 @@ public class Connect {
                 ResultSet rs = stmt.executeQuery(sql);
     
                 while (rs.next()) {
-                    String pangramText = rs.getString("pangram_text");
+                    String pangramText = rs.getString("pangram");
                     if (isPerfectPangram(pangramText)) {
                         perfectPangramCount++;
                     }

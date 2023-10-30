@@ -87,7 +87,9 @@ public class Controller {
     Button quit = new Button();
 
     @FXML
-    Button hints = new Button();
+    Button hintsButton = new Button();
+    @FXML
+    TextArea hintsBox = new TextArea();
 
     public Controller() {
         this.gameState = new GameState();
@@ -243,8 +245,15 @@ public class Controller {
         }
 
     }
-    public String hints(ActionEvent e){
-        return gameState.hints();
+
+
+    public void hintsf(ActionEvent e){
+        if(hintsBox.isVisible()){
+            hintsBox.setVisible(false);
+        }
+        String res = gameState.hints();
+        hintsBox.setText(gameState.hints());
+        hintsBox.setVisible(true);
     }
 
 

@@ -20,35 +20,35 @@ import java.util.concurrent.TimeUnit;
 public class GameState {
     // Fields
     private Puzzle puzzle;
+    private Database database;
+
+    private GameState(GameStateBuilder builder) {
+        this.puzzle = new Puzzle();
+        database = Database.getInstance();
+    }
 
 
     // Guess method to be called on by controller. Calls on puzzle's guessWord method.
     public GuessOutcome guess (String input) {
-        if (puzzle == null) {
-
-            return GuessOutcome.EMPTY_INPUT;
-
-        }
-        else if (input.isBlank() || input.length() < 4) {
+        if (input.isBlank() || input.length() < 4) {
 
             return GuessOutcome.TOO_SHORT;
 
         }
-
          return puzzle.guessWord(input);
-
-
     }
 
     // Save method for controllers to call on.
-    public void savePuzzle () {
+    public boolean savePuzzle () {
         if (puzzle != null) {
+            //memento.save();
             save();
             System.out.println("Puzzle Saved!");
-
+            return true;
         }
         else {
             System.out.println("No Puzzle to Save");
+            return false;
         }
     }
 
@@ -63,10 +63,9 @@ public class GameState {
 
     // Create new puzzle from user input method to be called on by controllers
     public boolean newUserPuzzle(String input) {
-        if (input.length() < 2 || input == null || input.length() < 7) {
+        if (input.length() < 7) {
             return false;
-
-        } else if (Connect.checkPangram(input)) {
+        } else if (database.checkPangram(input)) {
             newPuzzleBase(input);
             puzzle.shuffleLetters();
             return true;
@@ -78,10 +77,6 @@ public class GameState {
         return puzzle.getRequiredLetter();
     }
 
-    public char[] letters() {
-        return puzzle.getLetters();
-    }
-
     public ArrayList<String> guessed() {
         return puzzle.getGuessed();
     }
@@ -90,6 +85,9 @@ public class GameState {
         return (puzzle != null);
     }
 
+    public Puzzle.Memento getMemento() {return puzzle.saveToMemento();}
+
+    public void restoreFromMemento(Puzzle.Memento m) {puzzle.restoreFromMemento(m);}
 
     public char[] getLetters() {
         return puzzle.getLetters();
@@ -103,24 +101,13 @@ public class GameState {
 
     // Shuffle method
     public void shuffle() {
-        if (puzzle == null) {
-            System.out.println("No puzzle to shuffle!");
-
-        }
         puzzle.shuffleLetters();
     }
 
     // Rank method
     public void rank() {
-        if(puzzle != null)
-        {
-            puzzle.displayRank();
-
-        }
-        System.out.println("No puzzle to rank!");
+        puzzle.displayRank();
     }
-
-
 
     /**
      * @precondtion If the user has no puzzle generated a new puzzle is generated.
@@ -141,7 +128,7 @@ public class GameState {
     /**
      * Displays a loading animation on our terminal.
      */
-    void time() {
+    private void time() {
         for (int i = 0; i < 100; ++i) {
             try {
                 TimeUnit.MILLISECONDS.sleep(1);
@@ -161,7 +148,7 @@ public class GameState {
         //  Auto-generated method stub
         System.out.println("Generating New Puzzle...");
         time();
-        this.puzzle = new Puzzle(input);
+        puzzle = new Puzzle(input);
         System.out.println("\nNew Puzzle Generated!");
     }
 
@@ -171,22 +158,23 @@ public class GameState {
     /**
      * @precondtion The user has a puzzle to save in the first place.
      *
-     * @param path The path we want to save the puzzle to.
-     *
-     *             Saves the users current puzzle to a path if the path is valid.
+     * Saves the users current puzzle to a path if the path is valid.
      *
      * @postcondition The users puzzle is saved to the given path.
      */
-    private void save() {
+
+    public void save() {
 
         if(puzzle != null)
         {
-            String s = new String(puzzle.toGSONObject());
+            // Save current puzzle to a Memento.
+            Puzzle.Memento m = puzzle.saveToMemento();
+            String s = new String(m.toGSONObject());
             String home = System.getProperty("user.home");
 
             System.out.println(s);
             try {
-                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE);
+                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             } catch (IOException error) {
                 throw new RuntimeException(error);
             }
@@ -196,19 +184,47 @@ public class GameState {
 
     /**
      *
-     * @param path Loads the saved puzzle from a JSON file from the given path.
+     * Loads the saved puzzle from a JSON file from the given path.
      */
-    private boolean load() {
+
+    public boolean load() {
         String home = System.getProperty("user.home");
         Path path = Paths.get(home).resolve("puzzle.json");
         try {
             Gson gson = new Gson();
             String json = new String(Files.readAllBytes(path));
-            puzzle = gson.fromJson(json, Puzzle.class);
+            // Load json to a Memento
+            Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
+            puzzle = new Puzzle();
+            // Make current puzzle's fields to those of the saved Memento
+            puzzle.restoreFromMemento(m); 
             return true;
         } catch (IOException err) {
             System.out.println("No Save Found");
             return false;
         }
     }
+
+
+    public String hints(){
+        String res = puzzle.print();
+        return res;
+    }
+
+    // Builder implementation for GameState
+    public static class GameStateBuilder {
+        private Puzzle puzzle;
+        private Database database;
+
+        public GameStateBuilder(Database database) {
+            this.puzzle = new Puzzle();
+            this.database = database;
+        }
+
+        public GameState build() {
+            return new GameState(this);
+        }
+
+    }
+
 }

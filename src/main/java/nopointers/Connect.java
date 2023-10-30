@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+
 public class Connect {
     public static String[] numToWords = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
             "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen" };
@@ -71,7 +72,8 @@ public class Connect {
                 conn.close();
             }
         } catch (SQLException e) {
-            System.err.println("Database creation error: " + e.getMessage());
+            // Database access error
+            return wordList;
         }
         return wordList;
     }
@@ -94,12 +96,15 @@ public class Connect {
                 return isPangram;
             }
         } catch (SQLException e) {
-            System.err.println("Database access error: " + e.getMessage());
+            // Database access error
+            return false;
         }
         return false;
     }
 
     public static char[] convertToArray (String word) {
+        if (word.isBlank() || word.length() != 7)
+            return null;
         HashSet<Character> s = new HashSet<>();
         for(char c: word.toCharArray())
         {
@@ -115,6 +120,8 @@ public class Connect {
         return arr;
     }
     public static char[] convertToArray (char[] word) {
+        if (word.length != 7)
+            return null;
         HashSet<Character> s = new HashSet<>();
         for(char c : word)
         {
@@ -165,11 +172,11 @@ public class Connect {
                 return arr;
             }
         } catch (SQLException e) {
-            System.err.println("Database access error: " + e.getMessage());
+            // Database access error
+            return null;
         }
         return null;
     }
-
     public static void search(int size, String letters) {
         String url = "jdbc:sqlite:words.db";
 
@@ -255,5 +262,75 @@ public class Connect {
             // e.printStackTrace();
             return false;
         }
+    }
+    public static int pangramCount() {
+        String url = "jdbc:sqlite::resource:words.db";
+        String sql = "SELECT COUNT(*) FROM pangrams;";
+
+        try {
+            Connection conn = DriverManager.getConnection(url);
+            int res = 0;
+            if (conn != null) {
+                Statement stmt;
+
+                stmt = conn.createStatement();
+
+                ResultSet rs = stmt.executeQuery(sql);
+
+                if (rs.next())
+                    res = rs.getInt(1);
+
+                stmt.close();
+                conn.close();
+                return res;
+            }
+        } catch (SQLException e) {
+            System.err.println("Database access error: " + e.getMessage());
+        }
+        return 0;
+    }
+    
+    public static int countPerfectPangrams() {
+        String url = "jdbc:sqlite::resource:words.db";
+        String sql = "SELECT * FROM pangrams;"; // Change the SQL query to select all columns
+    
+        try {
+            Connection conn = DriverManager.getConnection(url);
+            int perfectPangramCount = 0;
+    
+            if (conn != null) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+    
+                while (rs.next()) {
+                    String pangramText = rs.getString("pangram");
+                    if (isPerfectPangram(pangramText)) {
+                        perfectPangramCount++;
+                    }
+                }
+    
+                stmt.close();
+                conn.close();
+    
+                return perfectPangramCount;
+            }
+        } catch (SQLException e) {
+            System.err.println("Database access error: " + e.getMessage());
+        }
+        return 0; // Return 0 for error or no perfect pangrams found
+    }
+
+    public static boolean isPerfectPangram(String text) {
+        String alphabet = "abcdefghijklmnopqrstuvwxyz";
+        
+        text = text.toLowerCase().replaceAll(" ", "");
+        
+        for (char letter : alphabet.toCharArray()) {
+            if (text.indexOf(letter) == -1) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }

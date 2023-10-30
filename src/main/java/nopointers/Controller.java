@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class Controller {
 
     private GameState gameState;
-
+    private CommandHistory history = new CommandHistory();
 
     @FXML
     TextField input = new TextField();
@@ -84,15 +84,28 @@ public class Controller {
     Text rank = new Text();
 
     @FXML
+    TextField customInput = new TextField();
+
+    @FXML
+    Button customButton = new Button();
+
+    @FXML
     Button quit = new Button();
 
     @FXML
+
     Button hintsButton = new Button();
     @FXML
     TextArea hintsBox = new TextArea();
 
+    Button g = new Button();
+    Controller controller = this;
+
+
     public Controller() {
-        this.gameState = new GameState();
+        //this.gameState = new GameState();
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        this.gameState = builder.build();
     }
 
     public void quit(ActionEvent e)
@@ -104,28 +117,26 @@ public class Controller {
     {
 
 
-        String s = input.getText().trim().toLowerCase();
+        String s = customInput.getText().trim().toLowerCase();
         if (gameState.newUserPuzzle(s)) {
             setButtons();
             error.setVisible(false);
+            customInput.clear();
         }
         else {
-            error.setText("Not a valid custom puzlle!");
+            error.setText("Not a valid custom puzzle!");
             error.setVisible(true);
         }
 
     }
 
 
+
     public void NewPuzzle(ActionEvent e)
     {
+        // Create a new puzzle via the New button with a NewPuzzle command.
+        executeCommand(new NewPuzzleCommand(this, gameState));
 
-
-
-        gameState.newRandomPuzzle();
-        String word = new String(gameState.getLetters());
-        setButtons();
-        foundWords.clear();
     }
 
     public void setHelp(ActionEvent e)
@@ -146,7 +157,6 @@ public class Controller {
             help.setVisible(false);
         }
     }
-
 
     @FXML
     private void handleButtonClick(ActionEvent event) {
@@ -201,14 +211,36 @@ public class Controller {
     }
     public void shuffle(ActionEvent e)
     {
+        if (gameState == null)
+            return;
 
         gameState.shuffle();
-        setButtons();
+
+        String word = new String (gameState.getLetters());
+        l0.setText(String.valueOf(word.charAt(0)));
+        l1.setText(String.valueOf(word.charAt(1)));
+        l2.setText(String.valueOf(word.charAt(2)));
+        l3.setText(String.valueOf(word.charAt(3)));
+        l4.setText(String.valueOf(word.charAt(4)));
+        l5.setText(String.valueOf(word.charAt(5)));
+
+        input.clear();
     }
 
     public void save(ActionEvent e)
     {
         gameState.savePuzzle();
+    }
+
+    public void CustomButton (ActionEvent e)
+    {
+        customButton.setVisible(!customButton.isVisible());
+        customInput.setVisible(!customInput.isVisible());
+    }
+
+    public void ConfirmButton (ActionEvent e)
+    {
+
     }
 
     public void guess(ActionEvent e)
@@ -246,6 +278,11 @@ public class Controller {
 
     }
 
+    private void executeCommand (Command command) {
+        if (command.execute()) {
+            history.push(command);
+        }
+    }
 
     public void hintsf(ActionEvent e){
         if(hintsBox.isVisible()){
@@ -255,8 +292,13 @@ public class Controller {
         hintsBox.setText(gameState.hints());
         hintsBox.setVisible(true);
     }
-
-
-
-
+    private void undo() {
+        if (history.isEmpty()) {
+            return;
+        }
+        Command command = history.pop();
+        if (command != null) {
+            command.undo();
+        }
+    }
 }

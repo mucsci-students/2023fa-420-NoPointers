@@ -63,3 +63,10 @@ Windows
 ```gradle run -Dorg.gradle.java.home=/usr/lib/jvm/java-20-openjdk -q --args='cli' ```
 
 This will look like it takes a while to run but it ensures that gradles output does not mess with the CLI output you will not see gradles progress bar.
+
+Design Patterns Used :
+1. Memento - the fields of the puzzle that are saved are stored within a Memento class nested in the Puzzle class. 
+The GameState class saves the Memento to a JSON file and loads that saved Memento to load a puzzle.
+2. Command - Clicking the New button in the GUI uses a NewPuzzleCommand to called on by the Controller to create a new Puzzle.
+3. Builder - A new GameState is created via GameStateBuilder nested within the GameState class. 
+4. Singleton - The Database class is implemented as a Singleton and used to access the sqlite database.

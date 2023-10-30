@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+
 public class Connect {
     public static String[] numToWords = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
             "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen" };
@@ -71,7 +72,8 @@ public class Connect {
                 conn.close();
             }
         } catch (SQLException e) {
-            System.err.println("Database creation error: " + e.getMessage());
+            // Database access error
+            return wordList;
         }
         return wordList;
     }
@@ -94,7 +96,8 @@ public class Connect {
                 return isPangram;
             }
         } catch (SQLException e) {
-            System.err.println("Database access error: " + e.getMessage());
+            // Database access error
+            return false;
         }
         return false;
     }
@@ -169,11 +172,11 @@ public class Connect {
                 return arr;
             }
         } catch (SQLException e) {
-            System.err.println("Database access error: " + e.getMessage());
+            // Database access error
+            return null;
         }
         return null;
     }
-
     public static void search(int size, String letters) {
         String url = "jdbc:sqlite:words.db";
 
@@ -330,6 +333,4 @@ public class Connect {
         
         return true;
     }
-
-    
 }

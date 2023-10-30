@@ -131,15 +131,6 @@ public class Puzzle {
         maxScore = calculateMaxScore ();
     }
 
-    public static Puzzle fromJsonObject(JsonObject jo) {
-        String requiredLetter = (String) jo.get("required letter");
-        char reql = requiredLetter.charAt(0);
-        char[] letters = jo.get("letters used").toString().toCharArray();
-
-        ArrayList<String> guessed = (ArrayList<String>)jo.get("Guessed Words");
-        return new Puzzle(reql, letters, guessed);
-
-    }
 
     private ArrayList<Character> findVowels () {
         ArrayList<Character> found = new ArrayList<>();
@@ -153,8 +144,6 @@ public class Puzzle {
                 }
             }
         }
-        if (found.isEmpty ())
-            found.add ('y');
         return found;
     }
 
@@ -176,10 +165,6 @@ public class Puzzle {
         }
         return letters[6];
     }
-
-
-
-
 
     // Method to be called on from Guess Command. Takes input from user and checks
     //  it is in the

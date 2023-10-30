@@ -30,10 +30,7 @@ public class GameState {
 
     // Guess method to be called on by controller. Calls on puzzle's guessWord method.
     public GuessOutcome guess (String input) {
-        if (puzzle == null) {
-            return GuessOutcome.EMPTY_INPUT;
-        }
-        else if (input.isBlank() || input.length() < 4) {
+        if (input.isBlank() || input.length() < 4) {
 
             return GuessOutcome.TOO_SHORT;
 
@@ -103,26 +100,14 @@ public class GameState {
     public int getScore() { return puzzle.getScore(); }
 
     // Shuffle method
-    public boolean shuffle() {
-        if (puzzle == null) {
-            System.out.println("No puzzle to shuffle!");
-            return false;
-        }
+    public void shuffle() {
         puzzle.shuffleLetters();
-        return true;
     }
 
     // Rank method
     public void rank() {
-        if(puzzle != null)
-        {
-            puzzle.displayRank();
-
-        }
-        System.out.println("No puzzle to rank!");
+        puzzle.displayRank();
     }
-
-
 
     /**
      * @precondtion If the user has no puzzle generated a new puzzle is generated.

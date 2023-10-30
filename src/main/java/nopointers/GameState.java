@@ -128,7 +128,7 @@ public class GameState {
     /**
      * Displays a loading animation on our terminal.
      */
-    void time() {
+    private void time() {
         for (int i = 0; i < 100; ++i) {
             try {
                 TimeUnit.MILLISECONDS.sleep(1);

@@ -205,8 +205,20 @@ public class Controller {
     }
     public void shuffle(ActionEvent e)
     {
+        if (gameState == null)
+            return;
+
         gameState.shuffle();
-        setButtons();
+
+        String word = new String (gameState.getLetters());
+        l0.setText(String.valueOf(word.charAt(0)));
+        l1.setText(String.valueOf(word.charAt(1)));
+        l2.setText(String.valueOf(word.charAt(2)));
+        l3.setText(String.valueOf(word.charAt(3)));
+        l4.setText(String.valueOf(word.charAt(4)));
+        l5.setText(String.valueOf(word.charAt(5)));
+
+        input.clear();
     }
 
     public void save(ActionEvent e)

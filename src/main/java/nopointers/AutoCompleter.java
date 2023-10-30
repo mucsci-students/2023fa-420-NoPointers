@@ -27,7 +27,7 @@ public class AutoCompleter {
                 new ArgumentCompleter(
                         new StringsCompleter("show"),
 
-                        new NullCompleter()
+                        new NullCompleter() 
                 ),
                 new ArgumentCompleter(
                         new StringsCompleter("shuffle"),

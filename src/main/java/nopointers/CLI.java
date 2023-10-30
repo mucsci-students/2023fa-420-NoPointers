@@ -47,7 +47,7 @@ public class CLI {
             history = new DefaultHistory(reader);
             history.attach(reader);
         } catch (IOException e) {
-            System.out.println("Terminal Error!");
+            System.out.println("Terminal Error! ");
         }
 
         while (true) {

@@ -25,13 +25,14 @@ public class CLI {
     private GameState gameState;
 
 
+    public CLI(Terminal t) {
+        //gameState = new GameState();
+        //gameState = new GameState.GameStateBuilder(Database.getInstance());
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        gameState = builder.build();
 
-    public CLI(Terminal t) throws IOException {
-        gameState = new GameState();
         start(t);
     }
-
-
 
     /**
      * Launches the REPL
@@ -155,10 +156,10 @@ public class CLI {
             return;
         }
         // Print out the seven letters with the required letter in brackets [].
-        for (int i = 0; i < gameState.letters().length; ++i) {
+        for (int i = 0; i < gameState.getLetters().length; ++i) {
             if (i == 6)
                 System.out.print("[");
-            System.out.print(gameState.letters()[i]);
+            System.out.print(gameState.getLetters()[i]);
         }
         System.out.print("]\n");
         System.out.println("Guessed Words: " + gameState.guessed().toString());

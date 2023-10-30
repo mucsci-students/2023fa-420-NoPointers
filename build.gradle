@@ -6,8 +6,7 @@ plugins {
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
-
-
+    id 'jacoco'
 }
 run
         {
@@ -29,6 +28,8 @@ jar {
 
 group 'com.example'
 version '1.0.0'
+
+apply plugin: 'jacoco'
 
 repositories {
     mavenCentral()
@@ -100,7 +101,16 @@ dependencies {
 }
 
 test {
-    useJUnitPlatform()}
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.required = false
+    }
+    dependsOn test // tests are required to run before generating the report
+}
 
 jlink {
     imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")

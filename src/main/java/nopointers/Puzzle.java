@@ -3,6 +3,7 @@ package nopointers;
 import java.io.File;
 import java.util.ArrayList;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
@@ -43,39 +44,34 @@ public class Puzzle {
 
     // Fields of Puzzle Class
     // The 6 optional letters
-    @SerializedName(value = "baseWord")
-    @Expose (serialize = true, deserialize = true)
+
     private char[] letters;
 
-    @SerializedName(value = "foundWords")
-    @Expose (serialize = true, deserialize = true)
+
     private ArrayList<String> guessed;
 
     // The required letter
-    @SerializedName(value = "requiredLetter")
-    @Expose (serialize = true, deserialize = true)
+
     private char requiredLetter;
     private ArrayList<String> validWords;
 
-    @SerializedName(value = "playerPoints")
-    @Expose (serialize = true, deserialize = true)
+
     private int score;
 
     @SerializedName(value = "maxPoints")
     @Expose (serialize = true, deserialize = true)
-    private final int maxScore;
+    private int maxScore;
+    private Database database;
 
     // Builder (New puzzle)
     public Puzzle() {
+        database = Database.getInstance();
 
-        char[] pangram = Connect.selectPangram();
-
-
-        this.letters = pangram;
+        this.letters = database.selectPangram();
         this.guessed = new ArrayList<>();
         this.validWords = new ArrayList<>();
         requiredLetter = selectRequiredLetter();
-        validWords = Connect.getWords(letters);
+        validWords = database.getWords(letters);
 
         score = 0;
         maxScore = calculateMaxScore ();
@@ -83,12 +79,39 @@ public class Puzzle {
     }
 
     public Puzzle(char requiredLetter, char[] letters, ArrayList<String> guessed) {
+        database = Database.getInstance();
         this.requiredLetter = requiredLetter;
-        this.letters = Connect.convertToArray(letters);
+        this.letters = database.convertToArray(letters);
         this.guessed = guessed;
 
 
-        this.validWords = Connect.getWords(letters);
+        this.validWords = database.getWords(letters);
+
+        score = 0;
+        maxScore = calculateMaxScore ();
+    }
+
+    //Build puzzle with a selected required letter. Used only for test purposes.
+    public Puzzle(String baseWord, char requiredLetter) {
+        database = Database.getInstance();
+        letters = database.convertToArray(baseWord);
+
+        int requiredIndex = 0;
+        for (int i = 0; i < 7; ++i) {
+            if (letters[i] != requiredLetter)
+                continue;
+
+            requiredIndex = i;
+            break;
+        }
+        this.requiredLetter = letters[requiredIndex];
+        letters[requiredIndex] = letters[6];
+        letters[6] = requiredLetter;
+
+        this.guessed = new ArrayList<String>();
+        this.validWords = new ArrayList<String>();
+
+        validWords = database.getWords(letters);
 
         score = 0;
         maxScore = calculateMaxScore ();
@@ -96,13 +119,15 @@ public class Puzzle {
 
     // Builder using input from user (New puzzle from base)
     public Puzzle(String input) {
+        database = Database.getInstance();
         validWords = new ArrayList<>();
         // Take 6 non-requited letters from input
         // Take requiredLetter from input Have user specify what is required letter?
         // Or just make a system like having the last letter be the requited letter?
-        this.letters = Connect.convertToArray(input);
+        this.letters = database.convertToArray(input);
+
         this.requiredLetter = selectRequiredLetter();
-        validWords = Connect.getWords(letters);
+        validWords = database.getWords(letters);
         this.guessed = new ArrayList<>();
 
         score = 0;
@@ -121,8 +146,6 @@ public class Puzzle {
                 }
             }
         }
-        if (found.isEmpty ())
-            found.add ('y');
         return found;
     }
 
@@ -145,10 +168,6 @@ public class Puzzle {
         return letters[6];
     }
 
-
-
-
-
     // Method to be called on from Guess Command. Takes input from user and checks
     //  it is in the
     // list of possible words found in the dictionary.
@@ -170,39 +189,15 @@ public class Puzzle {
             }
         }
         if (!foundRequired) {
-
             return GuessOutcome.MISSING_REQUIRED;
         }
-
-        for (int i = 0; i < letters.length; ++i) {
-            boolean found = false;
-            for (int j = 0; j < guess.length(); ++j) {
-                if (guess.charAt(j) == letters[i]) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-
-                return GuessOutcome.INCORRECT;
-            }
-
-        }
-
-
         return GuessOutcome.INCORRECT;
-
     }
 
     public char getRequiredLetter() {
         return this.requiredLetter;
     }
 
-
-
-    public void addGuess(String word) {
-        guessed.add(word);
-    }
 
     // Method to be called on from Shuffle Command. Shuffles the order of the
     // non-required letters.
@@ -219,9 +214,6 @@ public class Puzzle {
             letters[rand] = temp;
         }
     }
-
-
-
 
     public void displayRank () {
         System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " + ranks[getRank()]);
@@ -243,7 +235,7 @@ public class Puzzle {
             int points = word.length();
             if (points == 4)
                 points = 1;
-            if (Connect.checkPangram(word))
+            if (database.checkPangram(word))
                 points += 7;
             total += points;
         }
@@ -254,35 +246,17 @@ public class Puzzle {
         if (points == 4)
             points = 1;
 
-        if (Connect.checkPangram(guess))
+        if (database.checkPangram(guess))
             points += 7;
 
         return points;
     }
-    public String toGSONObject()
-    {
-        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-        String json = gson.toJson(this);
-        return json;
-    }
 
-    public JSONObject toJsonObject() {
-        String used = "";
-        for (int i = 0; i < letters.length; ++i) {
-            used += letters[i];
-        }
-        JSONObject jo = new JSONObject();
-        String reqletter = "" + getRequiredLetter();
-        jo.put("required letter", reqletter);
-        jo.put("letters used", used);
-        jo.put("Guessed Words", getGuessed());
-        return jo;
-    }
     public String[] getRanks() {
         return ranks;
     }
 
-    public void setRanks(String[] ranks) {
+    /*public void setRanks(String[] ranks) {
         this.ranks = ranks;
     }
 
@@ -292,50 +266,56 @@ public class Puzzle {
 
     public void setLevels(int[] levels) {
         this.levels = levels;
-    }
+    }*/
 
     public ArrayList<String> getValidWords() {
         return validWords;
     }
-
+    /*
     public void setValidWords(ArrayList<String> validWords) {
         this.validWords = validWords;
-    }
+    }*/
 
     public int getScore() {
         return score;
     }
-
+    /*
     public void setScore(int score) {
         this.score = score;
     }
 
     public int getMaxScore() {
         return maxScore;
-    }
+    }*/
 
     public char[] getLetters() {
         return letters;
     }
 
+    /*
     public void setLetters(char[] letters) {
         this.letters = letters;
-    }
+    }*/
 
     public ArrayList<String> getGuessed() {
         return guessed;
     }
 
+    /*
     public void setGuessed(ArrayList<String> guessed) {
         this.guessed = guessed;
     }
 
+    public void setMaxScore(int maxScore) {this.maxScore = maxScore;}
+
     public void setRequiredLetter(char requiredLetter) {
         this.requiredLetter = requiredLetter;
 
+    }*/
+
+    public double getScorePercent () {
+        return (double) score / maxScore;
     }
-
-
     public int getRank () {
         double overallScorePercent = (double) score / maxScore;
 
@@ -360,12 +340,72 @@ public class Puzzle {
         else
             return 0;
     }
-    //private char getRequiredLetter() {
-        //char[] array = { 'a', 'e', 'i', 'o', 'u' };
-        //Random r = new Random();
-        //char c = array[r.nextInt(5)];
-        // Need to find way to check if our picked vowel is already in the other 6
-        // letters.
-        //return c;
-    //}
+    // Changes current puzzle's fields to be of those stored in the saved Memento
+    public void restoreFromMemento(Memento memento) {
+        letters = memento.getLetters();
+        guessed = memento.getGuessed();
+        requiredLetter = memento.getRequiredLetter();
+        score = memento.getScore();
+    }
+    // Save fields of current puzzle to a Memento
+    public Memento saveToMemento() {
+        Memento saved = new Memento(this);
+        return saved;
+    }
+    // Memento implementation. Used to save/load details of puzzle to/from a json file.
+    public class Memento {
+
+        @SerializedName(value = "baseWord")
+        @Expose (serialize = true, deserialize = true)
+        private char[] letters;
+
+        @SerializedName(value = "foundWords")
+        @Expose (serialize = true, deserialize = true)
+        private ArrayList<String> guessed;
+
+        // The required letter
+        @SerializedName(value = "requiredLetter")
+        @Expose (serialize = true, deserialize = true)
+        private char requiredLetter;
+
+
+        @SerializedName(value = "playerPoints")
+        @Expose (serialize = true, deserialize = true)
+        private int score;
+
+
+        // Constructor.
+        public Memento (Puzzle puzzle) {
+            this.letters = puzzle.letters;
+            this.guessed = puzzle.guessed;
+            this.requiredLetter = puzzle.requiredLetter;
+            this.score = puzzle.score;
+        }
+
+        public char getRequiredLetter() {
+            return requiredLetter;
+        }
+
+        public ArrayList<String> getGuessed() {
+            return guessed;
+        }
+
+        public char[] getLetters() {
+            return letters;
+        }
+
+        public int getScore() {
+            return score;
+        }
+
+        public String toGSONObject()
+        {
+            Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+            String json = gson.toJson(this);
+            return json;
+        }
+
+
+    }
+
 }

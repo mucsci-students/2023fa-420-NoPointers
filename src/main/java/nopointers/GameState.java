@@ -31,19 +31,14 @@ public class GameState {
     // Guess method to be called on by controller. Calls on puzzle's guessWord method.
     public GuessOutcome guess (String input) {
         if (puzzle == null) {
-
             return GuessOutcome.EMPTY_INPUT;
-
         }
         else if (input.isBlank() || input.length() < 4) {
 
             return GuessOutcome.TOO_SHORT;
 
         }
-
          return puzzle.guessWord(input);
-
-
     }
 
     // Save method for controllers to call on.
@@ -71,9 +66,8 @@ public class GameState {
 
     // Create new puzzle from user input method to be called on by controllers
     public boolean newUserPuzzle(String input) {
-        if (input == null || input.length() < 7) {
+        if (input.length() < 7) {
             return false;
-
         } else if (database.checkPangram(input)) {
             newPuzzleBase(input);
             puzzle.shuffleLetters();
@@ -169,7 +163,7 @@ public class GameState {
         //  Auto-generated method stub
         System.out.println("Generating New Puzzle...");
         time();
-        this.puzzle = new Puzzle(input);
+        puzzle = new Puzzle(input);
         System.out.println("\nNew Puzzle Generated!");
     }
 

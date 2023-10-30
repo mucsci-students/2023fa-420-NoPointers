@@ -37,29 +37,25 @@ class GameStateTest {
     @RepeatedTest(3)
     @DisplayName("Ensure a guess returns the correct GuessOutcome enum value")
     public void testGuess () {
-        //gameState = new GameState();
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
-        assertEquals(gameState.guess("t"), GuessOutcome.EMPTY_INPUT, "Puzzle not initialized.");
-        gameState.newRandomPuzzle();
         assertEquals(gameState.guess("t"), GuessOutcome.TOO_SHORT, "Guess is too short");
 
         assertEquals(gameState.guess(" "), GuessOutcome.TOO_SHORT, "Guess is blank");
 
-        gameState.newUserPuzzle("pedagogy");
-        assertEquals(gameState.guess("pedagogy"), GuessOutcome.SUCCESS, "Pangram used for base word should be valid.");
-        assertEquals(gameState.guess("gap"), GuessOutcome.TOO_SHORT, "Word must be at least 4 letters!");
-        assertEquals(gameState.guess("zapped"), GuessOutcome.INCORRECT, "Word can not contain letters not in the puzzle.");
-        assertEquals(gameState.guess("pedagogy"), GuessOutcome.ALREADY_FOUND, "Word has already been found.");
-        assertEquals(gameState.guess("daddy"), GuessOutcome.SUCCESS, "Word should be valid.");
+        assertTrue(gameState.newUserPuzzle("picture"), "Should be a valid pangram");
+        assertEquals(gameState.guess("picture"), GuessOutcome.SUCCESS, "Pangram used for base word should be valid.");
+        assertEquals(gameState.guess("pit"), GuessOutcome.TOO_SHORT, "Word must be at least 4 letters!");
+        assertEquals(gameState.guess("pictures"), GuessOutcome.INCORRECT, "Word can not contain letters not in the puzzle.");
+        assertEquals(gameState.guess("picture"), GuessOutcome.ALREADY_FOUND, "Word has already been found.");
 
         char requiredLetter = gameState.requiredLetter();
-        String[] guesses = { "gaggy", "dope" };
+        String[] guesses = { "pure", "pint" };
 
-        if (requiredLetter == 'a' || requiredLetter == 'g' || requiredLetter == 'y')
-            assertEquals(gameState.guess("dope"), GuessOutcome.MISSING_REQUIRED);
+        if (requiredLetter == 'u' || requiredLetter == 'e')
+            assertEquals(gameState.guess("pint"), GuessOutcome.MISSING_REQUIRED);
         else
-            assertEquals(gameState.guess("gaggy"), GuessOutcome.MISSING_REQUIRED);
+            assertEquals(gameState.guess("pure"), GuessOutcome.MISSING_REQUIRED);
     }
 
     /** Tests that valid guesses to a random base puzzle are correct.
@@ -89,10 +85,6 @@ class GameStateTest {
     @RepeatedTest(5)
     @DisplayName("Ensure letters get shuffled")
     public void testShuffle () {
-        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
-        gameState = builder.build();
-        assertFalse (gameState.shuffle(), "Puzzle should be null. Shuffle should fail.");
-        gameState.newRandomPuzzle();
         char[] beforeShuffle = Arrays.copyOf(gameState.getLetters(), 7);
         assertTrue (gameState.shuffle(), "New Puzzle should be created. Shuffle should succeed.");
         assertFalse (Arrays.equals (beforeShuffle, gameState.getLetters()), "Letters should be in a new shuffled order.");
@@ -121,12 +113,14 @@ class GameStateTest {
     @RepeatedTest(3)
     @DisplayName("Ensure a puzzle can be built from user input.")
     public void testNewUserPuzzle () {
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        gameState = builder.build();
         assertFalse (gameState.newUserPuzzle("t"), "Input is too short");
-        assertFalse (gameState.newUserPuzzle("trickery"), "Input is not a pangram");
+        assertFalse (gameState.newUserPuzzle("alphabetical"), "Input is not a pangram");
         assertFalse (gameState.newUserPuzzle("assortment"), "Input is not a pangram");
 
-        assertTrue (gameState.newUserPuzzle("lawyers"), "Input is a pangram");
-        assertTrue (gameState.newUserPuzzle("programs"), "Input is a pangram");
+        assertTrue (gameState.newUserPuzzle("abdomen"), "Input is a pangram");
+        assertTrue (gameState.newUserPuzzle("variety"), "Input is a pangram");
     }
 
     /** Tests that the required letter is correct.

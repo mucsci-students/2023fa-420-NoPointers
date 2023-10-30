@@ -122,6 +122,7 @@ public class Puzzle {
         // Take requiredLetter from input Have user specify what is required letter?
         // Or just make a system like having the last letter be the requited letter?
         this.letters = database.convertToArray(input);
+
         this.requiredLetter = selectRequiredLetter();
         validWords = database.getWords(letters);
         this.guessed = new ArrayList<>();
@@ -193,7 +194,17 @@ public class Puzzle {
             addCorrectWord(guess);
             return GuessOutcome.SUCCESS;
         }
-        return GuessOutcome.MISSING_REQUIRED;
+        boolean foundRequired = false;
+        for (int i = 0; i < guess.length(); ++i) {
+            if (guess.charAt(i) == requiredLetter) {
+                foundRequired = true;
+                break;
+            }
+        }
+        if (!foundRequired) {
+            return GuessOutcome.MISSING_REQUIRED;
+        }
+        return GuessOutcome.INCORRECT;
     }
 
     public char getRequiredLetter() {

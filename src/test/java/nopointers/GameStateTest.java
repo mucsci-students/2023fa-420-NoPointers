@@ -1,5 +1,6 @@
 package nopointers;
 
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
@@ -148,5 +149,17 @@ class GameStateTest {
         Puzzle.Memento memento = gameState.getMemento();
         assertNotNull(memento.toGSONObject(), "GSON should not be null.");
         assertFalse(memento.toGSONObject().isBlank(), "GSON should not be blank.");
+    }
+
+    /** Tests the game state's memento gson object.
+     *
+     * @author kstigelman
+     */
+    @Test
+    @DisplayName("Ensure game state rank functions correctly.")
+    public void testOther () {
+        assertEquals (gameState.getRanks().length, 10, "Method should be of size 10");
+        assertEquals(0, gameState.getRank(), "Rank should be zero.");
+        gameState.rank();
     }
 }

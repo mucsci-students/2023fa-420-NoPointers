@@ -10,7 +10,6 @@ import java.io.IOException;
 
 
 
-
 /**
  *
  * @author Christian Michel
@@ -30,7 +29,7 @@ public class CLI {
     public CLI(Terminal t) throws IOException {
         gameState = new GameState();
         start(t);
-        }
+    }
 
 
 
@@ -55,8 +54,8 @@ public class CLI {
             System.out.print(">");
             String command = reader.readLine().toLowerCase().trim();
             parser(command);
-            }
         }
+    }
 
     /**
      *

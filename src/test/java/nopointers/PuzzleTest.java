@@ -103,7 +103,12 @@ class PuzzleTest {
         assertEquals(puzzle.getLetters()[6], puzzle.getRequiredLetter(), "The required letter should not change after shuffling");
     }
 
+    /** Tests that memento functionality is complete.
+     *
+     * @author kstigelman
+     */
     @RepeatedTest(5)
+    @DisplayName("Ensure memento saves and restores correctly.")
     public void testMementoMethods () {
         Puzzle.Memento memento = puzzle.saveToMemento();
         char[] letters = memento.getLetters();

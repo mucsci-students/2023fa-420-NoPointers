@@ -27,9 +27,9 @@ public class CLI {
 
 
 
-    public CLI() throws IOException {
+    public CLI(Terminal t) throws IOException {
         gameState = new GameState();
-        start(TerminalBuilder.terminal());
+        start(t);
         }
 
 
@@ -43,9 +43,8 @@ public class CLI {
 
         try {
             terminal = t;
-            //reader = LineReaderBuilder.builder().terminal(terminal).build();
             reader = new LineReaderImpl (t);
-            reader.setCompleter(new StringsCompleter("add", "remove", "-a", "-r", "short", "int", "long", "float", "double", "char", "bool"));
+            reader.setCompleter(new AutoCompleter().updateCompleter());
             history = new DefaultHistory(reader);
             history.attach(reader);
         } catch (IOException e) {

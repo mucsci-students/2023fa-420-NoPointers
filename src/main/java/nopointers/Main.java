@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.jline.terminal.TerminalBuilder;
 
 import java.io.IOException;
 
@@ -38,7 +39,7 @@ public class Main extends Application {
 
     public static void commandLine() throws IOException {
 
-        CLI c = new CLI();
+        CLI c = new CLI(TerminalBuilder.terminal());
 
         Platform.exit();
     }

@@ -18,7 +18,7 @@ public class AutoCompleter {
     private AggregateCompleter comp;
 
     public AutoCompleter(){
-        this.comp = new AggregateCompleter( 
+        this.comp = new AggregateCompleter(
                 new ArgumentCompleter(
                         new StringsCompleter("add"),
                         new StringsCompleter("class", "method", "field", "parameter", "relationship"),

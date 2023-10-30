@@ -31,7 +31,12 @@ public class CLI {
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
 
-        start(t);
+        try {
+            start(t);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

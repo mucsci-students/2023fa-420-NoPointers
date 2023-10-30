@@ -1,57 +1,65 @@
 package nopointers;
 
 
+import org.jline.reader.*;
+import org.jline.reader.impl.history.*;
+import org.jline.reader.impl.completer.*;
+import org.jline.reader.impl.*;
+import org.jline.terminal.*;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.Scanner;
-
-
-import com.github.cliftonlabs.json_simple.JsonArray;
-//import com.github.cliftonlabs.json_simple.JsonException;
-import com.github.cliftonlabs.json_simple.JsonObject;
-import com.github.cliftonlabs.json_simple.Jsoner;
 
 
 
-
-import java.util.concurrent.TimeUnit;
 /**
  *
  * @author Christian Michel
  * @
  */
 public class CLI {
-
-    private Scanner scanner;
+    private LineReaderImpl reader;
+    private Terminal terminal;
+    private ParsedLine parser;
+    private History history;
+    private Highlighter highlighter;
     //private Puzzle puzzle;
     private GameState gameState;
 
-    public CLI() {
+
+    public CLI(Terminal t) {
         //gameState = new GameState();
         //gameState = new GameState.GameStateBuilder(Database.getInstance());
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
-        this.scanner = new Scanner(System.in);
-        start(scanner);
-        scanner.close();
 
+        try {
+            start(t);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     *
-     * @param sc A scanner that will take input from system.in
+     * Launches the REPL
+     * @throws IOException
      */
-    public void start(Scanner sc) {
-        boolean isRun = true;
+    public void start(Terminal t) throws IOException {
         intro();
-        while (isRun) {
-            System.out.print("> ");
-            String command = sc.nextLine().toLowerCase().trim();
+
+        try {
+            terminal = t;
+            reader = new LineReaderImpl (t);
+            reader.setCompleter(new AutoCompleter().updateCompleter());
+            history = new DefaultHistory(reader);
+            history.attach(reader);
+        } catch (IOException e) {
+            System.out.println("Terminal Error! ");
+        }
+
+        while (true) {
+            System.out.print(">");
+            String command = reader.readLine().toLowerCase().trim();
             parser(command);
-            System.out.flush();
         }
     }
 
@@ -70,15 +78,12 @@ public class CLI {
                 System.out.println("Please enter a command");
                 break;
             case "show":
-
                 showPuzzle();
                 break;
             case "save":
-
                 gameState.savePuzzle();
                 break;
             case "guess":
-
                 GuessOutcome outcome = gameState.guess(args[1]);
                 handleOutcome(outcome);
                 break;
@@ -90,12 +95,11 @@ public class CLI {
                 rules();
                 break;
             case "load":
-                //load(getdefaultPath());
                 gameState.loadPuzzle();
                 break;
             case "new":
-                //newPuzzle();
                 gameState.newRandomPuzzle();
+                showPuzzle();
                 break;
             case "help":
                 commands();
@@ -190,7 +194,6 @@ public class CLI {
 
 
     private void intro() {
-        System.out.println("\033[34;1m");
         System.out.println("\t ▄█     █▄   ▄██████▄     ▄████████ ████████▄        ▄█     █▄   ▄█   ▄███████▄     ▄████████    ▄████████ ████████▄     ▄████████ \n"
                 + "\t███     ███ ███    ███   ███    ███ ███   ▀███      ███     ███ ███  ██▀     ▄██   ███    ███   ███    ███ ███   ▀███   ███    ███ \n"
                 + "\t███     ███ ███    ███   ███    ███ ███    ███      ███     ███ ███▌       ▄███▀   ███    ███   ███    ███ ███    ███   ███    █▀  \n"

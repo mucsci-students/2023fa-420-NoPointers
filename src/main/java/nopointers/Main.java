@@ -3,15 +3,10 @@ package nopointers;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.jline.terminal.TerminalBuilder;
 
 import java.io.IOException;
 
@@ -25,14 +20,13 @@ public class Main extends Application {
 
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Word Wizards");
-
         stage.setScene(scene);
-
+        stage.setResizable(false);
         stage.show();
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         if(args != null) {
             if (args.length > 0 && args[0].equalsIgnoreCase("cli")) {
                 commandLine();
@@ -43,9 +37,10 @@ public class Main extends Application {
 
     }
 
-    public static void commandLine()
-    {
-        CLI c = new CLI();
+    public static void commandLine() throws IOException {
+
+        CLI c = new CLI(TerminalBuilder.terminal());
+
         Platform.exit();
     }
 }

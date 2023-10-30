@@ -158,9 +158,7 @@ public class GameState {
     /**
      * @precondtion The user has a puzzle to save in the first place.
      *
-     *
-     *
-     *             Saves the users current puzzle to a path if the path is valid.
+     * Saves the users current puzzle to a path if the path is valid.
      *
      * @postcondition The users puzzle is saved to the given path.
      */

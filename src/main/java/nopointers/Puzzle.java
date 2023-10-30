@@ -16,6 +16,7 @@ import com.google.gson.GsonBuilder;
 public class Puzzle {
 
     //Rank related structures
+
     String[] ranks = {
             "Student",
             "Apprentice",
@@ -56,7 +57,9 @@ public class Puzzle {
 
 
     private int score;
-    //private final int maxScore;
+
+    @SerializedName(value = "maxPoints")
+    @Expose (serialize = true, deserialize = true)
     private int maxScore;
     private Database database;
 
@@ -130,7 +133,6 @@ public class Puzzle {
         score = 0;
         maxScore = calculateMaxScore ();
     }
-
 
     private ArrayList<Character> findVowels () {
         ArrayList<Character> found = new ArrayList<>();

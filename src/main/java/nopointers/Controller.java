@@ -84,8 +84,16 @@ public class Controller {
     Text rank = new Text();
 
     @FXML
+    TextField customInput = new TextField();
+
+    @FXML
+    Button customButton = new Button();
+
+    @FXML
     Button quit = new Button();
 
+    @FXML
+    Button g = new Button();
     Controller controller = this;
 
     public Controller() {
@@ -103,17 +111,19 @@ public class Controller {
     {
 
 
-        String s = input.getText().trim().toLowerCase();
+        String s = customInput.getText().trim().toLowerCase();
         if (gameState.newUserPuzzle(s)) {
             setButtons();
             error.setVisible(false);
+            customInput.clear();
         }
         else {
-            error.setText("Not a valid custom puzlle!");
+            error.setText("Not a valid custom puzzle!");
             error.setVisible(true);
         }
 
     }
+
 
 
     public void NewPuzzle(ActionEvent e)
@@ -141,7 +151,6 @@ public class Controller {
             help.setVisible(false);
         }
     }
-
 
     @FXML
     private void handleButtonClick(ActionEvent event) {
@@ -196,7 +205,6 @@ public class Controller {
     }
     public void shuffle(ActionEvent e)
     {
-
         gameState.shuffle();
         setButtons();
     }
@@ -204,6 +212,17 @@ public class Controller {
     public void save(ActionEvent e)
     {
         gameState.savePuzzle();
+    }
+
+    public void CustomButton (ActionEvent e)
+    {
+        customButton.setVisible(!customButton.isVisible());
+        customInput.setVisible(!customInput.isVisible());
+    }
+
+    public void ConfirmButton (ActionEvent e)
+    {
+
     }
 
     public void guess(ActionEvent e)

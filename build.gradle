@@ -1,6 +1,8 @@
+
 plugins {
     id 'java'
     id 'application'
+    id 'java-library'
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
@@ -10,7 +12,9 @@ run
         {
             standardInput = System.in
 
+
         }
+
 jar {
     manifest {
         attributes(
@@ -23,7 +27,7 @@ jar {
 }
 
 group 'com.example'
-version '1.0-SNAPSHOT'
+version '1.0.0'
 
 apply plugin: 'jacoco'
 
@@ -40,9 +44,6 @@ ext {
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
 
 application {
     mainModule = 'nopointers'
@@ -55,9 +56,11 @@ javafx {
 }
 
 dependencies {
+
     implementation (group: 'org.openjfx', name: 'javafx-controls', version: '22-ea+11')
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
+                exclude group: 'org.jline'
             }
     implementation('org.xerial:sqlite-jdbc:3.43.0.0')
             {
@@ -66,17 +69,31 @@ dependencies {
     implementation('com.github.cliftonlabs:json-simple:4.0.1')
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
+                exclude group: 'org.jline'
             }
     implementation ('org.json:json:20230227')
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
             }
+
+    implementation (group: 'org.jline', name: 'jline', version: '3.21.0')
+
+
+    implementation (group: 'org.fusesource.jansi', name: 'jansi', version: '2.4.0')
+    {
+
+    }
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
             {
                 exclude group: 'org.hamcrest', module: 'hamcrest-core'
+                exclude group: 'org.jline'
             }
+
+
+
 
     implementation 'org.kordamp.ikonli:ikonli-javafx:12.3.1'
     implementation 'io.github.palexdev:materialfx:11.16.1'
@@ -101,6 +118,28 @@ jlink {
     launcher {
         name = 'app'
     }
+}
+
+task shell(dependsOn: 'testClasses', type: JavaExec) {
+    group = 'help'
+    description 'Runs an interactive shell with all runtime dependencies. "Use with gradle -q shell".'
+    standardInput = System.in
+    doFirst{
+        if(getProperty('org.gradle.daemon') == true)
+        {
+            throw new IllegalStateException('shell with gradle daemon')
+        }
+    }
+    main = 'nopointers.Main'
+    // using Main directly has ansi issues (some keyboard keys not working)
+    // main = 'org.codehaus.groovy.tools.shell.Main'
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = []
+    // workingDir =
+    // standardOutput = System.out
+    // stops after eval, not useful now (maybe will change with Groovy >= 2.3.2)
+    // args = ["load $rootDir/integration-test/src/main/groovy/GroovyshStartup.groovy"]
+
 }
 
 jlinkZip {

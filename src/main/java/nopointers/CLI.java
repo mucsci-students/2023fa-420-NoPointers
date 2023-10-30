@@ -1,18 +1,13 @@
 package nopointers;
 
 
-import org.jline.reader.Highlighter;
-import org.jline.reader.History;
-import org.jline.reader.LineReader;
-import org.jline.reader.ParsedLine;
-import org.jline.reader.impl.LineReaderImpl;
-import org.jline.reader.impl.completer.AggregateCompleter;
-import org.jline.terminal.Terminal;
-
+import org.jline.reader.*;
+import org.jline.reader.impl.history.*;
+import org.jline.reader.impl.completer.*;
+import org.jline.reader.impl.*;
+import org.jline.terminal.*;
 import java.io.IOException;
-import java.util.Scanner;
 
-import static org.jline.terminal.TerminalBuilder.builder;
 
 
 /**
@@ -29,33 +24,36 @@ public class CLI {
     //private Puzzle puzzle;
     private GameState gameState;
 
-    public Scanner sc = new Scanner(System.in);
+
 
     public CLI() throws IOException {
         gameState = new GameState();
-        start();
+        start(TerminalBuilder.terminal());
         }
 
+
+
     /**
-     * Launches the pari
+     * Launches the REPL
      * @throws IOException
      */
-    public void start() throws IOException {
+    public void start(Terminal t) throws IOException {
         intro();
 
         try {
-
-            terminal = builder().system(true).jansi(true).jna(false).exec(false).dumb(false).build();
-            AggregateCompleter comp = new AutoCompleter().updateCompleter();
-            reader = new LineReaderImpl(terminal);
-            reader.setCompleter(comp);
+            terminal = t;
+            //reader = LineReaderBuilder.builder().terminal(terminal).build();
+            reader = new LineReaderImpl (t);
+            reader.setCompleter(new StringsCompleter("add", "remove", "-a", "-r", "short", "int", "long", "float", "double", "char", "bool"));
+            history = new DefaultHistory(reader);
+            history.attach(reader);
         } catch (IOException e) {
             System.out.println("Terminal Error!");
         }
 
         while (true) {
             System.out.print(">");
-            String command = reader.readLine().toLowerCase();
+            String command = reader.readLine().toLowerCase().trim();
             parser(command);
             }
         }

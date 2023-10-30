@@ -21,23 +21,21 @@ public class AutoCompleter {
         this.comp = new AggregateCompleter(
                 new ArgumentCompleter(
                         new StringsCompleter("add"),
-                        new StringsCompleter("class", "method", "field", "parameter", "relationship"),
+
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("delete"),
-                        new StringsCompleter("class", "method", "field", "parameter", "relationship"),
+                        new StringsCompleter("show"),
+
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("rename"),
-                        new StringsCompleter("class", "method", "field", "parameter", "relationship"),
+                        new StringsCompleter("shuffle"),
+
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
                         new StringsCompleter("add"),
-                        new StringsCompleter("relationship"),
-                        new StringsCompleter("aggregation", "composition", "inheritance", "realization"),
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
@@ -49,17 +47,7 @@ public class AutoCompleter {
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("changetype"),
-                        new StringsCompleter("field", "method", "parameter", "relationship"),
-                        new NullCompleter()
-                ),
-                new ArgumentCompleter(
                         new StringsCompleter("display"),
-                        new StringsCompleter("class", "all", "relationships"),
-                        new NullCompleter()
-                ),
-                new ArgumentCompleter(
-                        new StringsCompleter("undo"),
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
@@ -77,28 +65,11 @@ public class AutoCompleter {
         );
     }
 
-    /**
-     * Returns an AggregateCompleter to the UML Interface and Controller.
-     * @return AggregateCompleter
-     */
     public AggregateCompleter updateCompleter(){
         Collection<Completer> completers = comp.getCompleters();
         completers = new ArrayList<>(completers);
         return new AggregateCompleter(completers);
     }
 
-    /**
-     * Provides an AggregateCompleter for the relationships.
-     * @return AggregateCompleter
-     */
-    public AggregateCompleter relationComplete(){
-        AggregateCompleter completers;
-
-        completers = new AggregateCompleter(
-                new StringsCompleter("aggregation", "composition", "inheritance", "realization"),
-                new NullCompleter()
-        );
-        return new AggregateCompleter(completers);
-    }
 
 }

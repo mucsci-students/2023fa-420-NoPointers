@@ -86,6 +86,7 @@ class GameStateTest {
     @DisplayName("Ensure letters get shuffled")
     public void testShuffle () {
         char[] beforeShuffle = Arrays.copyOf(gameState.getLetters(), 7);
+        gameState.shuffle();
         assertFalse (Arrays.equals (beforeShuffle, gameState.getLetters()), "Letters should be in a new shuffled order.");
 
         Puzzle.Memento memento = gameState.getMemento();

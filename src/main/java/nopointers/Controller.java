@@ -93,8 +93,14 @@ public class Controller {
     Button quit = new Button();
 
     @FXML
+
+    Button hintsButton = new Button();
+    @FXML
+    TextArea hintsBox = new TextArea();
+
     Button g = new Button();
     Controller controller = this;
+
 
     public Controller() {
         //this.gameState = new GameState();
@@ -278,6 +284,14 @@ public class Controller {
         }
     }
 
+    public void hintsf(ActionEvent e){
+        if(hintsBox.isVisible()){
+            hintsBox.setVisible(false);
+        }
+        String res = gameState.hints();
+        hintsBox.setText(gameState.hints());
+        hintsBox.setVisible(true);
+    }
     private void undo() {
         if (history.isEmpty()) {
             return;
@@ -287,5 +301,4 @@ public class Controller {
             command.undo();
         }
     }
-
 }

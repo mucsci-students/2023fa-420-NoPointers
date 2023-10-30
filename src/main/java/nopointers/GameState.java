@@ -205,6 +205,12 @@ public class GameState {
         }
     }
 
+
+    public String hints(){
+        String res = puzzle.print();
+        return res;
+    }
+
     // Builder implementation for GameState
     public static class GameStateBuilder {
         private Puzzle puzzle;
@@ -221,6 +227,4 @@ public class GameState {
 
     }
 
-
 }
-

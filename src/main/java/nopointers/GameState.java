@@ -109,12 +109,13 @@ public class GameState {
     public int getScore() { return puzzle.getScore(); }
 
     // Shuffle method
-    public void shuffle() {
+    public boolean shuffle() {
         if (puzzle == null) {
             System.out.println("No puzzle to shuffle!");
-
+            return false;
         }
         puzzle.shuffleLetters();
+        return true;
     }
 
     // Rank method

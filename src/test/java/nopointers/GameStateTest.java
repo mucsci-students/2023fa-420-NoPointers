@@ -7,10 +7,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -39,7 +41,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @Test
+    @RepeatedTest(3)
     @DisplayName("Ensure a guess returns the correct GuessOutcome enum value")
     public void testGuess () {
         //gameState = new GameState();
@@ -49,7 +51,7 @@ class GameStateTest {
         gameState.newRandomPuzzle();
         assertEquals(gameState.guess("t"), GuessOutcome.TOO_SHORT, "Guess is too short");
 
-        assertEquals(gameState.guess(""), GuessOutcome.TOO_SHORT, "Guess is blank");
+        assertEquals(gameState.guess(" "), GuessOutcome.TOO_SHORT, "Guess is blank");
 
         gameState.newUserPuzzle("pedagogy");
         assertEquals(gameState.guess("pedagogy"), GuessOutcome.SUCCESS, "Pangram used for base word should be valid.");
@@ -67,6 +69,22 @@ class GameStateTest {
             assertEquals(gameState.guess("gaggy"), GuessOutcome.MISSING_REQUIRED);
     }
 
+    /** Tests that valid guesses to a random base puzzle are correct.
+     *
+     * @author kstigelman
+     */
+    @RepeatedTest(10)
+    @DisplayName("Ensure a guess from a randomized word returns the correct GuessOutcome enum value")
+    public void testRandomGuess () {
+        Database database = Database.getInstance();
+        ArrayList<String> validWords = database.getWords(gameState.getLetters());
+
+        assertNotEquals(validWords.size(), 0, "There should be guessed words.");
+
+        assertEquals(gameState.guess(validWords.get(0)), GuessOutcome.SUCCESS, "Word should be a valid word.");
+        assertEquals(gameState.guess(String.valueOf(gameState.getLetters()[0])), GuessOutcome.TOO_SHORT, "Word should be a valid word.");
+    }
+
     /** Tests that the order of letters successfully shuffles.
      *
      * @author kstigelman
@@ -74,30 +92,34 @@ class GameStateTest {
     @RepeatedTest(5)
     @DisplayName("Ensure letters get shuffled")
     public void testShuffle () {
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        gameState = builder.build();
+        assertFalse (gameState.shuffle(), "Puzzle should be null. Shuffle should fail.");
+        gameState.newRandomPuzzle();
         char[] beforeShuffle = Arrays.copyOf(gameState.getLetters(), 7);
-        gameState.shuffle();
-        assertFalse (Arrays.equals (beforeShuffle, gameState.getLetters()), "Letters should be in a new shuffled order");
+        assertTrue (gameState.shuffle(), "New Puzzle should be created. Shuffle should succeed.");
+        assertFalse (Arrays.equals (beforeShuffle, gameState.getLetters()), "Letters should be in a new shuffled order.");
     }
 
     /** Tests that GameState correctly generates a random puzzle.
      *
      * @author kstigelman
      */
-    /*
     @RepeatedTest(3)
+    @DisplayName("Ensure a new random puzzle can be built.")
     public void testNewRandomPuzzle () {
-        gameState = new GameState();
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        gameState = builder.build();
         gameState.newRandomPuzzle();
         assertTrue (gameState.hasPuzzle(), "When generating a new random puzzle, the game state should have a non-null puzzle.");
     }
-
-     */
 
     /** Tests that GameState correctly generates a puzzle from a user input.
      *
      * @author kstigelman
      */
-    @Test
+    @RepeatedTest(3)
+    @DisplayName("Ensure a puzzle can be built from user input.")
     public void testNewUserPuzzle () {
         assertFalse (gameState.newUserPuzzle("t"), "Input is too short");
         assertFalse (gameState.newUserPuzzle("trickery"), "Input is not a pangram");
@@ -107,17 +129,15 @@ class GameStateTest {
         assertTrue (gameState.newUserPuzzle("programs"), "Input is a pangram");
     }
 
-
     /** Tests that the required letter is correct.
      *
      * @author kstigelman
      */
-    /*
     @RepeatedTest(3)
+    @DisplayName("Ensure the required letter is correctly selected.")
     public void testRequiredLetter () {
         assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should be the last letter in the array.");
         gameState.shuffle();
         assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should not change after shuffling");
     }
-     */
 }

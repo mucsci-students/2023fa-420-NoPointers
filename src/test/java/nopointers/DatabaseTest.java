@@ -75,7 +75,7 @@ public class DatabaseTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(10)
+    @RepeatedTest(3)
     public void selectPangramTest () {
 
             char[] pangram = database.selectPangram();

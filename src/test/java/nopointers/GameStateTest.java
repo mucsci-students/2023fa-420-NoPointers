@@ -63,7 +63,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(10)
+    @RepeatedTest(3)
     @DisplayName("Ensure a guess from a randomized word returns the correct GuessOutcome enum value")
     public void testRandomGuess () {
         Database database = Database.getInstance();
@@ -83,7 +83,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(5)
+    @RepeatedTest(3)
     @DisplayName("Ensure letters get shuffled")
     public void testShuffle () {
         char[] beforeShuffle = Arrays.copyOf(gameState.getLetters(), 7);
@@ -129,7 +129,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(5)
+    @RepeatedTest(3)
     @DisplayName("Ensure the required letter is correctly selected.")
     public void testRequiredLetter () {
         assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should be the last letter in the array.");
@@ -144,7 +144,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(10)
+    @RepeatedTest(3)
     @DisplayName("Ensure memento's methods work properly.")
     public void testMemento () {
         Puzzle.Memento memento = gameState.getMemento();

@@ -1,6 +1,7 @@
 package nopointers;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
@@ -364,7 +365,8 @@ public class Puzzle {
         res.append("\n");
         res.append("WORDS:" + validWords.size() + ", POINTS: " + Integer.toString(maxScore));//+ var
         res.append(", PANGRAMS: ");
-	    res.append(Connect.pangramCount());
+
+	    res.append(database.pangramCount());
         /*
         if(Connect.countPerfectPangrams() > 0){
 	    res.append("(" + Connect.countPerfectPangrams() + "Perfect)");

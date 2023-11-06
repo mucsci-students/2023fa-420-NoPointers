@@ -33,8 +33,7 @@ public class Database {
      */
     public synchronized static Database getInstance() {
         if (instance == null)
-            instance = new Database();
-
+                instance = new Database();
         return instance;
     }
     /** Builds a SQL string to fetch all words in the database that are valid of the given set of letters.
@@ -71,8 +70,8 @@ public class Database {
      */
     public ArrayList<String> getWords(char[] letters) {
         ArrayList<String> wordList = new ArrayList<>();
+
         try {
-            // Create a connection to the database
             Statement stmt;
 
             stmt = connection.createStatement();
@@ -84,11 +83,11 @@ public class Database {
             }
 
             stmt.close();
-        } catch (SQLException e) {
-            // Database access error
             return wordList;
         }
-        return wordList;
+        catch (SQLException e) {
+            return wordList;
+        }
     }
 
     /** Checks if the given word is a pangram.
@@ -99,9 +98,10 @@ public class Database {
      */
     public boolean checkPangram(String word) {
         String sql = "SELECT * FROM pangrams WHERE pangram = '" + word + "';";
+
+        boolean isPangram;
+
         try {
-            // Create a connection to the database
-            boolean isPangram = false;
             Statement stmt;
 
             stmt = connection.createStatement();
@@ -110,8 +110,8 @@ public class Database {
             isPangram = rs.next();
             stmt.close();
             return isPangram;
-        } catch (SQLException e) {
-            // Database access error
+        }
+        catch (SQLException e) {
             return false;
         }
     }
@@ -173,8 +173,60 @@ public class Database {
     public char[] selectPangram() {
         String sql = "SELECT * FROM pangrams ORDER BY RANDOM() LIMIT 1;";
 
+        String word = "";
+
         try {
-            String word = "";
+            Statement stmt;
+
+            stmt = connection.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            word = rs.getString(1);
+
+            stmt.close();
+            HashSet<Character> s = new HashSet<>();
+            for (char c : word.toCharArray()) {
+                s.add(c);
+            }
+            ArrayList<Character> lst = new ArrayList<Character>();
+            lst.addAll(s);
+            char[] arr = new char[7];
+            for (int i = 0; i < lst.size(); ++i) {
+                arr[i] = lst.get(i);
+            }
+            return arr;
+        }
+        catch (SQLException e) {
+            return null;
+        }
+    }
+
+    public static boolean findWord(int size, String wordString) {
+        if (size < 4)
+            return false;
+
+        try {
+            Statement stmt;
+
+            stmt = connection.createStatement();
+            String SQLQuery = "SELECT * FROM words WHERE word = " + wordString + ";";
+            ResultSet rs = stmt.executeQuery(SQLQuery);
+            boolean found = rs.next();
+            stmt.close();
+            return found;
+        }
+        catch (SQLException e) {
+            return false;
+        }
+
+    }
+    public static int pangramCount()  {
+        String sql = "SELECT COUNT(*) FROM pangrams;";
+
+        int res = 0;
+
+        try {
             Statement stmt;
 
             stmt = connection.createStatement();
@@ -182,25 +234,53 @@ public class Database {
             ResultSet rs = stmt.executeQuery(sql);
 
             if (rs.next())
-                word = rs.getString(1);
+                res = rs.getInt(1);
 
             stmt.close();
-            HashSet<Character> s = new HashSet<>();
-            for(char c: word.toCharArray())
-            {
-                s.add(c);
-            }
-            ArrayList<Character> lst = new ArrayList<Character>();
-            lst.addAll(s);
-            char[] arr = new char[7];
-            for(int i = 0; i < lst.size(); ++i)
-            {
-                arr[i] = lst.get(i);
-            }
-            return arr;
-        } catch (SQLException e) {
-            // Database access error
-            return null;
+            return res;
+        }
+        catch (SQLException e) {
+            return 0;
         }
     }
+
+    public static int countPerfectPangrams() {
+
+        String sql = "SELECT * FROM pangrams;"; // Change the SQL query to select all columns
+
+        int perfectPangramCount = 0;
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while (rs.next()) {
+                String pangramText = rs.getString("pangram");
+                if (isPerfectPangram(pangramText)) {
+                    perfectPangramCount++;
+                }
+            }
+
+            stmt.close();
+        }
+        catch (SQLException e) {
+            return 0;
+        }
+
+        return perfectPangramCount;
+    }
+
+
+    public static boolean isPerfectPangram(String text) {
+
+        text = text.toLowerCase().replaceAll(" ", "");
+
+        for (char letter : alphabet.toCharArray()) {
+            if (text.indexOf(letter) == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

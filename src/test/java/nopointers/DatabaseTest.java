@@ -1,5 +1,6 @@
 package nopointers;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -16,10 +17,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author kstigelman
  */
 public class DatabaseTest {
-    private Database database = Database.getInstance();
+    private Database database;
 
-    @Test
-    public void testInstance () {
+
+    @BeforeEach
+    public void beforeEach () {
+        database = Database.getInstance();
+
         assertNotNull(database, "The database instance should not be null");
     }
     /** Tests retrieving all words from the database that contain the letters of the pangram.
@@ -28,7 +32,6 @@ public class DatabaseTest {
      */
     @Test
     public void getWordsTest () {
-        try {
             char[] letters = { 'p', 'a', 'n', 'g', 'r', 'm', 's' };
             ArrayList<String> words = database.getWords(letters);
 
@@ -42,10 +45,6 @@ public class DatabaseTest {
 
             assertNotNull(words, "The ArrayList should not be null.");
             assertTrue (words.isEmpty(), "The valid words list should not be empty.");
-        }
-        catch (Exception e) {
-            fail("SQL Error: " + e.getMessage());
-        }
     }
 
     /** Tests reducing a word down to a character array
@@ -78,21 +77,19 @@ public class DatabaseTest {
      */
     @RepeatedTest(10)
     public void selectPangramTest () {
-        try {
+
             char[] pangram = database.selectPangram();
 
             assertNotNull(pangram, "Array of pangram letters is not null");
             assertEquals(7, pangram.length, "Pangram array must have 7 letters");
 
             HashSet<Character> chars = new HashSet<>();
-            for (int i = 0; i < pangram.length; ++i)
-                chars.add(pangram[i]);
+
+            for (char c : pangram)
+                chars.add(c);
 
             assertEquals(7, chars.size(), "Selected pangram has exactly 7 unique letters");
-        }
-        catch (Exception e) {
-            fail("SQL Error: " + e.getMessage());
-        }
+
     }
     /** Tests checking to see if words are valid 7 letter pangrams.
      *
@@ -100,16 +97,11 @@ public class DatabaseTest {
      */
     @Test
     public void checkPangramTest () {
-        try {
             assertTrue(database.checkPangram("pangrams"));
             assertTrue(database.checkPangram("ultrastructural"));
             assertFalse(database.checkPangram("assemblz"));
             assertFalse(database.checkPangram("metaphoric"));
             assertFalse(database.checkPangram("apple"));
             assertFalse(database.checkPangram(""));
-        }
-        catch (Exception e) {
-            fail("SQL Error: " + e.getMessage());
-        }
     }
 }

@@ -103,6 +103,7 @@ class GameStateTest {
     public void testNewRandomPuzzle () {
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
+        assertFalse (gameState.hasPuzzle(), "New random puzzle has not yet been generated, so hasPuzzle should be false");
         gameState.newRandomPuzzle();
         assertTrue (gameState.hasPuzzle(), "When generating a new random puzzle, the game state should have a non-null puzzle.");
     }
@@ -144,11 +145,19 @@ class GameStateTest {
      * @author kstigelman
      */
     @RepeatedTest(10)
-    @DisplayName("Ensure memento's gson method produces a string")
-    public void testMementoGSON () {
+    @DisplayName("Ensure memento's methods work properly.")
+    public void testMemento () {
         Puzzle.Memento memento = gameState.getMemento();
         assertNotNull(memento.toGSONObject(), "GSON should not be null.");
         assertFalse(memento.toGSONObject().isBlank(), "GSON should not be blank.");
+
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        GameState gameState2 = builder.build();
+
+        gameState2.restoreFromMemento(memento);
+        assertEquals(gameState.getScore(), gameState2.getScore(), "Restored memento's score should be the same as old memento.");
+        assertEquals(gameState.getLetters(), gameState2.getLetters(), "Restored memento's letters should be the same as old memento.");
+        assertEquals(gameState.requiredLetter(), gameState2.requiredLetter(), "Restored memento's required letter should be the same as old memento.");
     }
 
     /** Tests the game state's memento gson object.
@@ -168,5 +177,11 @@ class GameStateTest {
         assertFalse (gameState.load(), "Puzzle should successfully load");
         gameState.save();
         assertTrue (gameState.load(), "Puzzle should successfully load");
+    }
+
+
+    @RepeatedTest(10)
+    public void testTime () {
+        assertFalse (gameState.time(true), "I'm dropping out if this works");
     }
 }

@@ -121,33 +121,36 @@ public class GameState {
      */
     void newPuzzle() {
         System.out.println("Generating New Puzzle...");
-        time();
+        time(false);
         this.puzzle = new Puzzle();
         System.out.println("\nNew Puzzle Generated!");
     }
     /**
      * Displays a loading animation on our terminal.
      */
-    private void time() {
-        for (int i = 0; i < 100; ++i) {
-            try {
+    public boolean time(boolean fail) {
+        try {
+            if (fail)
+                Thread.sleep(5);
+            for (int i = 0; i < 100; ++i) {
                 TimeUnit.MILLISECONDS.sleep(1);
                 System.out.print("\u001b[1000D");
                 System.out.flush();
                 TimeUnit.MILLISECONDS.sleep(1);
                 System.out.print((i + 1) + "%");
                 System.out.flush();
-            } catch (InterruptedException e) {
-
-                e.printStackTrace();
             }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return false;
         }
+        return true;
     }
     // Helper method to generate new puzzle from user input
     private void newPuzzleBase(String input) {
         //  Auto-generated method stub
         System.out.println("Generating New Puzzle...");
-        time();
+        time(false);
         puzzle = new Puzzle(input);
         System.out.println("\nNew Puzzle Generated!");
     }

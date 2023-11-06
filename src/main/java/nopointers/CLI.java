@@ -128,6 +128,7 @@ public class CLI {
     }
 
     private void promptWinner() {
+        System.out.print("Enter name: ");
         String user = reader.getParsedLine().toString();
         gameState.addScore(user);
     }

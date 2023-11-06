@@ -364,12 +364,10 @@ public class Puzzle {
         res.append("\n");
         res.append("WORDS:" + validWords.size() + ", POINTS: " + Integer.toString(maxScore));//+ var
         res.append(", PANGRAMS: ");
-	    res.append(Connect.pangramCount());
-        /*
+        res.append(Connect.pangramCount());
         if(Connect.countPerfectPangrams() > 0){
 	    res.append("(" + Connect.countPerfectPangrams() + "Perfect)");
         }
-        */
         res.append("\n\n" + buildMatrix(validWords) + "\n");
         res.append("Two letter list:\n");
         res.append(twoLetLst(validWords));
@@ -587,6 +585,28 @@ public class Puzzle {
             res.append(iter.getKey().toString().toUpperCase());
             res.append("-");
             res.append(iter.getValue().toString());
+        }
+        return res.toString();
+    }
+
+    public boolean newHighScore(int score,String name){
+        if(database.checkScore(score)){
+            database.addScore(score,name);
+            return true;
+        }
+        return false;
+    }
+
+    public String printScore(){
+        StringBuilder res = new StringBuilder();
+        res.append("TOTAL HIGH SCORES\n");
+        Map<String,Integer> map = database.totalScore();
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            res.append("Name: ");
+            res.append(entry.getKey().toString());
+            res.append(" /Score: ");
+            res.append(entry.getValue().toString());
+            res.append("\n");
         }
         return res.toString();
     }

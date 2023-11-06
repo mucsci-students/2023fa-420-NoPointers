@@ -1,8 +1,7 @@
 package nopointers;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 /** Database class to handle all accesses to the 'words' sqlite database.
  *    Implemented with the Singleton design pattern.
@@ -203,4 +202,147 @@ public class Database {
             return null;
         }
     }
+
+    /**
+     * This is a java function that adds a new
+     * highscore to the sql database
+     *
+     * When a new score is high enough to
+     *
+     * It will return an int
+     * 0 if the score is not a new highscore
+     * 1 if
+     * 2 if
+     */
+    public Boolean checkScore(int score) {
+        if(scoreCount()< 10){
+            return true;
+        }
+        String sql = "SELECT MIN(scores) AS smallest_score FROM highscores;";
+        try {
+            int res = 0;
+            Statement stmt;
+
+            stmt = connection.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next())
+                res = rs.getInt(1);
+
+            stmt.close();
+            if(score > res) {
+                return true;
+            }
+            return false;
+        } catch (SQLException e) {
+            // Database access error
+
+            return null;
+        }
+    }
+
+    /**
+     * This is a java function that adds a new
+     * highscore to the sql database
+     *
+     * When a new score is high enough to
+     *
+     *
+     * @param score
+     * @param name
+     */
+    public void addScore(int score, String name){
+        String sql = "INSERT INTO highscores (NAME,SCORE) VALUES ('"+ name +"', "+ score +");";
+        if(scoreCount() < 10){
+            deleteScore();
+        }
+        try {
+
+            Statement stmt;
+
+            stmt = connection.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next())
+
+            stmt.close();
+
+        } catch (SQLException e) {
+            // Database access error
+            throw new IllegalArgumentException("whatever");
+        }
+    }
+
+    public void deleteScore(){
+        String sql = "DELETE FROM highscores WHERE scores = (SELECT MIN(scores) FROM highscores);";
+        try {
+            String word = "";
+            Statement stmt;
+
+                 stmt = connection.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next())
+                word = rs.getString(1);
+
+            stmt.close();
+        } catch (SQLException e) {
+            // Database access error
+            throw new IllegalArgumentException("whatever");
+        }
+    }
+
+    public int scoreCount(){
+        String sql = "SELECT COUNT(*) FROM highscores;";
+        try {
+            int res = 0;
+            Statement stmt;
+
+            stmt = connection.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            if (rs.next())
+                res = rs.getInt(1);
+
+            stmt.close();
+            return res;
+
+        } catch (SQLException e) {
+            // Database access error
+            return -1;
+        }
+    }
+
+    public Map<String,Integer> totalScore(){
+        String sql = "SELECT COUNT(*) FROM highscores;";
+        try {
+            Map<String,Integer> map = new TreeMap<>(Comparator.reverseOrder());
+            int num = 0;
+            String word = "";
+            Statement stmt;
+
+            stmt = connection.createStatement();
+
+            ResultSet rs = stmt.executeQuery(sql);
+
+            while(rs.next()){
+                word = rs.getString("name");
+                num = rs.getInt("score");
+                map.put(word, num);
+            }
+
+            stmt.close();
+
+            return map;
+
+        } catch (SQLException e) {
+            // Database access error
+            return null;
+        }
+    }
+
 }

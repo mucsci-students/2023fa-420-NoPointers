@@ -72,6 +72,10 @@ public class CLI {
         String[] args = command.split(" ");
         switch (args[0]) {
             case "exit":
+                if(gameState.newScore()){
+                    promptWinner();
+                    System.out.println(gameState.printScore());
+                }
                 System.out.println("\033[49m");
                 System.exit(0);
             case "":
@@ -121,6 +125,11 @@ public class CLI {
             default:
                 System.out.println(command + ": Unknown Command");
         }
+    }
+
+    private void promptWinner() {
+        String user = reader.getParsedLine().toString();
+        gameState.addScore(user);
     }
 
     private void handleOutcome(GuessOutcome outcome) {

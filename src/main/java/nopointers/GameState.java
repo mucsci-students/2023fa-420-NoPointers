@@ -211,6 +211,21 @@ public class GameState {
         return res;
     }
 
+    public boolean newScore(){
+        if(database.checkScore(getScore())){
+            return true;
+        }
+        return false;
+    }
+
+    public void addScore(String name){
+        puzzle.newHighScore(getScore(),name);
+    }
+
+    public String printScore(){
+        return puzzle.printScore();
+    }
+
     // Builder implementation for GameState
     public static class GameStateBuilder {
         private Puzzle puzzle;

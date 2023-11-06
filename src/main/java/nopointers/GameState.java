@@ -131,7 +131,7 @@ public class GameState {
     public boolean time(boolean fail) {
         try {
             if (fail)
-                Thread.sleep(1000);
+                TTimeUnit.MILLISECONDS.sleep(2000);
             for (int i = 0; i < 100; ++i) {
                 TimeUnit.MILLISECONDS.sleep(1);
                 System.out.print("\u001b[1000D");

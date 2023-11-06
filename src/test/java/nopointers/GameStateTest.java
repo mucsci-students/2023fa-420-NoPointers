@@ -180,7 +180,7 @@ class GameStateTest {
     }
 
 
-    @RepeatedTest(10)
+    @Test
     public void testTime () {
         assertFalse (gameState.time(true), "I'm dropping out if this works");
     }

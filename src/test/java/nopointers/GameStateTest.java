@@ -172,7 +172,8 @@ class GameStateTest {
         gameState.rank();
     }
 
-    @Test
+    @RepeatedTest(3)
+    @DisplayName("Test save & load functonality")
     public void testSaveAndLoad () {
         assertFalse (gameState.load(), "Puzzle should successfully load");
         gameState.save();
@@ -181,6 +182,7 @@ class GameStateTest {
 
 
     @Test
+    @DisplayName("Test the time function")
     public void testTime () {
         assertFalse (gameState.time(true), "I'm dropping out if this works");
     }

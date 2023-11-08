@@ -40,16 +40,11 @@ public class GameState {
 
     // Save method for controllers to call on.
     public boolean savePuzzle () {
-        if (puzzle != null) {
-            //memento.save();
-            save();
-            System.out.println("Puzzle Saved!");
-            return true;
-        }
-        else {
-            System.out.println("No Puzzle to Save");
+        if (puzzle == null)
             return false;
-        }
+        save();
+        System.out.println("Puzzle Saved!");
+        return true;
     }
 
     // Load method to be called on by controllers.
@@ -167,22 +162,17 @@ public class GameState {
      */
 
     public void save() {
+        // Save current puzzle to a Memento.
+        Puzzle.Memento m = puzzle.saveToMemento();
+        String s = m.toGSONObject();
+        String home = System.getProperty("user.home");
 
-        if(puzzle != null)
-        {
-            // Save current puzzle to a Memento.
-            Puzzle.Memento m = puzzle.saveToMemento();
-            String s = new String(m.toGSONObject());
-            String home = System.getProperty("user.home");
-
-            System.out.println(s);
-            try {
-                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-            } catch (IOException error) {
-                throw new RuntimeException(error);
-            }
+        System.out.println(s);
+        try {
+            Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException error) {
+            throw new RuntimeException(error);
         }
-
     }
 
     /**

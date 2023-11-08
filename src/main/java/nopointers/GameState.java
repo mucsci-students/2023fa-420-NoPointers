@@ -42,7 +42,20 @@ public class GameState {
     public boolean savePuzzle () {
         if (puzzle == null)
             return false;
-        save();
+        // Save current puzzle to a Memento.
+        Puzzle.Memento m = puzzle.saveToMemento();
+        String s = m.toGSONObject();
+        String home = System.getProperty("user.home");
+
+        System.out.println(s);
+
+        try {
+            Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException error) {
+            System.out.print("No save file found!");
+            return false;
+        }
+
         System.out.println("Puzzle Saved!");
         return true;
     }
@@ -162,31 +175,6 @@ public class GameState {
         time(false);
         puzzle = new Puzzle(input);
         System.out.println("\nNew Puzzle Generated!");
-    }
-
-
-
-
-    /**
-     * @precondtion The user has a puzzle to save in the first place.
-     *
-     * Saves the users current puzzle to a path if the path is valid.
-     *
-     * @postcondition The users puzzle is saved to the given path.
-     */
-
-    public void save() {
-        // Save current puzzle to a Memento.
-        Puzzle.Memento m = puzzle.saveToMemento();
-        String s = m.toGSONObject();
-        String home = System.getProperty("user.home");
-
-        System.out.println(s);
-        try {
-            Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-        } catch (IOException error) {
-            throw new RuntimeException(error);
-        }
     }
 
     public String hints(){

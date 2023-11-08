@@ -176,7 +176,7 @@ class GameStateTest {
     @DisplayName("Test save & load functonality")
     public void testSaveAndLoad () {
         assertFalse (gameState.load(), "Puzzle should successfully load");
-        gameState.save();
+        gameState.savePuzzle();
         assertTrue (gameState.load(), "Puzzle should successfully load");
     }
 

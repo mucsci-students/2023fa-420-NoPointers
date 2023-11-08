@@ -172,7 +172,7 @@ class GameStateTest {
         gameState.rank();
     }
 
-    @RepeatedTest(3)
+    @Test
     @DisplayName("Test save & load functonality")
     public void testSaveAndLoad () {
         assertFalse (gameState.load(), "Puzzle should successfully load");

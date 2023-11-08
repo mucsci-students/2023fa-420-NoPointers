@@ -160,10 +160,6 @@ public class CLI {
     // Method to be called on from Show Puzzle Command. Prints out the puzzle
     // letters to user.
     public void showPuzzle() {
-        if (!gameState.hasPuzzle()) {
-            System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
-            return;
-        }
         // Print out the seven letters with the required letter in brackets [].
         for (int i = 0; i < gameState.getLetters().length; ++i) {
             if (i == 6)

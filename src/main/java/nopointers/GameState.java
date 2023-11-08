@@ -27,7 +27,6 @@ public class GameState {
         database = Database.getInstance();
     }
 
-
     // Guess method to be called on by controller. Calls on puzzle's guessWord method.
     public GuessOutcome guess (String input) {
         if (input.isBlank() || input.length() < 4) {

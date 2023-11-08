@@ -40,21 +40,43 @@ public class GameState {
 
     // Save method for controllers to call on.
     public boolean savePuzzle () {
-        if (puzzle != null) {
-            //memento.save();
-            save();
-            System.out.println("Puzzle Saved!");
-            return true;
-        }
-        else {
-            System.out.println("No Puzzle to Save");
+        if (puzzle == null)
+            return false;
+        // Save current puzzle to a Memento.
+        Puzzle.Memento m = puzzle.saveToMemento();
+        String s = m.toGSONObject();
+        String home = System.getProperty("user.home");
+
+        System.out.println(s);
+
+        try {
+            Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException error) {
+            System.out.print("Saving failed!");
             return false;
         }
+
+        System.out.println("Puzzle Saved!");
+        return true;
     }
 
     // Load method to be called on by controllers.
     public boolean loadPuzzle() {
-        return load();
+        String home = System.getProperty("user.home");
+        Path path = Paths.get(home).resolve("puzzle.json");
+        try {
+            Gson gson = new Gson();
+            String json = new String(Files.readAllBytes(path));
+            // Load json to a Memento
+            Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
+            puzzle = new Puzzle();
+            // Make current puzzle's fields to those of the saved Memento
+            puzzle.restoreFromMemento(m);
+            return true;
+        } catch (IOException err) {
+            System.out.println("No Save Found");
+            return false;
+        }
     }
     // Create new puzzle method to be called on by controllers.
     public void newRandomPuzzle() {
@@ -148,60 +170,6 @@ public class GameState {
         puzzle = new Puzzle(input);
         System.out.println("\nNew Puzzle Generated!");
     }
-
-
-
-
-    /**
-     * @precondtion The user has a puzzle to save in the first place.
-     *
-     * Saves the users current puzzle to a path if the path is valid.
-     *
-     * @postcondition The users puzzle is saved to the given path.
-     */
-
-    public void save() {
-
-        if(puzzle != null)
-        {
-            // Save current puzzle to a Memento.
-            Puzzle.Memento m = puzzle.saveToMemento();
-            String s = new String(m.toGSONObject());
-            String home = System.getProperty("user.home");
-
-            System.out.println(s);
-            try {
-                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-            } catch (IOException error) {
-                throw new RuntimeException(error);
-            }
-        }
-
-    }
-
-    /**
-     *
-     * Loads the saved puzzle from a JSON file from the given path.
-     */
-
-    public boolean load() {
-        String home = System.getProperty("user.home");
-        Path path = Paths.get(home).resolve("puzzle.json");
-        try {
-            Gson gson = new Gson();
-            String json = new String(Files.readAllBytes(path));
-            // Load json to a Memento
-            Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
-            puzzle = new Puzzle();
-            // Make current puzzle's fields to those of the saved Memento
-            puzzle.restoreFromMemento(m); 
-            return true;
-        } catch (IOException err) {
-            System.out.println("No Save Found");
-            return false;
-        }
-    }
-
 
     public String hints(){
         String res = puzzle.print();

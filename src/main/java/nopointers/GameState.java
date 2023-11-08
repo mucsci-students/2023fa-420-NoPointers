@@ -52,7 +52,7 @@ public class GameState {
         try {
             Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
         } catch (IOException error) {
-            System.out.print("No save file found!");
+            System.out.print("Saving failed!");
             return false;
         }
 

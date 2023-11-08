@@ -81,10 +81,6 @@ public class GameState {
         return puzzle.getGuessed();
     }
 
-    public boolean hasPuzzle() {
-        return (puzzle != null);
-    }
-
     public Puzzle.Memento getMemento() {return puzzle.saveToMemento();}
 
     public void restoreFromMemento(Puzzle.Memento m) {puzzle.restoreFromMemento(m);}
@@ -121,17 +117,15 @@ public class GameState {
      */
     void newPuzzle() {
         System.out.println("Generating New Puzzle...");
-        time(false);
+        time();
         this.puzzle = new Puzzle();
         System.out.println("\nNew Puzzle Generated!");
     }
     /**
      * Displays a loading animation on our terminal.
      */
-    public boolean time(boolean fail) {
+    public boolean time() {
         try {
-            if (fail)
-                TimeUnit.MILLISECONDS.sleep(2000);
             for (int i = 0; i < 100; ++i) {
                 TimeUnit.MILLISECONDS.sleep(1);
                 System.out.print("\u001b[1000D");
@@ -150,7 +144,7 @@ public class GameState {
     private void newPuzzleBase(String input) {
         //  Auto-generated method stub
         System.out.println("Generating New Puzzle...");
-        time(false);
+        time();
         puzzle = new Puzzle(input);
         System.out.println("\nNew Puzzle Generated!");
     }

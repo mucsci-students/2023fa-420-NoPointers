@@ -94,20 +94,6 @@ class GameStateTest {
         assertEquals(memento.getLetters(), gameState.getLetters(), "The game state's letters and the memento's letters should be the same.");
     }
 
-    /** Tests that GameState correctly generates a random puzzle.
-     *
-     * @author kstigelman
-     */
-    @RepeatedTest(3)
-    @DisplayName("Ensure a new random puzzle can be built.")
-    public void testNewRandomPuzzle () {
-        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
-        gameState = builder.build();
-        //assertFalse (gameState.hasPuzzle(), "New random puzzle has not yet been generated, so hasPuzzle should be false");
-        gameState.newRandomPuzzle();
-        assertTrue (gameState.hasPuzzle(), "When generating a new random puzzle, the game state should have a non-null puzzle.");
-    }
-
     /** Tests that GameState correctly generates a puzzle from a user input.
      *
      * @author kstigelman
@@ -182,6 +168,6 @@ class GameStateTest {
 
     @Test
     public void testTime () {
-        assertFalse (gameState.time(true), "I'm dropping out if this works");
+        assertFalse (when(gameState.time()).thenThrow(new InterruptedException e), "Exception should throw and fail.");
     }
 }

@@ -20,10 +20,26 @@ public class AutoCompleter {
     public AutoCompleter(){
         this.comp = new AggregateCompleter(
                 new ArgumentCompleter(
-                        new StringsCompleter("add"),
+                        new StringsCompleter("new"),
 
                         new NullCompleter()
                 ),
+                new ArgumentCompleter(
+                        new StringsCompleter("Custom"),
+
+                        new NullCompleter()
+                ),
+                new ArgumentCompleter(
+                        new StringsCompleter("Rules"),
+
+                        new NullCompleter()
+                ),
+                new ArgumentCompleter(
+                        new StringsCompleter("Guess"),
+
+                        new NullCompleter()
+                ),
+
                 new ArgumentCompleter(
                         new StringsCompleter("show"),
 
@@ -44,14 +60,6 @@ public class AutoCompleter {
                 ),
                 new ArgumentCompleter(
                         new StringsCompleter("load"),
-                        new NullCompleter()
-                ),
-                new ArgumentCompleter(
-                        new StringsCompleter("display"),
-                        new NullCompleter()
-                ),
-                new ArgumentCompleter(
-                        new StringsCompleter("redo"),
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(

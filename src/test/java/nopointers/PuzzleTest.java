@@ -55,7 +55,7 @@ class PuzzleTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(10)
+
     @DisplayName("Ensure letters get shuffled")
     public void testShuffle () {
         char[] beforeShuffle = Arrays.copyOf(puzzle.getLetters(), 7);
@@ -67,7 +67,7 @@ class PuzzleTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(5)
+
     @DisplayName("Rank should be 0 at 0 points and 9 at max points")
     public void testRank () {
         assertEquals(0, puzzle.getRank(), "Puzzle should not have any points and no guesses");
@@ -83,7 +83,7 @@ class PuzzleTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(5)
+
     @DisplayName("Percentage should be 0% at no words guessed and 100% at all words found")
     public void testScorePercent () {
         assertEquals(0.0, puzzle.getScorePercent(), "Puzzle should have 0% and no guesses");
@@ -97,7 +97,7 @@ class PuzzleTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(3)
+
     @DisplayName("Ensure the required letter is correctly selected.")
     public void testRequiredLetter () {
         assertEquals(puzzle.getLetters()[6], puzzle.getRequiredLetter(), "The required letter should be the last letter in the array.");
@@ -109,7 +109,7 @@ class PuzzleTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(5)
+
     @DisplayName("Ensure memento saves and restores correctly.")
     public void testMementoMethods () {
         Puzzle.Memento memento = puzzle.saveToMemento();

@@ -6,7 +6,7 @@ plugins {
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
-    id 'com.github.johnrengelman.shadow' version "7.1.2"
+    id ("com.github.johnrengelman.shadow") version "8.1.1"
 
 }
 run
@@ -18,17 +18,18 @@ run
 
 shadowJar {
     manifest {
-        attributes 'Main-Class': 'nopointers.Main'
+        attributes 'Main-Class': 'nopointers.EntryPoint'
     }
 
-    baseName = 'UML'
+
 }
 
 jar {
     manifest {
         attributes(
 
-                'Main-Class': 'nopointers.Main'
+                'Main-Class': 'nopointers.EntryPoint'
+
         )
     }
 
@@ -54,7 +55,8 @@ targetCompatibility = '17'
 
 application {
     mainModule = 'nopointers'
-    mainClass = 'nopointers.Main'
+    mainClass = 'nopointers.EntryPoint'
+
 }
 
 javafx {
@@ -115,27 +117,13 @@ test {
     useJUnitPlatform()}
 
 jlink {
+
+
     imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
     options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
     launcher {
         name = 'app'
     }
-}
-
-task shell(dependsOn: 'testClasses', type: JavaExec) {
-    group = 'help'
-    description 'Runs an interactive shell with all runtime dependencies. "Use with gradle -q shell".'
-    standardInput = System.in
-    main = 'nopointers.Main' 
-    // using Main directly has ansi issues (some keyboard keys not working)
-    // main = 'org.codehaus.groovy.tools.shell.Main'
-    classpath = sourceSets.main.runtimeClasspath
-    jvmArgs = []
-    // workingDir =
-    // standardOutput = System.out
-    // stops after eval, not useful now (maybe will change with Groovy >= 2.3.2)
-    // args = ["load $rootDir/integration-test/src/main/groovy/GroovyshStartup.groovy"]
-
 }
 
 jlinkZip {

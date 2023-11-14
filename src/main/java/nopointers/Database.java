@@ -214,11 +214,11 @@ public class Database {
      * 1 if
      * 2 if
      */
-    public Boolean checkScore(int score) {
+    public boolean checkScore(int score) {
         if(scoreCount()< 10){
             return true;
         }
-        String sql = "SELECT MIN(scores) AS smallest_score FROM highscores;";
+        String sql = "SELECT MIN(scores) FROM highscores;";
         try {
             int res = 0;
             Statement stmt;
@@ -237,8 +237,7 @@ public class Database {
             return false;
         } catch (SQLException e) {
             // Database access error
-
-            return null;
+            throw new IllegalArgumentException("checkScore failed: " + e.getMessage());
         }
     }
 
@@ -252,46 +251,46 @@ public class Database {
      * @param score
      * @param name
      */
-    public void addScore(int score, String name){
+    public boolean addScore(int score, String name){
         String sql = "INSERT INTO highscores (NAME,SCORE) VALUES ('"+ name +"', "+ score +");";
-        if(scoreCount() < 10){
+        if(scoreCount() > 10){
             deleteScore();
         }
         try {
-
             Statement stmt;
 
             stmt = connection.createStatement();
+            int rowsaff = stmt.executeUpdate(sql);
 
-            ResultSet rs = stmt.executeQuery(sql);
-
-            if (rs.next())
 
             stmt.close();
-
+            if(rowsaff > 0) {
+                return true;
+            }
+            return false;
         } catch (SQLException e) {
             // Database access error
-            throw new IllegalArgumentException("whatever");
+            throw new IllegalArgumentException("addScore failed: " + e.getMessage());
         }
     }
 
     public void deleteScore(){
         String sql = "DELETE FROM highscores WHERE scores = (SELECT MIN(scores) FROM highscores);";
         try {
-            String word = "";
             Statement stmt;
 
-                 stmt = connection.createStatement();
+            stmt = connection.createStatement();
 
-            ResultSet rs = stmt.executeQuery(sql);
+            int rowsaff = stmt.executeUpdate(sql);
 
-            if (rs.next())
-                word = rs.getString(1);
-
+            if (rowsaff == 0) {
+                throw new IllegalStateException("deletion didn't work");
+            }
+            connection.commit();
             stmt.close();
         } catch (SQLException e) {
             // Database access error
-            throw new IllegalArgumentException("whatever");
+            throw new IllegalArgumentException("deleteError" + e.getMessage());
         }
     }
 
@@ -318,7 +317,7 @@ public class Database {
     }
 
     public Map<String,Integer> totalScore(){
-        String sql = "SELECT COUNT(*) FROM highscores;";
+        String sql = "SELECT * FROM highscores;";
         try {
             Map<String,Integer> map = new TreeMap<>(Comparator.reverseOrder());
             int num = 0;
@@ -342,6 +341,31 @@ public class Database {
         } catch (SQLException e) {
             // Database access error
             return null;
+        }
+    }
+
+    public int test(String query){
+        try {
+            int num = 0;
+            Statement stmt;
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            if (rs.next()){
+                num = rs.getInt(1);
+            }
+            stmt.close();
+            return num;
+        } catch (SQLException e) {
+            // Database access error
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
+    public void conClose(){
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 

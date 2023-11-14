@@ -95,8 +95,12 @@ public class Controller {
     @FXML
 
     Button hintsButton = new Button();
+
     @FXML
     TextArea hintsBox = new TextArea();
+
+    @FXML
+    Button screensnap = new Button();
 
     Button g = new Button();
     Controller controller = this;
@@ -292,6 +296,11 @@ public class Controller {
         hintsBox.setText(gameState.hints());
         hintsBox.setVisible(true);
     }
+
+    public void screensnapf(ActionEvent e){
+
+    }
+
     private void undo() {
         if (history.isEmpty()) {
             return;

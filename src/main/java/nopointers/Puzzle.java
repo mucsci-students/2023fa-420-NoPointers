@@ -591,8 +591,7 @@ public class Puzzle {
 
     public boolean newHighScore(int score,String name){
         if(database.checkScore(score)){
-            database.addScore(score,name);
-            return true;
+            return database.addScore(score,name);
         }
         return false;
     }
@@ -604,7 +603,7 @@ public class Puzzle {
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             res.append("Name: ");
             res.append(entry.getKey().toString());
-            res.append(" /Score: ");
+            res.append("| Score: ");
             res.append(entry.getValue().toString());
             res.append("\n");
         }

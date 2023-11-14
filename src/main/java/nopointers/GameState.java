@@ -218,13 +218,17 @@ public class GameState {
         return false;
     }
 
-    public void addScore(String name){
-        puzzle.newHighScore(getScore(),name);
+    public boolean addScore(String name){
+        return puzzle.newHighScore(getScore(),name);
     }
 
     public String printScore(){
         return puzzle.printScore();
     }
+
+    public int test(String name){return database.test(name);}
+    public void conClose(){database.conClose();}
+
 
     // Builder implementation for GameState
     public static class GameStateBuilder {

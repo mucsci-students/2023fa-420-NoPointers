@@ -25,6 +25,7 @@ public class CLI {
     private GameState gameState;
 
 
+
     public CLI(Terminal t) {
         //gameState = new GameState();
         //gameState = new GameState.GameStateBuilder(Database.getInstance());
@@ -76,6 +77,7 @@ public class CLI {
                     promptWinner();
                     System.out.println(gameState.printScore());
                 }
+                gameState.conClose();
                 System.out.println("\033[49m");
                 System.exit(0);
             case "":
@@ -122,17 +124,28 @@ public class CLI {
                 String res = gameState.hints();
                 System.out.print(res);
                 break;
+            case "test":
+                tester();
+                break;
             default:
                 System.out.println(command + ": Unknown Command");
         }
     }
 
     private void promptWinner() {
+
         System.out.print("Enter name: ");
-        String user = reader.getParsedLine().toString();
-        gameState.addScore(user);
+        String user = reader.readLine().toLowerCase();
+        boolean res = gameState.addScore(user);
+        if(!res){System.out.print("did not add.");}
+        System.out.println(gameState.test("SELECT score FROM highscores WHERE name = '"+ user +"';"));
     }
 
+    private void tester() {
+        System.out.print("Enter query: ");
+        String user = reader.readLine().toLowerCase();
+        System.out.println(gameState.test(user));
+    }
     private void handleOutcome(GuessOutcome outcome) {
         switch (outcome) {
             case SUCCESS -> {

@@ -186,6 +186,9 @@ public class Controller {
             input.clear();
             foundWords.clear();
 
+
+
+
         }
     }
 

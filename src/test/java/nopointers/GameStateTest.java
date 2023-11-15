@@ -179,6 +179,6 @@ class GameStateTest {
         doThrow(InterruptedException.class).when(gs).time();
         //when(gs.time()).thenThrow(InterruptedException.class);
 
-        assertThrows(InterruptedException.class, () -> gs.newPuzzle());
+        assertThrows(InterruptedException.class, () -> gs.time());
     }
 }

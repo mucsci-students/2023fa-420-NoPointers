@@ -81,7 +81,13 @@ public class CLI {
                 showPuzzle();
                 break;
             case "save":
-                gameState.savePuzzle();
+                try {
+                    gameState.savePuzzle();
+                }
+                catch (IOException e) {
+                    System.out.print("Saving failed!");
+                }
+
                 break;
             case "guess":
                 GuessOutcome outcome = gameState.guess(args[1]);
@@ -95,7 +101,12 @@ public class CLI {
                 rules();
                 break;
             case "load":
-                gameState.loadPuzzle();
+                try {
+                    gameState.loadPuzzle();
+                }
+                catch (IOException e) {
+                    System.out.println("No Save Found");
+                }
                 break;
             case "new":
                 gameState.newRandomPuzzle();

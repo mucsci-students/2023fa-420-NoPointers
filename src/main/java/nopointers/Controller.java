@@ -197,14 +197,14 @@ public class Controller {
 
     public void load(ActionEvent e)
     {
-        if (gameState.loadPuzzle()) {
+        try {
+            gameState.loadPuzzle();
             setButtons();
-            for(String s : gameState.guessed())
-            {
+            for (String s : gameState.guessed()) {
                 foundWords.insertText(0, s + "\n");
             }
         }
-        else {
+        catch (IOException ex)  {
             error.setText("No puzzle to load.");
             error.setVisible(true);
         }
@@ -229,7 +229,13 @@ public class Controller {
 
     public void save(ActionEvent e)
     {
-        gameState.savePuzzle();
+        try {
+            gameState.savePuzzle();
+        }
+        catch (IOException ex) {
+            System.out.print("Saving failed!");
+        }
+
     }
 
     public void CustomButton (ActionEvent e)

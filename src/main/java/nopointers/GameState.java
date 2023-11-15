@@ -38,7 +38,7 @@ public class GameState {
     }
 
     // Save method for controllers to call on.
-    public boolean savePuzzle () {
+    public boolean savePuzzle () throws IOException {
         if (puzzle == null)
             return false;
         // Save current puzzle to a Memento.
@@ -48,34 +48,23 @@ public class GameState {
 
         System.out.println(s);
 
-        try {
-            Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-        } catch (IOException error) {
-            System.out.print("Saving failed!");
-            return false;
-        }
+        Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
         System.out.println("Puzzle Saved!");
         return true;
     }
 
     // Load method to be called on by controllers.
-    public boolean loadPuzzle() {
+    public void loadPuzzle() throws IOException {
         String home = System.getProperty("user.home");
         Path path = Paths.get(home).resolve("puzzle.json");
-        try {
-            Gson gson = new Gson();
-            String json = new String(Files.readAllBytes(path));
-            // Load json to a Memento
-            Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
-            puzzle = new Puzzle();
-            // Make current puzzle's fields to those of the saved Memento
-            puzzle.restoreFromMemento(m);
-            return true;
-        } catch (IOException err) {
-            System.out.println("No Save Found");
-            return false;
-        }
+        Gson gson = new Gson();
+        String json = new String(Files.readAllBytes(path));
+        // Load json to a Memento
+        Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
+        puzzle = new Puzzle();
+        // Make current puzzle's fields to those of the saved Memento
+        puzzle.restoreFromMemento(m);
     }
     // Create new puzzle method to be called on by controllers.
     public void newRandomPuzzle() {

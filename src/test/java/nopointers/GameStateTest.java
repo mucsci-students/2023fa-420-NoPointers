@@ -178,22 +178,28 @@ class GameStateTest {
     }
 
     @Test
-    @DisplayName("Test save & load functonality")
-    public void testLoad () {
-        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
-        GameState gs = mock(GameState.class);
-
+    @DisplayName("Test save functonality")
+    public void testSave () {
         try {
-            doThrow(IOException.class).when(gs).savePuzzle();
+            gameState.savePuzzle();
+        } catch (IOException e) {
+            fail("IOException was thrown");
         }
-        catch (IOException e) {
-            fail ("IOException was thrown");
+    }
+    @Test
+    @DisplayName("Test load functonality")
+    public void testLoad () {
+        try {
+            gameState.loadPuzzle();
+        } catch (IOException e) {
+            fail("IOException was thrown");
         }
+    }
         //when(gs.time()).thenThrow(InterruptedException.class);
 
         //assertThrows(InterruptedException.class, () -> gs.time());
         //assertFalse (gameState.loadPuzzle(), "Puzzle should not load");
         //assertTrue(gameState.savePuzzle(), "Puzzle should save");
         //assertTrue (gameState.loadPuzzle(), "Puzzle should successfully load");
-    }
+
 }

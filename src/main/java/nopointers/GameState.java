@@ -38,9 +38,7 @@ public class GameState {
     }
 
     // Save method for controllers to call on.
-    public boolean savePuzzle () throws IOException {
-        if (puzzle == null)
-            return false;
+    public void savePuzzle () throws IOException {
         // Save current puzzle to a Memento.
         Puzzle.Memento m = puzzle.saveToMemento();
         String s = m.toGSONObject();
@@ -51,7 +49,6 @@ public class GameState {
         Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
         System.out.println("Puzzle Saved!");
-        return true;
     }
 
     // Load method to be called on by controllers.

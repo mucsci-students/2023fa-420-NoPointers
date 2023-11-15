@@ -625,6 +625,9 @@ public class Puzzle {
         @Expose (serialize = true, deserialize = true)
         private int score;
 
+        @SerializedName(value = "playerRank")
+        @Expose (serialize = true, deserialize = true)
+        private int rank;
 
         // Constructor.
         public Memento (Puzzle puzzle) {
@@ -632,6 +635,7 @@ public class Puzzle {
             this.guessed = puzzle.guessed;
             this.requiredLetter = puzzle.requiredLetter;
             this.score = puzzle.score;
+            this.rank = puzzle.getRank();
         }
 
         public char getRequiredLetter() {
@@ -648,6 +652,9 @@ public class Puzzle {
 
         public int getScore() {
             return score;
+        }
+        public int getRank() {
+            return rank;
         }
 
         public String toGSONObject()

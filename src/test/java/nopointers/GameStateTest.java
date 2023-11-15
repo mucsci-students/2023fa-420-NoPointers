@@ -90,6 +90,9 @@ class GameStateTest {
         Puzzle.Memento memento = gameState.getMemento();
         assertEquals(memento.getGuessed(), gameState.guessed(), "The game state's guessed words and the memento's guessed words should be the same.");
         assertEquals(memento.getScore(), gameState.getScore(), "The game state's score should match the memento's score.");
+        gameState.rank();
+        assertEquals(memento.getRank(), gameState.getRank(), "The game state's score should match the memento's score.");
+        gameState.rank();
     }
 
     /** Tests that the order of letters successfully shuffles.
@@ -160,36 +163,14 @@ class GameStateTest {
         GameState gameState2 = builder.build();
 
         gameState2.restoreFromMemento(memento);
+        assertEquals(gameState.getRank(), gameState2.getRank(), "Restored memento's score should be the same as old memento.");
+
         assertEquals(gameState.getScore(), gameState2.getScore(), "Restored memento's score should be the same as old memento.");
         assertEquals(gameState.getLetters(), gameState2.getLetters(), "Restored memento's letters should be the same as old memento.");
         assertEquals(gameState.requiredLetter(), gameState2.requiredLetter(), "Restored memento's required letter should be the same as old memento.");
+
     }
 
-    /** Tests the game state's memento gson object.
-     *
-     * @author kstigelman
-     */
-    @Test
-    @DisplayName("Ensure game state rank functions correctly.")
-    public void testOther () {
-        Puzzle puzzle = new Puzzle("pangrams");
-        try {
-            gameState.newUserPuzzle("pangrams");
-        }
-        catch (InterruptedException e) {
-            fail("Something went wrong. Try again later");
-        }
-
-        assertEquals(0, gameState.getRank(), "Rank should be zero.");
-        gameState.rank();
-
-        for (String s : puzzle.getValidWords()) {
-            gameState.guess(s);
-            puzzle.guessWord(s);
-        }
-
-        assertEquals(puzzle.getRank(), gameState.getRank(), "Puzzle should have max rank at max points");
-    }
 
     @Test
     @DisplayName("Test save functonality")

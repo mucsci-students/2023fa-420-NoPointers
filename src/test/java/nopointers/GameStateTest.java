@@ -176,9 +176,9 @@ class GameStateTest {
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         GameState gs = mock(GameState.class);
 
-        doThrow(IllegalStateException.class).when(gs).time();
+        doThrow(InterruptedException.class).when(gs).time();
         //when(gs.time()).thenThrow(InterruptedException.class);
 
-        assertThrows(IllegalStateException.class, () -> gs.time());
+        assertThrows(InterruptedException.class, () -> gs.newPuzzle());
     }
 }

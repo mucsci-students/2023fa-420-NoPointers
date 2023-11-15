@@ -16,6 +16,8 @@ public class Database {
     private static Database instance;
     private static Connection connection;
 
+    //private static Connection sconnection;
+
     /** Constructor establishes connection to the database.
      *
      * @author kstigelman
@@ -23,9 +25,11 @@ public class Database {
     private Database () {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite::resource:words.db");
+            //sconnection = DriverManager.getConnection("jdbc:sqlite::src/main/resources/words.db");
         }
         catch (SQLException e) {
             connection = null;
+            //sconnection = null;
         }
     }
 
@@ -217,7 +221,7 @@ public class Database {
      * 2 if
      */
     public boolean checkScore(int score) {
-        if(scoreCount()< 10){
+        if(scoreCount() < 10){
             return true;
         }
         String sql = "SELECT MIN(scores) FROM highscores;";
@@ -376,8 +380,28 @@ public class Database {
     }
 
     public void conClose(){
+        /*
+        String sql = "SELECT * FROM highscores";
+        StringBuilder res = new StringBuilder();
+        */
         try {
             connection.close();
+            /*
+            Statement stmnt = connection.createStatement();
+            ResultSet rs = stmnt.executeQuery(sql);
+
+            res.append("INSERT INTO highscores VALUES ");
+            while(rs.next()){
+                String word = rs.getString(1);
+                int num = rs.getInt(1);
+                res.append("(" + word + ", ");
+                res.append(String.valueOf(num) + ")");
+            }
+            res.append(";");
+            stmnt = sconnection.createStatement();
+            stmnt.executeUpdate("DELETE FROM highscores;");
+            stmnt.executeUpdate(sql);
+            */
         } catch (SQLException e) {
             throw new IllegalArgumentException(e.getMessage());
         }

@@ -169,7 +169,20 @@ public class Controller {
     public void NewPuzzle(ActionEvent e)
     {
         // Create a new puzzle via the New button with a NewPuzzle command.
-        executeCommand(new NewPuzzleCommand(this, gameState));
+        String word = new String(gameState.getLetters());
+        if(!l0.getText().equals(String.valueOf(word.charAt(0)))){
+            executeCommand(new NewPuzzleCommand(this, gameState));
+        }
+        else if(scoresBox.isVisible()){
+            scoresBox.setVisible(false);
+        }
+        else{
+            scoresf(e);
+            executeCommand(new NewPuzzleCommand(this, gameState));
+        }
+
+
+
 
     }
 
@@ -321,6 +334,7 @@ public class Controller {
     public void hintsf(ActionEvent e){
         if(hintsBox.isVisible()){
             hintsBox.setVisible(false);
+            return;
         }
         String res = gameState.hints();
         hintsBox.setText(gameState.hints());
@@ -328,22 +342,22 @@ public class Controller {
     }
 
     public void scoresf(ActionEvent e){
-        enterName.setVisible(true);
-        enter.setVisible(true);
-        String name = enterf(e);
-        gameState.addScore(name);
-        enterName.setVisible(false);
-        enter.setVisible(false);
         if(scoresBox.isVisible()){
             scoresBox.setVisible(false);
         }
+        enterName.setVisible(true);
+        enter.setVisible(true);
+    }
+
+    public void enterf(ActionEvent e){
+        enterName.setVisible(false);
+        enter.setVisible(false);
+        gameState.addScore(enterName.getText());
+        enterName.setText("");
         String res = gameState.printScore();
         scoresBox.setText(res);
         scoresBox.setVisible(true);
-    }
 
-    public String enterf(ActionEvent e){
-        return enterName.getText();
     }
 
     public void screensnapf(ActionEvent e){

@@ -319,7 +319,7 @@
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="enter" layoutX="313.0" layoutY="242.0" mnemonicParsing="false" onAction="#guess" prefHeight="58.0" prefWidth="87.0" style="-fx-background-color: lime;" text="Enter" visible="false">
+                  <Button fx:id="enter" layoutX="313.0" layoutY="242.0" mnemonicParsing="false" onAction="#enterf" prefHeight="58.0" prefWidth="87.0" style="-fx-background-color: lime;" text="Enter" visible="false">
                      <effect>
                         <InnerShadow />
                      </effect>

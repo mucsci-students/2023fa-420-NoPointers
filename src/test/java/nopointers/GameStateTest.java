@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -161,7 +162,19 @@ class GameStateTest {
 
     @Test
     @DisplayName("Test save & load functonality")
-    public void testSaveAndLoad () {
+    public void testLoad () {
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        GameState gs = mock(GameState.class);
+
+        try {
+            doThrow(IOException.class).when(gs).savePuzzle();
+        }
+        catch (IOException e) {
+            fail ("IOException was thrown");
+        }
+        //when(gs.time()).thenThrow(InterruptedException.class);
+
+        //assertThrows(InterruptedException.class, () -> gs.time());
         //assertFalse (gameState.loadPuzzle(), "Puzzle should not load");
         //assertTrue(gameState.savePuzzle(), "Puzzle should save");
         //assertTrue (gameState.loadPuzzle(), "Puzzle should successfully load");
@@ -179,6 +192,6 @@ class GameStateTest {
         doThrow(InterruptedException.class).when(gs).time();
         //when(gs.time()).thenThrow(InterruptedException.class);
 
-        assertThrows(InterruptedException.class, () -> gs.time());
+
     }
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 
 /** Tests public methods from the Game State class.
@@ -167,10 +168,17 @@ class GameStateTest {
     }
 
 
-/*
+
+
     @Test
     @DisplayName("Test the time function")
     public void testTime () {
-        assertFalse (when(gameState.time()).thenThrow(new InterruptedException e), "Exception should throw and fail.");
-    }*/
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        GameState gs = mock(GameState.class);
+
+        doThrow(IllegalStateException.class).when(gs).time();
+        //when(gs.time()).thenThrow(InterruptedException.class);
+
+        assertThrows(IllegalStateException.class, () -> gs.time());
+    }
 }

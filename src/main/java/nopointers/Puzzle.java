@@ -602,7 +602,12 @@ public class Puzzle {
         Map<String,Integer> map = database.totalScore();
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
             res.append("Name: ");
-            res.append(entry.getKey().toString());
+            String word = entry.getKey().toString();
+            if(word.substring(0,1).equals(".")){
+                res.append(word.substring(2,word.length()));
+            }else{
+                res.append(entry.getKey().toString());
+            }
             res.append("| Score: ");
             res.append(entry.getValue().toString());
             res.append("\n");

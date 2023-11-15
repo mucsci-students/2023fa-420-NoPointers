@@ -16,6 +16,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import javafx.scene.image.WritableImage;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
+import javafx.scene.text.Text;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 
 public class Controller {
@@ -102,6 +118,15 @@ public class Controller {
     @FXML
     Button screensnap = new Button();
 
+    @FXML
+    TextArea scoresBox = new TextArea();
+
+    @FXML
+    TextField enterName = new TextField();
+
+    @FXML
+    Button enter = new Button();
+
     Button g = new Button();
     Controller controller = this;
 
@@ -114,7 +139,12 @@ public class Controller {
 
     public void quit(ActionEvent e)
     {
-        System.exit(0);
+        if(gameState.newScore()){
+            scoresf(e);
+        }
+        else{
+            System.exit(0);
+        }
     }
 
     public void customPuzzle(ActionEvent e)
@@ -297,9 +327,60 @@ public class Controller {
         hintsBox.setVisible(true);
     }
 
+    public void scoresf(ActionEvent e){
+        enterName.setVisible(true);
+        enter.setVisible(true);
+        String name = enterf(e);
+        gameState.addScore(name);
+        enterName.setVisible(false);
+        enter.setVisible(false);
+        if(scoresBox.isVisible()){
+            scoresBox.setVisible(false);
+        }
+        String res = gameState.printScore();
+        scoresBox.setText(res);
+        scoresBox.setVisible(true);
+    }
+
+    public String enterf(ActionEvent e){
+        return enterName.getText();
+    }
+
     public void screensnapf(ActionEvent e){
 
     }
+    private void captureScreenshot() {
+        // Assuming you want to capture the root node of the scene.
+        Node rootNode = l0.getScene().getRoot();
+
+        // Specify the file name for the screenshot
+        String fileName = "screenshot.png";
+
+        // Create a WritableImage with the dimensions of the node
+        WritableImage image = new WritableImage((int) rootNode.getBoundsInLocal().getWidth(),
+                (int) rootNode.getBoundsInLocal().getHeight());
+
+        // Set up snapshot parameters
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(javafx.scene.paint.Color.TRANSPARENT); // Use TRANSPARENT for transparent backgrounds
+
+        // Take a snapshot of the node
+        rootNode.snapshot(params, image);
+
+        // Get the user's "Downloads" directory
+        String downloadsDir = System.getProperty("user.home") + File.separator + "Downloads";
+        Path downloadsPath = FileSystems.getDefault().getPath(downloadsDir);
+
+        // Save the WritableImage to the "Downloads" directory
+        try {
+            File file = new File(downloadsPath.toFile(), fileName);
+            ImageIO.write(/*SwingFXUtils.fromFXImage(image, null)*/null, "png", file);
+            System.out.println("Screenshot saved to: " + file.getAbsolutePath());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     private void undo() {
         if (history.isEmpty()) {

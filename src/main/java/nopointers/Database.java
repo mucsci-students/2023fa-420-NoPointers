@@ -1,5 +1,7 @@
 package nopointers;
 
+import javafx.util.Pair;
+
 import java.sql.*;
 import java.util.*;
 
@@ -252,10 +254,14 @@ public class Database {
      * @param name
      */
     public boolean addScore(int score, String name){
-        String sql = "INSERT INTO highscores (NAME,SCORE) VALUES ('"+ name +"', "+ score +");";
+        int id = 0;
         if(scoreCount() > 10){
-            deleteScore();
+            id = deleteScore();
         }
+        else{
+            id = scoreCount() + 1;
+        }
+        String sql = "INSERT INTO highscores (ID,NAME,SCORE) VALUES ("+ id +", '"+ name +"', "+ score +");";
         try {
             Statement stmt;
 
@@ -274,20 +280,22 @@ public class Database {
         }
     }
 
-    public void deleteScore(){
-        String sql = "DELETE FROM highscores WHERE scores = (SELECT MIN(scores) FROM highscores);";
+    public int deleteScore(){
+        String sqla = "SELECT ID FROM highscores WHERE scores = (SELECT MIN() FROM highscores)";
+        String sqlb = "DELETE FROM highscores WHERE scores = (SELECT MIN(scores) FROM highscores);";
         try {
             Statement stmt;
 
             stmt = connection.createStatement();
-
-            int rowsaff = stmt.executeUpdate(sql);
+            ResultSet rs = stmt.executeQuery(sqla);
+            int rowsaff = stmt.executeUpdate(sqlb);
 
             if (rowsaff == 0) {
                 throw new IllegalStateException("deletion didn't work");
             }
             connection.commit();
             stmt.close();
+            return rs.getInt(1);
         } catch (SQLException e) {
             // Database access error
             throw new IllegalArgumentException("deleteError" + e.getMessage());
@@ -316,12 +324,13 @@ public class Database {
         }
     }
 
-    public Map<String,Integer> totalScore(){
+    public Map<String, Integer> totalScore(){
         String sql = "SELECT * FROM highscores;";
         try {
             Map<String,Integer> map = new TreeMap<>(Comparator.reverseOrder());
             int num = 0;
             String word = "";
+            int i = 1;
             Statement stmt;
 
             stmt = connection.createStatement();
@@ -331,7 +340,12 @@ public class Database {
             while(rs.next()){
                 word = rs.getString("name");
                 num = rs.getInt("score");
-                map.put(word, num);
+                if(map.containsKey(word)){
+                    map.put("."+ String.valueOf(i) + word, num);
+                    i++;
+                }else{
+                    map.put(word,num);
+                }
             }
 
             stmt.close();

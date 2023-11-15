@@ -15,10 +15,10 @@ import org.jline.reader.impl.completer.StringsCompleter;
 
 public class AutoCompleter {
 
-    private AggregateCompleter comp;
+    private AggregateCompleter completer;
 
     public AutoCompleter(){
-        this.comp = new AggregateCompleter(
+        this.completer = new AggregateCompleter(
                 new ArgumentCompleter(
                         new StringsCompleter("new"),
 
@@ -51,10 +51,6 @@ public class AutoCompleter {
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("add"),
-                        new NullCompleter()
-                ),
-                new ArgumentCompleter(
                         new StringsCompleter("save"),
                         new NullCompleter()
                 ),
@@ -74,7 +70,7 @@ public class AutoCompleter {
     }
 
     public AggregateCompleter updateCompleter(){
-        Collection<Completer> completers = comp.getCompleters();
+        Collection<Completer> completers = completer.getCompleters();
         completers = new ArrayList<>(completers);
         return new AggregateCompleter(completers);
     }

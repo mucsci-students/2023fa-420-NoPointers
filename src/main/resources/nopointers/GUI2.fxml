@@ -276,6 +276,20 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
+                  <Button fx:id="screenshot" layoutX="42.0" layoutY="554.0" mnemonicParsing="false" onAction="#fileChooser" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Screenshot">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                     <font>
+                        <Font name="Algerian" size="20.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </Pane>
          </children>

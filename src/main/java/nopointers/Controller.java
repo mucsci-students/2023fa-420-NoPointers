@@ -264,7 +264,7 @@ public class Controller {
                 score.setText(String.valueOf(gameState.getScore()));
                 input.clear();
                 int currentRank = gameState.getRank();
-                String[] arr = gameState.getRanks();
+                String[] arr = RankInfo.ranks;
                 rank.setText(arr[gameState.getRank()]);
             }
             case TOO_SHORT -> {

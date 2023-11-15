@@ -75,8 +75,6 @@ class PuzzleTest {
             puzzle.guessWord(s);
 
         assertEquals(9, puzzle.getRank(), "Puzzle should have max rank at max points");
-
-        assertEquals (puzzle.getRanks().length, 10, "Method should be of size 10");
     }
 
     /** Tests that the point percentages for the ranking system are correct.

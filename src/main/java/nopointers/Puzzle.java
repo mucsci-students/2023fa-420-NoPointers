@@ -1,6 +1,11 @@
 package nopointers;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,34 +22,8 @@ import javafx.event.ActionEvent;
 import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 public class Puzzle {
-
-    //Rank related structures
-
-    String[] ranks = {
-            "Student",
-            "Apprentice",
-            "Adept",
-            "Master",
-            "Elder Wizard",
-            "Sorcerer",
-            "Keeper of Words",
-            "Keeper of Words",
-            "Genius",
-            "Word Wizard"
-    };
-    int[] levels = {
-            0,
-            2,
-            5,
-            8,
-            15,
-            25,
-            40,
-            50,
-            70,
-            100
-    };
 
     // Fields of Puzzle Class
     // The 6 optional letters
@@ -220,10 +199,10 @@ public class Puzzle {
     }
 
     public void displayRank () {
-        System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " + ranks[getRank()]);
+        System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " + RankInfo.ranks[getRank()]);
         if (getRank () == 9)
             return;
-        System.out.println ("Next rank: " + ranks[getRank() + 1] + " at " + (int) (levels[getRank () + 1] * maxScore / 100) + "pts");
+        System.out.println ("Next rank: " + RankInfo.ranks[getRank() + 1] + " at " + (int) (RankInfo.levels[getRank () + 1] * maxScore / 100) + "pts");
     }
     private void addCorrectWord (String guess) {
         guessed.add(guess);
@@ -254,10 +233,6 @@ public class Puzzle {
             points += 7;
 
         return points;
-    }
-
-    public String[] getRanks() {
-        return ranks;
     }
 
     /*public void setRanks(String[] ranks) {
@@ -604,6 +579,30 @@ public class Puzzle {
     public Memento saveToMemento() {
         Memento saved = new Memento(this);
         return saved;
+    }
+
+    public void save() throws IOException {
+        // Save current puzzle to a Memento.
+        Memento m = saveToMemento();
+        String s = m.toGSONObject();
+        String home = System.getProperty("user.home");
+
+        System.out.println(s);
+
+        Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+        System.out.println("Puzzle Saved!");
+    }
+    public void load() throws IOException {
+        String home = System.getProperty("user.home");
+        Path path = Paths.get(home).resolve("puzzle.json");
+        Gson gson = new Gson();
+        String json = new String(Files.readAllBytes(path));
+        // Load json to a Memento
+        Memento m = gson.fromJson(json, Puzzle.Memento.class);
+
+        // Make current puzzle's fields to those of the saved Memento
+        restoreFromMemento(m);
     }
     // Memento implementation. Used to save/load details of puzzle to/from a json file.
     public class Memento {

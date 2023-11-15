@@ -40,28 +40,12 @@ public class GameState {
     // Save method for controllers to call on.
     public void savePuzzle () throws IOException {
         // Save current puzzle to a Memento.
-        Puzzle.Memento m = puzzle.saveToMemento();
-        String s = m.toGSONObject();
-        String home = System.getProperty("user.home");
-
-        System.out.println(s);
-
-        Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-
-        System.out.println("Puzzle Saved!");
+        puzzle.save ();
     }
 
     // Load method to be called on by controllers.
     public void loadPuzzle() throws IOException {
-        String home = System.getProperty("user.home");
-        Path path = Paths.get(home).resolve("puzzle.json");
-        Gson gson = new Gson();
-        String json = new String(Files.readAllBytes(path));
-        // Load json to a Memento
-        Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
-        puzzle = new Puzzle();
-        // Make current puzzle's fields to those of the saved Memento
-        puzzle.restoreFromMemento(m);
+        puzzle.load();
     }
     // Create new puzzle method to be called on by controllers.
     public void newRandomPuzzle() throws InterruptedException {
@@ -97,8 +81,6 @@ public class GameState {
     }
 
     public int getRank() { return puzzle.getRank(); }
-
-    public String[] getRanks() { return puzzle.getRanks(); }
 
     public int getScore() { return puzzle.getScore(); }
 

@@ -172,9 +172,23 @@ class GameStateTest {
     @Test
     @DisplayName("Ensure game state rank functions correctly.")
     public void testOther () {
-        assertEquals (gameState.getRanks().length, 10, "Method should be of size 10");
+        Puzzle puzzle = new Puzzle("pangrams");
+        try {
+            gameState.newUserPuzzle("pangrams");
+        }
+        catch (InterruptedException e) {
+            fail("Something went wrong. Try again later");
+        }
+
         assertEquals(0, gameState.getRank(), "Rank should be zero.");
         gameState.rank();
+
+        for (String s : puzzle.getValidWords()) {
+            gameState.guess(s);
+            puzzle.guessWord(s);
+        }
+
+        assertEquals(puzzle.getRank(), gameState.getRank(), "Puzzle should have max rank at max points");
     }
 
     @Test
@@ -195,11 +209,11 @@ class GameStateTest {
             fail("IOException was thrown");
         }
     }
-        //when(gs.time()).thenThrow(InterruptedException.class);
-
-        //assertThrows(InterruptedException.class, () -> gs.time());
-        //assertFalse (gameState.loadPuzzle(), "Puzzle should not load");
-        //assertTrue(gameState.savePuzzle(), "Puzzle should save");
-        //assertTrue (gameState.loadPuzzle(), "Puzzle should successfully load");
+    @Test
+    @DisplayName("Test hints")
+    public void testHints () {
+        String s = gameState.hints();
+        assertNotNull(s, "String result should not be null.");
+    }
 
 }

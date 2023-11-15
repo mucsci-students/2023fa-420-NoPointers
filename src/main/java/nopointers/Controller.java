@@ -115,17 +115,19 @@ public class Controller {
 
     public void customPuzzle(ActionEvent e)
     {
-
-
-        String s = customInput.getText().trim().toLowerCase();
-        if (gameState.newUserPuzzle(s)) {
-            setButtons();
-            error.setVisible(false);
-            customInput.clear();
+        try {
+            String s = customInput.getText().trim().toLowerCase();
+            if (gameState.newUserPuzzle(s)) {
+                setButtons();
+                error.setVisible(false);
+                customInput.clear();
+            } else {
+                error.setText("Not a valid custom puzzle!");
+                error.setVisible(true);
+            }
         }
-        else {
-            error.setText("Not a valid custom puzzle!");
-            error.setVisible(true);
+        catch (InterruptedException ex) {
+            System.out.println ("Something went wrong. Please try again.");
         }
 
     }

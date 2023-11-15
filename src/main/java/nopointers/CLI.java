@@ -109,8 +109,13 @@ public class CLI {
                 }
                 break;
             case "new":
-                gameState.newRandomPuzzle();
-                showPuzzle();
+                try {
+                    gameState.newRandomPuzzle();
+                    showPuzzle();
+                }
+                catch (InterruptedException e) {
+                    System.out.println ("Something went wrong. Please try again.");
+                }
                 break;
             case "help":
                 commands();
@@ -120,9 +125,13 @@ public class CLI {
                 gameState.rank();
                 break;
             case "custom":
-
-                if (!gameState.newUserPuzzle(args[1])) {
-                    System.out.println("Invalid Pangram!");
+                try {
+                    if (!gameState.newUserPuzzle(args[1])) {
+                        System.out.println("Invalid Pangram!");
+                    }
+                }
+                catch (InterruptedException e) {
+                    System.out.println ("Something went wrong. Please try again.");
                 }
                 break;
             case "hints":

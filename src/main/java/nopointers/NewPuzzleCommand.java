@@ -8,7 +8,12 @@ public class NewPuzzleCommand extends Command {
     @Override
     public boolean execute() {
         backup();
-        gameState.newRandomPuzzle();
+        try {
+            gameState.newRandomPuzzle();
+        }
+        catch (InterruptedException e) {
+            System.out.println ("Something went wrong. Please try again.");
+        }
         String word = new String(gameState.getLetters());
         controller.setButtons();
         controller.foundWords.clear();

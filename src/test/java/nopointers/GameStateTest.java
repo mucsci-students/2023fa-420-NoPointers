@@ -30,7 +30,13 @@ class GameStateTest {
         //gameState = new GameState();
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
-        gameState.newRandomPuzzle();
+        try {
+            gameState.newRandomPuzzle();
+        }
+        catch (InterruptedException e) {
+            System.out.println ("Something went wrong. Please try again.");
+        }
+        
     }
 
     /** Tests that valid guesses to the base puzzle have the correct value.
@@ -46,7 +52,12 @@ class GameStateTest {
 
         assertEquals(gameState.guess(" "), GuessOutcome.TOO_SHORT, "Guess is blank");
 
-        assertTrue(gameState.newUserPuzzle("picture"), "Should be a valid pangram");
+        try {
+            assertTrue(gameState.newUserPuzzle("picture"), "Should be a valid pangram");
+        }
+        catch (InterruptedException e) {
+            System.out.println ("Something went wrong. Please try again.");
+        }
         assertEquals(gameState.guess("picture"), GuessOutcome.SUCCESS, "Pangram used for base word should be valid.");
         assertEquals(gameState.guess("pit"), GuessOutcome.TOO_SHORT, "Word must be at least 4 letters!");
         assertEquals(gameState.guess("pictures"), GuessOutcome.INCORRECT, "Word can not contain letters not in the puzzle.");
@@ -105,12 +116,18 @@ class GameStateTest {
     public void testNewUserPuzzle () {
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
-        assertFalse (gameState.newUserPuzzle("t"), "Input is too short");
-        assertFalse (gameState.newUserPuzzle("alphabetical"), "Input is not a pangram");
-        assertFalse (gameState.newUserPuzzle("assortment"), "Input is not a pangram");
+        try {
+            assertFalse(gameState.newUserPuzzle("t"), "Input is too short");
+            assertFalse(gameState.newUserPuzzle("alphabetical"), "Input is not a pangram");
+            assertFalse(gameState.newUserPuzzle("assortment"), "Input is not a pangram");
 
-        assertTrue (gameState.newUserPuzzle("abdomen"), "Input is a pangram");
-        assertTrue (gameState.newUserPuzzle("variety"), "Input is a pangram");
+            assertTrue(gameState.newUserPuzzle("abdomen"), "Input is a pangram");
+            assertTrue(gameState.newUserPuzzle("variety"), "Input is a pangram");
+        }
+        catch (InterruptedException e) {
+            System.out.println ("Something went wrong. Please try again.");
+            fail ("Interrupted. Please try again");
+        }
     }
 
     /** Tests that the required letter is correct.
@@ -178,20 +195,5 @@ class GameStateTest {
         //assertFalse (gameState.loadPuzzle(), "Puzzle should not load");
         //assertTrue(gameState.savePuzzle(), "Puzzle should save");
         //assertTrue (gameState.loadPuzzle(), "Puzzle should successfully load");
-    }
-
-
-
-
-    @Test
-    @DisplayName("Test the time function")
-    public void testTime () {
-        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
-        GameState gs = mock(GameState.class);
-
-        doThrow(InterruptedException.class).when(gs).time();
-        //when(gs.time()).thenThrow(InterruptedException.class);
-
-
     }
 }

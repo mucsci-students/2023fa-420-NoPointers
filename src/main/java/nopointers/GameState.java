@@ -67,12 +67,12 @@ public class GameState {
         puzzle.restoreFromMemento(m);
     }
     // Create new puzzle method to be called on by controllers.
-    public void newRandomPuzzle() {
+    public void newRandomPuzzle() throws InterruptedException {
         newPuzzle();
     }
 
     // Create new puzzle from user input method to be called on by controllers
-    public boolean newUserPuzzle(String input) {
+    public boolean newUserPuzzle(String input) throws InterruptedException {
         if (input.length() < 7) {
             return false;
         } else if (database.checkPangram(input)) {
@@ -125,7 +125,7 @@ public class GameState {
      *
      * @poscondition We have generated a new puzzle for the user to solve.
      */
-    void newPuzzle() {
+    void newPuzzle() throws InterruptedException {
         System.out.println("Generating New Puzzle...");
         time();
         this.puzzle = new Puzzle();
@@ -134,24 +134,19 @@ public class GameState {
     /**
      * Displays a loading animation on our terminal.
      */
-    public boolean time() {
-        try {
-            for (int i = 0; i < 100; ++i) {
-                TimeUnit.MILLISECONDS.sleep(1);
-                System.out.print("\u001b[1000D");
-                System.out.flush();
-                TimeUnit.MILLISECONDS.sleep(1);
-                System.out.print((i + 1) + "%");
-                System.out.flush();
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-            return false;
+    public void time() throws InterruptedException {
+        for (int i = 0; i < 100; ++i) {
+            TimeUnit.MILLISECONDS.sleep(1);
+            System.out.print("\u001b[1000D");
+            System.out.flush();
+            TimeUnit.MILLISECONDS.sleep(1);
+            System.out.print((i + 1) + "%");
+            System.out.flush();
         }
-        return true;
+
     }
     // Helper method to generate new puzzle from user input
-    private void newPuzzleBase(String input) {
+    private void newPuzzleBase(String input) throws InterruptedException {
         //  Auto-generated method stub
         System.out.println("Generating New Puzzle...");
         time();

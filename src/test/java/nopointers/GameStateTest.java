@@ -119,7 +119,7 @@ class GameStateTest {
     @DisplayName("Test hints")
     public void testHints () {
         try {
-            gameState.newUserPuzzle("pangrams");
+            gameState.newUserPuzzle("variety");
             assertNotNull(gameState.hints(), "Hints should be equal.");
         }
         catch (InterruptedException e) {

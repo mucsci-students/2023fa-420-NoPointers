@@ -172,7 +172,7 @@ class GameStateTest {
     }
 
 
-    @Test
+    @RepeatedTest(3)
     @DisplayName("Test save functonality")
     public void testSave () {
         try {
@@ -183,18 +183,20 @@ class GameStateTest {
     }
     @Test
     @DisplayName("Test load functonality")
-    public void testLoad () {
-        try {
-            gameState.loadPuzzle();
-        } catch (IOException e) {
-            fail("IOException was thrown");
-        }
+    public void testLoad () throws IOException {
+        gameState.loadPuzzle();
     }
     @Test
     @DisplayName("Test hints")
     public void testHints () {
-        String s = gameState.hints();
-        assertNotNull(s, "String result should not be null.");
+        Puzzle puzzle = new Puzzle ("pangrams");
+        try {
+            gameState.newUserPuzzle("pangrams");
+        }
+        catch (InterruptedException e) {
+            fail ("An error occured. Please try again.");
+        }
+        assertEquals(gameState.hints(), puzzle.print(), "Hints should be equal.");
     }
 
 }

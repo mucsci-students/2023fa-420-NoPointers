@@ -103,15 +103,16 @@ public class Puzzle {
     // Builder using input from user (New puzzle from base)
     public Puzzle(String input) {
         database = Database.getInstance();
-        validWords = new ArrayList<>();
+
         // Take 6 non-requited letters from input
         // Take requiredLetter from input Have user specify what is required letter?
         // Or just make a system like having the last letter be the requited letter?
         this.letters = database.convertToArray(input);
-
         this.requiredLetter = selectRequiredLetter();
-        validWords = database.getWords(letters);
+
         this.guessed = new ArrayList<>();
+        validWords = new ArrayList<>();
+        validWords = database.getWords(letters);
 
         score = 0;
         maxScore = calculateMaxScore ();

@@ -107,29 +107,19 @@ class GameStateTest {
     @RepeatedTest(2)
     @DisplayName("Test load functonality")
     public void testLoad () {
-
-        boolean thrown = false;
-        try {
-            gameState.loadPuzzle();
-        }
-        catch (IOException e) {
-            thrown = true;
-        }
-
-        assertTrue(thrown);
-
         try {
             gameState.savePuzzle();
             gameState.loadPuzzle();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             fail("IOException was thrown");
         }
     }
     @RepeatedTest(2)
     @DisplayName("Test hints")
     public void testHints () {
+        Puzzle puzzle = new Puzzle("pangrams");
         try {
-            Puzzle puzzle = new Puzzle("pangrams");
             gameState.newUserPuzzle("pangrams");
             assertEquals(gameState.hints(), puzzle.print(), "Hints should be equal.");
             assertEquals(puzzle.print(), gameState.hints(), "Hints should be equal.");

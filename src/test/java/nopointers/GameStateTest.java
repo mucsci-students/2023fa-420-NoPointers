@@ -95,6 +95,28 @@ class GameStateTest {
         gameState.rank();
     }
 
+    @RepeatedTest(3)
+    @DisplayName("Test save functonality")
+    public void testSave () {
+        try {
+            gameState.savePuzzle();
+        } catch (IOException e) {
+            fail("IOException was thrown");
+        }
+    }
+    @Test
+    @DisplayName("Test load functonality")
+    public void testLoad () throws IOException {
+        gameState.loadPuzzle();
+    }
+    @Test
+    @DisplayName("Test hints")
+    public void testHints () throws InterruptedException {
+        Puzzle puzzle = new Puzzle ("pangrams");
+        gameState.newUserPuzzle("pangrams");
+        assertEquals(gameState.hints(), puzzle.print(), "Hints should be equal.");
+    }
+
     /** Tests that the order of letters successfully shuffles.
      *
      * @author kstigelman
@@ -172,31 +194,6 @@ class GameStateTest {
     }
 
 
-    @RepeatedTest(3)
-    @DisplayName("Test save functonality")
-    public void testSave () {
-        try {
-            gameState.savePuzzle();
-        } catch (IOException e) {
-            fail("IOException was thrown");
-        }
-    }
-    @Test
-    @DisplayName("Test load functonality")
-    public void testLoad () throws IOException {
-        gameState.loadPuzzle();
-    }
-    @Test
-    @DisplayName("Test hints")
-    public void testHints () {
-        Puzzle puzzle = new Puzzle ("pangrams");
-        try {
-            gameState.newUserPuzzle("pangrams");
-        }
-        catch (InterruptedException e) {
-            fail ("An error occured. Please try again.");
-        }
-        assertEquals(gameState.hints(), puzzle.print(), "Hints should be equal.");
-    }
+
 
 }

@@ -71,9 +71,10 @@ public class CLI {
      */
     private void parser(String command) {
         String[] args = command.split(" ");
+        int i = 0;
         switch (args[0]) {
             case "exit":
-                if(gameState.newScore()){
+                if(gameState.newScore() && i++ > 0){
                     promptWinner();
                     System.out.println(gameState.printScore());
                 }
@@ -104,8 +105,14 @@ public class CLI {
                 gameState.loadPuzzle();
                 break;
             case "new":
+                if(i == 0){
+                    promptWinner();
+                    System.out.println(gameState.printScore());
+                    i++;
+                }
                 gameState.newRandomPuzzle();
                 showPuzzle();
+
                 break;
             case "help":
                 commands();
@@ -124,21 +131,18 @@ public class CLI {
                 String res = gameState.hints();
                 System.out.print(res);
                 break;
-            case "test":
-                tester();
-                break;
             default:
                 System.out.println(command + ": Unknown Command");
         }
     }
 
     private void promptWinner() {
-
         System.out.print("Enter name: ");
         String user = reader.readLine().toLowerCase();
         boolean res = gameState.addScore(user);
         if(!res){System.out.print("did not add.");}
-        System.out.println(gameState.test("SELECT score FROM highscores WHERE name = '"+ user +"';"));
+        System.out.println(gameState.getScore());
+        //System.out.println(gameState.test("SELECT score FROM highscores WHERE name = '"+ user +"';"));
     }
 
     private void tester() {

@@ -600,9 +600,12 @@ public class Puzzle {
         StringBuilder res = new StringBuilder();
         res.append("TOTAL HIGH SCORES\n");
         Map<String,Integer> map = database.totalScore();
+        int i = 1;
         for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            res.append(String.valueOf(i) + ".");
+            i++;
             res.append("Name: ");
-            String word = entry.getKey().toString();
+            String word = entry.getKey().toString().toUpperCase();
             if(word.substring(0,1).equals(".")){
                 res.append(word.substring(2,word.length()));
             }else{

@@ -115,8 +115,6 @@ public class Controller {
     @FXML
     TextArea hintsBox = new TextArea();
 
-    @FXML
-    Button screensnap = new Button();
 
     @FXML
     TextArea scoresBox = new TextArea();
@@ -358,41 +356,6 @@ public class Controller {
         scoresBox.setText(res);
         scoresBox.setVisible(true);
 
-    }
-
-    public void screensnapf(ActionEvent e){
-
-    }
-    private void captureScreenshot() {
-        // Assuming you want to capture the root node of the scene.
-        Node rootNode = l0.getScene().getRoot();
-
-        // Specify the file name for the screenshot
-        String fileName = "screenshot.png";
-
-        // Create a WritableImage with the dimensions of the node
-        WritableImage image = new WritableImage((int) rootNode.getBoundsInLocal().getWidth(),
-                (int) rootNode.getBoundsInLocal().getHeight());
-
-        // Set up snapshot parameters
-        SnapshotParameters params = new SnapshotParameters();
-        params.setFill(javafx.scene.paint.Color.TRANSPARENT); // Use TRANSPARENT for transparent backgrounds
-
-        // Take a snapshot of the node
-        rootNode.snapshot(params, image);
-
-        // Get the user's "Downloads" directory
-        String downloadsDir = System.getProperty("user.home") + File.separator + "Downloads";
-        Path downloadsPath = FileSystems.getDefault().getPath(downloadsDir);
-
-        // Save the WritableImage to the "Downloads" directory
-        try {
-            File file = new File(downloadsPath.toFile(), fileName);
-            ImageIO.write(/*SwingFXUtils.fromFXImage(image, null)*/null, "png", file);
-            System.out.println("Screenshot saved to: " + file.getAbsolutePath());
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
 

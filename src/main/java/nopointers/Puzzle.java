@@ -353,7 +353,7 @@ public class Puzzle {
     //return c;
     //}
     
-    public String print(){
+    public String printHints(){
         StringBuilder res = new StringBuilder();
         res.append("Center letter is bold.\n\n");
         res.append("\u001B"+Character.toString(requiredLetter).toUpperCase() + " ");
@@ -589,6 +589,15 @@ public class Puzzle {
         return res.toString();
     }
 
+    /**
+     * Adds the name and score of the user
+     * if the score is a new high score.
+     *
+     * @param score The score of the user.
+     * @param name The name of the user.
+     * @return True if the score is a new
+     * high score and false if it isn't.
+     */
     public boolean newHighScore(int score,String name){
         if(database.checkScore(score)){
             return database.addScore(score,name);
@@ -596,6 +605,13 @@ public class Puzzle {
         return false;
     }
 
+    /**
+     * Returns a large string containing
+     * the total list of high scores in the
+     * correct order.
+     *
+     * @return String of the total high score.
+     */
     public String printScore(){
         StringBuilder res = new StringBuilder();
         res.append("TOTAL HIGH SCORES\n");

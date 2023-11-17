@@ -112,17 +112,14 @@ public class CLI {
                 }
                 gameState.newRandomPuzzle();
                 showPuzzle();
-
                 break;
             case "help":
                 commands();
                 break;
             case "rank":
-
                 gameState.rank();
                 break;
             case "custom":
-
                 if (!gameState.newUserPuzzle(args[1])) {
                     System.out.println("Invalid Pangram!");
                 }
@@ -136,20 +133,20 @@ public class CLI {
         }
     }
 
+    /**
+     * This function prompt the user
+     * to enter their name and it will
+     * add it into the database.
+     *
+     */
     private void promptWinner() {
         System.out.print("Enter name: ");
         String user = reader.readLine().toLowerCase();
         boolean res = gameState.addScore(user);
         if(!res){System.out.print("did not add.");}
         System.out.println(gameState.getScore());
-        //System.out.println(gameState.test("SELECT score FROM highscores WHERE name = '"+ user +"';"));
     }
 
-    private void tester() {
-        System.out.print("Enter query: ");
-        String user = reader.readLine().toLowerCase();
-        System.out.println(gameState.test(user));
-    }
     private void handleOutcome(GuessOutcome outcome) {
         switch (outcome) {
             case SUCCESS -> {

@@ -107,21 +107,19 @@ public class Controller {
 
     @FXML
     Button quit = new Button();
-
+    //Button the user pressed to show the hints
     @FXML
-
     Button hintsButton = new Button();
-
+    //Text ares that presents the hint
     @FXML
     TextArea hintsBox = new TextArea();
-
-
+    //Text area that presents the scores
     @FXML
     TextArea scoresBox = new TextArea();
-
+    //Text field where user enters their name
     @FXML
     TextField enterName = new TextField();
-
+    //Button the user presses to enter their name
     @FXML
     Button enter = new Button();
 
@@ -328,7 +326,11 @@ public class Controller {
             history.push(command);
         }
     }
-
+    /**
+     * A javafx function for
+     *
+     * @param e
+     */
     public void hintsf(ActionEvent e){
         if(hintsBox.isVisible()){
             hintsBox.setVisible(false);
@@ -339,6 +341,12 @@ public class Controller {
         hintsBox.setVisible(true);
     }
 
+    /**
+     * A javafx function for the textbox
+     * that presents the scoresbox
+     *
+     * @param e
+     */
     public void scoresf(ActionEvent e){
         if(scoresBox.isVisible()){
             scoresBox.setVisible(false);
@@ -347,6 +355,12 @@ public class Controller {
         enter.setVisible(true);
     }
 
+    /**
+     * A javafx function that
+     *
+     *
+     * @param e
+     */
     public void enterf(ActionEvent e){
         enterName.setVisible(false);
         enter.setVisible(false);

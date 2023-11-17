@@ -210,15 +210,12 @@ public class Database {
     }
 
     /**
-     * This is a java function that adds a new
-     * highscore to the sql database
+     * This is a java function that checks
+     * a score is an acceptable high score.
      *
-     * When a new score is high enough to
-     *
-     * It will return an int
-     * 0 if the score is not a new highscore
-     * 1 if
-     * 2 if
+     * @param score The score of the user.
+     * @return True if the score is a new
+     * high score and false if it isn't.
      */
     public boolean checkScore(int score) {
         if(scoreCount() < 10){
@@ -249,13 +246,12 @@ public class Database {
 
     /**
      * This is a java function that adds a new
-     * highscore to the sql database
+     * highscore to the sql database.
      *
-     * When a new score is high enough to
-     *
-     *
-     * @param score
-     * @param name
+     * @param score The score of the user.
+     * @param name The name of the user.
+     * @return True if the score is inputted
+     * and false if it isn't
      */
     public boolean addScore(int score, String name){
         int id = 0;
@@ -284,6 +280,12 @@ public class Database {
         }
     }
 
+    /**
+     * Deletes the lowest highscore in
+     * the database.
+     *
+     * @return The ID of the deleted score
+     */
     public int deleteScore(){
         String sqla = "SELECT ID FROM highscores WHERE scores = (SELECT MIN() FROM highscores)";
         String sqlb = "DELETE FROM highscores WHERE scores = (SELECT MIN(scores) FROM highscores);";
@@ -306,6 +308,13 @@ public class Database {
         }
     }
 
+    /**
+     * Return the number of scores in
+     * the database.
+     *
+     * @return The number of scores in
+     * the database.
+     */
     public int scoreCount(){
         String sql = "SELECT COUNT(*) FROM highscores;";
         try {
@@ -328,6 +337,20 @@ public class Database {
         }
     }
 
+    /**
+     * A function that returns a map
+     * of type string and int that
+     * contain the name and scores of
+     * all the values in the database.
+     *
+     * If there is more the one of the same name in
+     * the map then the next of the same name has a
+     * dot and num.
+     * Ex. John, .1John, .2John
+     *
+     * @return Map with the names and score
+     * of the high scores databse.
+     */
     public Map<String, Integer> totalScore(){
         String sql = "SELECT * FROM highscores;";
         try {
@@ -362,46 +385,14 @@ public class Database {
         }
     }
 
-    public int test(String query){
-        try {
-            int num = 0;
-            Statement stmt;
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            if (rs.next()){
-                num = rs.getInt(1);
-            }
-            stmt.close();
-            return num;
-        } catch (SQLException e) {
-            // Database access error
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
+    /**
+     * Closes the connection of the database.
+     * Throws an exception if the connection doesn't
+     * close.
+     */
     public void conClose(){
-        /*
-        String sql = "SELECT * FROM highscores";
-        StringBuilder res = new StringBuilder();
-        */
         try {
             connection.close();
-            /*
-            Statement stmnt = connection.createStatement();
-            ResultSet rs = stmnt.executeQuery(sql);
-
-            res.append("INSERT INTO highscores VALUES ");
-            while(rs.next()){
-                String word = rs.getString(1);
-                int num = rs.getInt(1);
-                res.append("(" + word + ", ");
-                res.append(String.valueOf(num) + ")");
-            }
-            res.append(";");
-            stmnt = sconnection.createStatement();
-            stmnt.executeUpdate("DELETE FROM highscores;");
-            stmnt.executeUpdate(sql);
-            */
         } catch (SQLException e) {
             throw new IllegalArgumentException(e.getMessage());
         }

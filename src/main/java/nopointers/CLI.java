@@ -145,6 +145,12 @@ public class CLI {
                 System.out.println("Incorrect. Does not use required letter.");
                 System.out.println("The Required letter is [" + gameState.requiredLetter() + "]");
             }
+            case PUZZLE_COMPLETED -> {
+                // Uses the onGuess() function from either FreshState or Completed State.
+                // When a user successfully enters the last word, FreshState's text will be returned.
+                // Subsequent attempts to guess words will cause CompletedState's text to appear.
+                System.out.println(gameState.getState().onGuess());
+            }
         }
     }
 

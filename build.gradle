@@ -12,7 +12,7 @@ run
         {
             standardInput = System.in
 
-
+            args = ["cli"]
         }
 
 jar {

@@ -205,11 +205,60 @@ public class GameState {
         }
     }
 
-
+    /**
+     * Called the print func from puzzle
+     * and returns the string of the total hints.
+     *
+     * @return A string of the total hints
+     */
     public String hints(){
-        String res = puzzle.print();
+        String res = puzzle.printHints();
         return res;
     }
+
+    /**
+     * Checks to see if the current score is
+     * an acceptable high score.
+     *
+     * @return True if the score is a new high
+     * score and false if it isn't.
+     */
+    public boolean newScore(){
+        if(database.checkScore(getScore())){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Adds the current score into the database of
+     * high scores.
+     *
+     * @param name The name of the user.
+     * @return True if it is added and false if it
+     * isn't.
+     */
+    public boolean addScore(String name){
+        return puzzle.newHighScore(getScore(),name);
+    }
+
+    /**
+     * Returns total list of high scores.
+     *
+     * @return The string of the total
+     * list of high scores.
+     */
+    public String printScore(){
+        return puzzle.printScore();
+    }
+
+    /**
+     * Function that closes the connection
+     * to the database.
+     *
+     */
+    public void conClose(){database.conClose();}
+
 
     // Builder implementation for GameState
     public static class GameStateBuilder {

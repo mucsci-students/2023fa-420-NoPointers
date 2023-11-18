@@ -223,23 +223,24 @@ public class Connect {
 
     }
 
-    public static boolean access(String word) {
+    public static String access(String word) {
         // Database URL
         String url = "jdbc:sqlite:words.db";
         int size = word.length();
+        String res = "";
 
-        boolean res = false;
         try {
             // Create a connection to the database
             Connection conn = DriverManager.getConnection(url);
             if (conn != null) {
-                res = findWord(size, word, conn);
-
+                Statement smnt = conn.createStatement();
+                ResultSet rs = smnt.executeQuery(word);
+                res = rs.getString(1);
                 conn.close();
             }
         } catch (SQLException e) {
             System.err.println("Database creation error: " + e.getMessage());
-            return false;
+            return "false";
         }
         return res;
     }

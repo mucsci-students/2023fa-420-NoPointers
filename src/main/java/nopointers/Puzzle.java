@@ -353,7 +353,7 @@ public class Puzzle {
     //return c;
     //}
     
-    public String print(){
+    public String printHints(){
         StringBuilder res = new StringBuilder();
         res.append("Center letter is bold.\n\n");
         res.append("\u001B"+Character.toString(requiredLetter).toUpperCase() + " ");
@@ -364,12 +364,10 @@ public class Puzzle {
         res.append("\n");
         res.append("WORDS:" + validWords.size() + ", POINTS: " + Integer.toString(maxScore));//+ var
         res.append(", PANGRAMS: ");
-	    res.append(Connect.pangramCount());
-        /*
+        res.append(Connect.pangramCount());
         if(Connect.countPerfectPangrams() > 0){
 	    res.append("(" + Connect.countPerfectPangrams() + "Perfect)");
         }
-        */
         res.append("\n\n" + buildMatrix(validWords) + "\n");
         res.append("Two letter list:\n");
         res.append(twoLetLst(validWords));
@@ -587,6 +585,51 @@ public class Puzzle {
             res.append(iter.getKey().toString().toUpperCase());
             res.append("-");
             res.append(iter.getValue().toString());
+        }
+        return res.toString();
+    }
+
+    /**
+     * Adds the name and score of the user
+     * if the score is a new high score.
+     *
+     * @param score The score of the user.
+     * @param name The name of the user.
+     * @return True if the score is a new
+     * high score and false if it isn't.
+     */
+    public boolean newHighScore(int score,String name){
+        if(database.checkScore(score)){
+            return database.addScore(score,name);
+        }
+        return false;
+    }
+
+    /**
+     * Returns a large string containing
+     * the total list of high scores in the
+     * correct order.
+     *
+     * @return String of the total high score.
+     */
+    public String printScore(){
+        StringBuilder res = new StringBuilder();
+        res.append("TOTAL HIGH SCORES\n");
+        Map<String,Integer> map = database.totalScore();
+        int i = 1;
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            res.append(String.valueOf(i) + ".");
+            i++;
+            res.append("Name: ");
+            String word = entry.getKey().toString().toUpperCase();
+            if(word.substring(0,1).equals(".")){
+                res.append(word.substring(2,word.length()));
+            }else{
+                res.append(entry.getKey().toString());
+            }
+            res.append("| Score: ");
+            res.append(entry.getValue().toString());
+            res.append("\n");
         }
         return res.toString();
     }

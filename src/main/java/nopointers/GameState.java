@@ -21,21 +21,41 @@ public class GameState {
     // Fields
     private Puzzle puzzle;
     private Database database;
+    private State state;
+    private boolean isDone = false;
 
     private GameState(GameStateBuilder builder) {
         this.puzzle = new Puzzle();
         database = Database.getInstance();
+        this.state = new FreshState(this);
     }
 
 
     // Guess method to be called on by controller. Calls on puzzle's guessWord method.
     public GuessOutcome guess (String input) {
+        GuessOutcome outcome;
+        // If GameState is in CompletedState(all words found) just return PUZZLE_COMPLETED rather than calling function.
+        if (isDone == true) {
+            return GuessOutcome.PUZZLE_COMPLETED;
+        }
         if (input.isBlank() || input.length() < 4) {
 
             return GuessOutcome.TOO_SHORT;
 
         }
          return puzzle.guessWord(input);
+    }
+    // Changes state to/from FreshState and CompletedState.
+    public void changeState(State state) {
+        this.state = state;
+    }
+
+    public State getState() {
+        return state;
+    }
+    // Marks puzzle as being completed.
+    public void setDone(boolean done) {
+        this.isDone = done;
     }
 
     // Save method for controllers to call on.
@@ -215,10 +235,14 @@ public class GameState {
     public static class GameStateBuilder {
         private Puzzle puzzle;
         private Database database;
+        private State state;
+        private boolean isDone = false;
 
         public GameStateBuilder(Database database) {
             this.puzzle = new Puzzle();
             this.database = database;
+            this.isDone = false;
+            this.state = state;
         }
 
         public GameState build() {

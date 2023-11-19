@@ -205,19 +205,6 @@ public class GameState {
         return res;
     }
 
-    /**
-     * Checks to see if the current score is
-     * an acceptable high score.
-     *
-     * @return True if the score is a new high
-     * score and false if it isn't.
-     */
-    public boolean newScore(){
-        if(database.checkScore(getScore())){
-            return true;
-        }
-        return false;
-    }
 
     /**
      * Adds the current score into the database of

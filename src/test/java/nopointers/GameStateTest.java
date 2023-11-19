@@ -220,21 +220,14 @@ class GameStateTest {
         }
 
         String prev = gameState.printScore();
-        gameState.addScore("Tom Cruise");
-
-        assertTrue(gameState.newScore());
 
         //Guess some valid words-- score is no longer 0
+
+
         gameState.guess(testPuzzle.getValidWords().get(0));
         gameState.guess(testPuzzle.getValidWords().get(1));
 
-        //Generate new puzzle
-        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
-        gameState = builder.build();
-
-        //Add a new score, score should be > 0
-        gameState.addScore("Bob");
-        gameState.newScore();
+        gameState.addScore("Tom Cruise");
 
         //Compare original, blank score to the current score string.
         assertNotEquals(gameState.printScore(), prev, "Scores should not be the same.");

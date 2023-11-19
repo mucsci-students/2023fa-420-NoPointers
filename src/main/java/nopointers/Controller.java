@@ -145,15 +145,18 @@ public class Controller {
     Controller controller = this;
 
 
+    Database database;
+
     public Controller() {
         //this.gameState = new GameState();
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         this.gameState = builder.build();
+        database = Database.getInstance();
     }
 
     public void quit(ActionEvent e)
     {
-        if(gameState.newScore()){
+        if(database.checkScore(gameState.getScore())){
             scoresf(e);
         }
         else{

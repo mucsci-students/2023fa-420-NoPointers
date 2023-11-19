@@ -27,11 +27,15 @@ public class CLI {
     private static final String PRINT_RED_TERMINAL_COLOR = "\u001b[31;1;3m";
     private GameState gameState;
 
+    private Database database;
+
     public CLI() throws IOException {
         //gameState = new GameState();
         //gameState = new GameState.GameStateBuilder(Database.getInstance());
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
+
+        database = Database.getInstance();
 
         try {
             start();
@@ -77,7 +81,7 @@ public class CLI {
         int i = 0;
         switch (args[0]) {
             case "exit":
-                if(gameState.newScore() && i++ > 0){
+                if(database.checkScore(gameState.getScore())){
                     promptWinner();
                     System.out.println(gameState.printScore());
                 }

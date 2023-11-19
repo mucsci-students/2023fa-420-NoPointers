@@ -13,6 +13,7 @@ ignore:
   - "src/main/java/nopointers/EntryPoint.java"
   - "src/main/java/nopointers/CompletedState.java"
   - "src/main/java/nopointers/State.java"
+  - "src/main/java/nopointers/FreshState.java"
 
 coverage:
   status:

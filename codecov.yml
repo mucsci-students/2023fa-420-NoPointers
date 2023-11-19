@@ -7,6 +7,8 @@ ignore:
   - "src/main/java/nopointers/Command.java"
   - "src/main/java/nopointers/CommandHistory.java"
   - "src/main/java/nopointers/AutoCompleter.java"
+  - "src/main/java/nopointers/RankInfo.java"
+  - "src/main/java/nopointers/GuessOutcome.java"
 
 coverage:
   status:

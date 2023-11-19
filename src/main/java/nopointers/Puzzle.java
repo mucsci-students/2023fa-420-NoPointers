@@ -55,6 +55,7 @@ public class Puzzle {
     // The required letter
     private char requiredLetter;
     //The list of valid words
+
     private ArrayList<String> validWords;
 
     //The score of the user
@@ -248,7 +249,6 @@ public class Puzzle {
         score += calculatePoints(guess);
         if (getRank() != prevRank)
             System.out.println ("Level up!");
-        displayRank ();
     }
 
     /**
@@ -742,13 +742,21 @@ public class Puzzle {
         @Expose (serialize = true, deserialize = true)
         private int score;
 
+        @SerializedName(value = "wordlist")
+        @Expose (serialize = true, deserialize = true)
+        private ArrayList<String> validWords;
 
+        @SerializedName(value = "author")
+        @Expose (serialize = true, deserialize = true)
+        private String author;
         // Constructor.
         public Memento (Puzzle puzzle) {
             this.letters = puzzle.letters;
             this.guessed = puzzle.guessed;
             this.requiredLetter = puzzle.requiredLetter;
             this.score = puzzle.score;
+            this.validWords = puzzle.validWords;
+            this.author = "no-pointers";
         }
 
         public char getRequiredLetter() {

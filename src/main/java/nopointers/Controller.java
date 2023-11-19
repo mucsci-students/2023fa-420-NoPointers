@@ -1,20 +1,35 @@
 package nopointers;
 
 import com.google.gson.Gson;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.RenderedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+
+import java.util.ArrayList; 
+
+import javafx.scene.robot.*;
+import javafx.scene.image.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import javafx.scene.image.WritableImage;
 import javafx.event.ActionEvent;
@@ -108,6 +123,9 @@ public class Controller {
     @FXML
     Button quit = new Button();
     //Button the user pressed to show the hints
+    @FXML
+    Button Screenshot = new Button();
+
     @FXML
     Button hintsButton = new Button();
     //Text ares that presents the hint
@@ -250,6 +268,9 @@ public class Controller {
             input.clear();
             foundWords.clear();
 
+
+
+
         }
     }
 
@@ -278,14 +299,14 @@ public class Controller {
      *
      * @param e
      */
-    public void shuffle(ActionEvent e)
-    {
+    public void shuffle(ActionEvent e) {
         if (gameState == null)
             return;
 
         gameState.shuffle();
 
         String word = new String (gameState.getLetters());
+
         l0.setText(String.valueOf(word.charAt(0)));
         l1.setText(String.valueOf(word.charAt(1)));
         l2.setText(String.valueOf(word.charAt(2)));
@@ -293,7 +314,10 @@ public class Controller {
         l4.setText(String.valueOf(word.charAt(4)));
         l5.setText(String.valueOf(word.charAt(5)));
 
+        requiredLetter.setText(String.valueOf(word.charAt(6)));
+        score.setText(String.valueOf(gameState.getScore()));
         input.clear();
+
     }
 
     /**
@@ -317,10 +341,7 @@ public class Controller {
         customInput.setVisible(!customInput.isVisible());
     }
 
-    public void ConfirmButton (ActionEvent e)
-    {
 
-    }
 
     /**
      * Function that evaluates a user's guess
@@ -358,11 +379,8 @@ public class Controller {
             case MISSING_REQUIRED -> {
                 error.setText("Incorrect. Does not use required letter: " + gameState.requiredLetter());
             }
-            case PUZZLE_COMPLETED -> {
-                // Uses the onGuess() function from either FreshState or Completed State.
-                // When a user successfully enters the last word, FreshState's text will be returned.
-                // Subsequent attempts to guess words will cause CompletedState's text to appear.
-                error.setText(gameState.getState().onGuess());
+            case INVALID_LETTER -> {
+                error.setText("Invalid Letter");
             }
         }
 
@@ -396,6 +414,27 @@ public class Controller {
         Command command = history.pop();
         if (command != null) {
             command.undo();
+        }
+    }
+
+    @FXML
+    private void fileChooser(ActionEvent e) throws IOException {
+        Stage stage = (Stage) foundWords.getScene().getWindow();
+        WritableImage image = stage.getScene().snapshot(null);
+        
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Screenshot");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG Files", "*.png"));
+
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+                System.out.println("Screenshot saved to: " + file.getAbsolutePath());
+            } catch (IOException error) {
+                error.printStackTrace();
+                System.out.println("Saving Error!");
+            }
         }
     }
 

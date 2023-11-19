@@ -21,19 +21,20 @@ public class CLI {
     private ParsedLine parser;
     private History history;
     private Highlighter highlighter;
-    //private Puzzle puzzle;
+
+    private static final String RESET_TERMINAL_COLOR = "\033[0m";
+    private static final String RED_TERMINAL_COLOR = "\u001b[31;1m";
+    private static final String PRINT_RED_TERMINAL_COLOR = "\u001b[31;1;3m";
     private GameState gameState;
 
-
-
-    public CLI(Terminal t) {
+    public CLI() throws IOException {
         //gameState = new GameState();
         //gameState = new GameState.GameStateBuilder(Database.getInstance());
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
 
         try {
-            start(t);
+            start();
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -44,12 +45,12 @@ public class CLI {
      * Launches the REPL
      * @throws IOException
      */
-    public void start(Terminal t) throws IOException {
+    public void start() throws IOException {
+        terminal = TerminalBuilder.builder().system(true).build();
         intro();
 
         try {
-            terminal = t;
-            reader = new LineReaderImpl (t);
+            reader = new LineReaderImpl (terminal);
             reader.setCompleter(new AutoCompleter().updateCompleter());
             history = new DefaultHistory(reader);
             history.attach(reader);
@@ -58,9 +59,10 @@ public class CLI {
         }
 
         while (true) {
-            System.out.print(">");
-            String command = reader.readLine().toLowerCase().trim();
+            terminal.writer().print(RED_TERMINAL_COLOR +">");
+            String command = reader.readLine().toLowerCase();
             parser(command);
+
         }
     }
 
@@ -73,16 +75,21 @@ public class CLI {
      * @postcondition The users command is parsed and executed.
      */
     private void parser(String command) {
+
         String[] args = command.split(" ");
         int i = 0;
         switch (args[0]) {
             case "exit":
+
                 if(gameState.newScore() && i++ > 0){
                     promptWinner();
                     System.out.println(gameState.printScore());
                 }
                 gameState.conClose();
                 System.out.println("\033[49m");
+
+                System.out.println(RESET_TERMINAL_COLOR);
+
                 System.exit(0);
             case "":
                 System.out.println("Please enter a command");
@@ -94,12 +101,21 @@ public class CLI {
                 gameState.savePuzzle();
                 break;
             case "guess":
-                GuessOutcome outcome = gameState.guess(args[1]);
-                handleOutcome(outcome);
-                break;
+                if(args.length > 1)
+                {
+                    GuessOutcome outcome = gameState.guess(args[1].trim());
+                    handleOutcome(outcome);
+                    break;
+                }
+            terminal.writer().write("Blank Guess!\n");
+            break;
             case "shuffle":
 
                 gameState.shuffle();
+                showPuzzle();
+                System.out.println("\n");
+
+                terminal.writer().println("Puzzle Shuffled!");
                 break;
             case "rules":
                 rules();
@@ -123,9 +139,12 @@ public class CLI {
                 gameState.rank();
                 break;
             case "custom":
-                if (!gameState.newUserPuzzle(args[1])) {
-                    System.out.println("Invalid Pangram!");
+                if(args.length > 1) {
+                    if (!gameState.newUserPuzzle(args[1])) {
+                        System.out.println("Invalid Pangram!");
+                    }
                 }
+                terminal.writer().println("Invalid New Puzzle!");
                 break;
             case "hints":
                 String res = gameState.hints();
@@ -203,14 +222,6 @@ public class CLI {
             System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
             return;
         }
-        // Print out the seven letters with the required letter in brackets [].
-        for (int i = 0; i < gameState.getLetters().length; ++i) {
-            if (i == 6)
-                System.out.print("[");
-            System.out.print(gameState.getLetters()[i]);
-        }
-        System.out.print("]\n");
-        System.out.println("Guessed Words: " + gameState.guessed().toString());
         System.out.println("                  .'* *.'\n"
                 + "               __/_*_*(_\n"
                 + "              / _______ \\\n"
@@ -232,6 +243,17 @@ public class CLI {
                 + "     _.-'    /     |     '-. '-._ \n"
                 + " _.-'       |      |       '-.  '-. \n"
                 + "(________mrf\\____.| .________)____)");
+        // Print out the seven letters with the required letter in brackets [].
+        gameState.rank();
+        System.out.println(PRINT_RED_TERMINAL_COLOR);
+        for (int i = 0; i < gameState.getLetters().length; ++i) {
+            if (i == 6)
+                System.out.print("[");
+            System.out.print(gameState.getLetters()[i]);
+        }
+        System.out.print("]\n");
+        System.out.println("Guessed Words: " + gameState.guessed().toString());
+        System.out.println(RED_TERMINAL_COLOR);
     }
 
 
@@ -239,23 +261,37 @@ public class CLI {
      * Prints the intro and title of the game
      */
     private void intro() {
-        System.out.println("\t ▄█     █▄   ▄██████▄     ▄████████ ████████▄        ▄█     █▄   ▄█   ▄███████▄     ▄████████    ▄████████ ████████▄     ▄████████ \n"
-                + "\t███     ███ ███    ███   ███    ███ ███   ▀███      ███     ███ ███  ██▀     ▄██   ███    ███   ███    ███ ███   ▀███   ███    ███ \n"
-                + "\t███     ███ ███    ███   ███    ███ ███    ███      ███     ███ ███▌       ▄███▀   ███    ███   ███    ███ ███    ███   ███    █▀  \n"
-                + "\t███     ███ ███    ███  ▄███▄▄▄▄██▀ ███    ███      ███     ███ ███▌  ▀█▀▄███▀▄▄   ███    ███  ▄███▄▄▄▄██▀ ███    ███   ███        \n"
-                + "\t███     ███ ███    ███ ▀▀███▀▀▀▀▀   ███    ███      ███     ███ ███▌   ▄███▀   ▀ ▀███████████ ▀▀███▀▀▀▀▀   ███    ███ ▀███████████ \n"
-                + "\t███     ███ ███    ███ ▀███████████ ███    ███      ███     ███ ███  ▄███▀         ███    ███ ▀███████████ ███    ███          ███ \n"
-                + "\t███ ▄█▄ ███ ███    ███   ███    ███ ███   ▄███      ███ ▄█▄ ███ ███  ███▄     ▄█   ███    ███   ███    ███ ███   ▄███    ▄█    ███ \n"
-                + " \t▀███▀███▀   ▀██████▀    ███    ███ ████████▀        ▀███▀███▀  █▀    ▀████████▀   ███    █▀    ███    ███ ████████▀   ▄████████▀  \n"
-                + "\t                         ███    ███                                                             ███    ███                         ");
-        System.out.println("\n\t\t\t Welcome \u001b[24m To Word Wizards! To begin playing enter a command below!\n\n\n");
-        System.out.println("\t\t\t \u001b[4m New \u001b[24m \254  Creates a New Puzzle\n\n");
-        System.out.println("\t\t\t \u001b[4m Save \u001b[24m \254 Saves Your Current Puzzle to Your Home Directory\n\n");
-        System.out.println("\t\t\t \u001b[4m Load \u001b[24m \254 Loads a Puzzle From Your Home Directory\n\n");
-        System.out.println("\t\t\t \u001b[4m Help \u001b[24m \254 Display Additional Commands \n\n");
-        System.out.println("\t\t\t \u001b[4m Exit \u001b[24m \254 Exits the Program\n\n");
-        System.out.println("\033[49m");
-        System.out.flush();
+        terminal.writer().write(RED_TERMINAL_COLOR);
+        String logo = "\n" +
+                "/***\n" +
+                " *                                                                                                                                                          \n" +
+                " *         ##### /    ##   ###                               ##            ##### /    ##   ###                                               ##             \n" +
+                " *      ######  /  #####    ###                               ##        ######  /  #####    ###     #                                         ##            \n" +
+                " *     /#   /  /     #####   ###                              ##       /#   /  /     #####   ###   ###                                        ##            \n" +
+                " *    /    /  ##     # ##      ##                             ##      /    /  ##     # ##      ##   #                                         ##            \n" +
+                " *        /  ###     #         ##                             ##          /  ###     #         ##                                             ##            \n" +
+                " *       ##   ##     #         ##    /###   ###  /###     ### ##         ##   ##     #         ## ###    ######      /###   ###  /###     ### ##    /###    \n" +
+                " *       ##   ##     #         ##   / ###  / ###/ #### / #########       ##   ##     #         ##  ###  /#######    / ###  / ###/ #### / ######### / #### / \n" +
+                " *       ##   ##     #         ##  /   ###/   ##   ###/ ##   ####        ##   ##     #         ##   ## /      ##   /   ###/   ##   ###/ ##   #### ##  ###/  \n" +
+                " *       ##   ##     #         ## ##    ##    ##        ##    ##         ##   ##     #         ##   ##        /   ##    ##    ##        ##    ## ####       \n" +
+                " *       ##   ##     #         ## ##    ##    ##        ##    ##         ##   ##     #         ##   ##       /    ##    ##    ##        ##    ##   ###      \n" +
+                " *        ##  ##     #         ## ##    ##    ##        ##    ##          ##  ##     #         ##   ##      ###   ##    ##    ##        ##    ##     ###    \n" +
+                " *         ## #      #         /  ##    ##    ##        ##    ##           ## #      #         /    ##       ###  ##    ##    ##        ##    ##       ###  \n" +
+                " *          ###      /##      /   ##    ##    ##        ##    /#            ###      /##      /     ##        ### ##    /#    ##        ##    /#  /###  ##  \n" +
+                " *           #######/ #######/     ######     ###        ####/               #######/ #######/      ### /      ##  ####/ ##   ###        ####/   / #### /   \n" +
+                " *             ####     ####        ####       ###        ###                  ####     ####         ##/       ##   ###   ##   ###        ###       ###/    \n" +
+                " *                                                                                                             /                                            \n" +
+                " *                                                                                                            /                                             \n" +
+                " *                                                                                                           /                                              \n" +
+                " *                                                                                                          /                                               \n" +
+                " */\n";
+        terminal.writer().print(logo);
+        terminal.writer().print("\n\t\t\t Welcome \u001b[24m To Word Wizards! To begin playing enter a command below!\n\n\n");
+        terminal.writer().print("\t\t\t \u001b[4m New \u001b[24m \254  Creates a New Puzzle\n\n");
+        terminal.writer().print("\t\t\t \u001b[4m Save \u001b[24m \254 Saves Your Current Puzzle to Your Home Directory\n\n");
+        terminal.writer().print("\t\t\t \u001b[4m Load \u001b[24m \254 Loads a Puzzle From Your Home Directory\n\n");
+        terminal.writer().print("\t\t\t \u001b[4m Help \u001b[24m \254 Display Additional Commands \n\n");
+        terminal.writer().print("\t\t\t \u001b[4m Exit \u001b[24m \254 Exits the Program\n\n");
 
     }
 
@@ -263,6 +299,7 @@ public class CLI {
      * Prints a list of the commands and what they do
      */
     public void commands() {
+        System.out.println(RED_TERMINAL_COLOR);
         String padding = "               ";
         System.out.println(padding + "============================================================================");
         System.out.println(padding + " New \u001b[24m \254  Creates a New Puzzle\n");
@@ -285,6 +322,7 @@ public class CLI {
      *
      */
     private void rules() {
+        System.out.println(RED_TERMINAL_COLOR);
         System.out.println("============================================================================================================");
         System.out.println("Welcome to Word Wizards! The goal of this game is to find all the possible words of a generated pangram \nHere are the rules for the game.\n"
                 + "\n"

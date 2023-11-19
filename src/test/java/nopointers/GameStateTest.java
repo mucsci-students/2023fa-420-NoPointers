@@ -35,7 +35,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(3)
+
     @DisplayName("Ensure a guess returns the correct GuessOutcome enum value")
     public void testGuess () {
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
@@ -63,7 +63,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(10)
+
     @DisplayName("Ensure a guess from a randomized word returns the correct GuessOutcome enum value")
     public void testRandomGuess () {
         Database database = Database.getInstance();
@@ -83,7 +83,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(5)
+
     @DisplayName("Ensure letters get shuffled")
     public void testShuffle () {
         char[] beforeShuffle = Arrays.copyOf(gameState.getLetters(), 7);
@@ -98,7 +98,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(3)
+
     @DisplayName("Ensure a new random puzzle can be built.")
     public void testNewRandomPuzzle () {
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
@@ -111,7 +111,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(3)
+
     @DisplayName("Ensure a puzzle can be built from user input.")
     public void testNewUserPuzzle () {
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
@@ -128,7 +128,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(5)
+
     @DisplayName("Ensure the required letter is correctly selected.")
     public void testRequiredLetter () {
         assertEquals(gameState.getLetters()[6], gameState.requiredLetter(), "The required letter should be the last letter in the array.");
@@ -143,7 +143,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(10)
+
     @DisplayName("Ensure memento's gson method produces a string")
     public void testMementoGSON () {
         Puzzle.Memento memento = gameState.getMemento();

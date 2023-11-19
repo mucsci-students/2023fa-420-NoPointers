@@ -6,5 +6,12 @@
     -fx-font-size: 20px;
     -fx-padding: 10px;
     -fx-border-radius: 50em; /* Optional: Adds a circular border */
-    
+        -fx-effect: dropshadow(three-pass-box, rgba(255, 255, 255, 0.6), 10, 0, 0, 0);
+}
+
+.circular-button:pressed {
+    /* Define the styles for the pressed state */
+    -fx-background-color: #0257ac; /* Change the background color when pressed */
+    -fx-scale-x: 0.999;  
+    -fx-scale-y: 0.999;  
 }

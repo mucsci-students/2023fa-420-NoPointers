@@ -1,15 +1,15 @@
-.shuffle-button {
+.small-button {
     -fx-background-color: #FFA500; /* Orange button color */
     -fx-background-radius: 3px;
     -fx-border-radius: 3px;
     -fx-border-color: transparent;
 }
 
-.shuffle-button:hover {
+.small-button:hover {
     -fx-background-color: #FF8C00; /* Darker orange on hover */
     -fx-effect: dropshadow(three-pass-box, #ffffff, 5, 0, 0, 0); /* Glow effect on hover */
 }
 
-.shuffle-button:pressed {
+.small-button:pressed {
     -fx-background-color: #FF6347; /* Even darker orange when pressed */
 }

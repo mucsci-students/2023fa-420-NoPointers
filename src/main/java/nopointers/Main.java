@@ -39,7 +39,7 @@ public class Main extends Application {
 
     public static void commandLine() throws IOException {
 
-        CLI c = new CLI(TerminalBuilder.terminal());
+        CLI c = new CLI();
 
         Platform.exit();
     }

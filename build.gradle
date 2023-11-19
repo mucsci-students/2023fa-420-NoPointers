@@ -6,9 +6,8 @@ plugins {
     id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
-    id ("com.github.johnrengelman.shadow") version "8.1.1"
     id 'jacoco'
-
+    id ("com.github.johnrengelman.shadow") version "8.1.1"
 }
 run
         {
@@ -98,7 +97,8 @@ dependencies {
     }
 
 
-
+    testImplementation 'org.mockito:mockito-inline:4.0.0'
+    testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'
 
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")

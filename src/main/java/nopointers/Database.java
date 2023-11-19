@@ -384,18 +384,4 @@ public class Database {
             return null;
         }
     }
-
-    /**
-     * Closes the connection of the database.
-     * Throws an exception if the connection doesn't
-     * close.
-     */
-    public void conClose(){
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        }
-    }
-
 }

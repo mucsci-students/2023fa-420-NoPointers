@@ -58,30 +58,21 @@ public class GameState {
     public void setDone(boolean done) {this.isDone = done;}
 
     // Save method for controllers to call on.
-    public boolean savePuzzle () {
-        if (puzzle != null) {
-            //memento.save();
-            save();
-            System.out.println("Puzzle Saved to Home Directory");
-            return true;
-        }
-        else {
-            System.out.println("No Puzzle to Save");
-            return false;
-        }
+    public void savePuzzle () throws IOException {
+        save();
     }
 
     // Load method to be called on by controllers.
-    public boolean loadPuzzle() {
-        return load();
+    public void loadPuzzle() throws IOException {
+        load();
     }
     // Create new puzzle method to be called on by controllers.
-    public void newRandomPuzzle() {
+    public void newRandomPuzzle() throws InterruptedException {
         newPuzzle();
     }
 
     // Create new puzzle from user input method to be called on by controllers
-    public boolean newUserPuzzle(String input) {
+    public boolean newUserPuzzle(String input) throws InterruptedException {
         if (input.length() < 7) {
             return false;
         } else if (database.checkPangram(input)) {
@@ -91,12 +82,11 @@ public class GameState {
         }
         return false;
     }
+
     //Returns the required letter
     public char requiredLetter() {return puzzle.getRequiredLetter();}
     //Returns the list of guessed words
     public ArrayList<String> guessed() {return puzzle.getGuessed();}
-    //Returns false if the puzzle is null and true otherwise
-    public boolean hasPuzzle() {return (puzzle != null);}
 
     public Puzzle.Memento getMemento() {return puzzle.saveToMemento();}
 
@@ -108,9 +98,7 @@ public class GameState {
     }
     //Returns the current rank
     public int getRank() { return puzzle.getRank(); }
-    //Returns a string of the possible ranks
-    public String[] getRanks() { return puzzle.getRanks(); }
-    //Returns the score of the current puzzle
+
     public int getScore() { return puzzle.getScore(); }
 
     // Shuffle method
@@ -133,7 +121,7 @@ public class GameState {
      *
      * @poscondition We have generated a new puzzle for the user to solve.
      */
-    void newPuzzle() {
+    void newPuzzle() throws InterruptedException {
         System.out.println("Generating New Puzzle...");
         time();
         this.puzzle = new Puzzle();
@@ -142,23 +130,18 @@ public class GameState {
     /**
      * Displays a loading animation on our terminal.
      */
-    private void time() {
+    private void time() throws InterruptedException {
         for (int i = 0; i < 100; ++i) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(1);
-                System.out.print("\u001b[1000D");
-                System.out.flush();
-                TimeUnit.MILLISECONDS.sleep(1);
-                System.out.print((i + 1) + "%");
-                System.out.flush();
-            } catch (InterruptedException e) {
-
-                e.printStackTrace();
-            }
+            TimeUnit.MILLISECONDS.sleep(1);
+            System.out.print("\u001b[1000D");
+            System.out.flush();
+            TimeUnit.MILLISECONDS.sleep(1);
+            System.out.print((i + 1) + "%");
+            System.out.flush();
         }
     }
     // Helper method to generate new puzzle from user input
-    private void newPuzzleBase(String input) {
+    private void newPuzzleBase(String input) throws InterruptedException {
         //  Auto-generated method stub
         System.out.println("Generating New Puzzle...");
         time();
@@ -177,21 +160,12 @@ public class GameState {
      * @postcondition The users puzzle is saved to the given path.
      */
 
-    public void save() {
-
-        if(puzzle != null)
-        {
-            // Save current puzzle to a Memento.
-            Puzzle.Memento m = puzzle.saveToMemento();
-            String s = new String(m.toGSONObject());
-            String home = System.getProperty("user.home");
-            try {
-                Files.write(Paths.get(home).resolve( "puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-            } catch (IOException error) {
-                throw new RuntimeException(error);
-            }
-        }
-
+    public void save() throws IOException {
+        // Save current puzzle to a Memento.
+        Puzzle.Memento m = puzzle.saveToMemento();
+        String s = new String(m.toGSONObject());
+        String home = System.getProperty("user.home");
+        Files.write(Paths.get(home).resolve( "puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
     /**
@@ -199,22 +173,17 @@ public class GameState {
      * Loads the saved puzzle from a JSON file from the given path.
      */
 
-    public boolean load() {
+    public void load() throws IOException {
         String home = System.getProperty("user.home");
         Path path = Paths.get(home).resolve("puzzle.json");
-        try {
-            Gson gson = new Gson();
-            String json = new String(Files.readAllBytes(path));
-            // Load json to a Memento
-            Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
-            puzzle = new Puzzle();
-            // Make current puzzle's fields to those of the saved Memento
-            puzzle.restoreFromMemento(m); 
-            return true;
-        } catch (IOException err) {
-            System.out.println("No Save Found");
-            return false;
-        }
+
+        Gson gson = new Gson();
+        String json = new String(Files.readAllBytes(path));
+        // Load json to a Memento
+        Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
+        puzzle = new Puzzle();
+        // Make current puzzle's fields to those of the saved Memento
+        puzzle.restoreFromMemento(m);
     }
 
     /**
@@ -228,19 +197,6 @@ public class GameState {
         return res;
     }
 
-    /**
-     * Checks to see if the current score is
-     * an acceptable high score.
-     *
-     * @return True if the score is a new high
-     * score and false if it isn't.
-     */
-    public boolean newScore(){
-        if(database.checkScore(getScore())){
-            return true;
-        }
-        return false;
-    }
 
     /**
      * Adds the current score into the database of
@@ -263,13 +219,6 @@ public class GameState {
     public String printScore(){
         return puzzle.printScore();
     }
-
-    /**
-     * Function that closes the connection
-     * to the database.
-     *
-     */
-    public void conClose(){database.conClose();}
 
 
     // Builder implementation for GameState

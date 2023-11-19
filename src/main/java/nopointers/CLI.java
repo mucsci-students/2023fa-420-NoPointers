@@ -72,6 +72,9 @@ public class CLI {
 
     /**
      *
+     * Function that parses nad evaluates different cli
+     * commands
+     *
      * @param command The command from the user that will be parsed.
      * @postcondition The users command is parsed and executed.
      */
@@ -192,6 +195,12 @@ public class CLI {
         System.out.println(gameState.getScore());
     }
 
+    /**
+     * Function that prints different outcome based
+     * on what the user entered in as a guess
+     *
+     * @param outcome The outcome of the guess
+     */
     private void handleOutcome(GuessOutcome outcome) {
         switch (outcome) {
             case SUCCESS -> {
@@ -274,7 +283,9 @@ public class CLI {
     }
 
 
-
+    /**
+     * Prints the intro and title of the game
+     */
     private void intro() {
         terminal.writer().write(RED_TERMINAL_COLOR);
         String logo = "\n" +
@@ -310,6 +321,9 @@ public class CLI {
 
     }
 
+    /**
+     * Prints a list of the commands and what they do
+     */
     public void commands() {
         System.out.println(RED_TERMINAL_COLOR);
         String padding = "               ";
@@ -329,6 +343,10 @@ public class CLI {
         System.out.println(padding + " Rank \u001b[24m \254 Displays your current rank in the puzzle including your points\n");
     }
 
+    /**
+     * Prints the rules of the game to the user
+     *
+     */
     private void rules() {
         System.out.println(RED_TERMINAL_COLOR);
         System.out.println("============================================================================================================");

@@ -51,17 +51,11 @@ public class GameState {
          return puzzle.guessWord(input);
     }
     // Changes state to/from FreshState and CompletedState.
-    public void changeState(State state) {
-        this.state = state;
-    }
+    public void changeState(State state) {this.state = state;}
 
-    public State getState() {
-        return state;
-    }
+    public State getState() {return state;}
     // Marks puzzle as being completed.
-    public void setDone(boolean done) {
-        this.isDone = done;
-    }
+    public void setDone(boolean done) {this.isDone = done;}
 
     // Save method for controllers to call on.
     public void savePuzzle () throws IOException {
@@ -89,22 +83,20 @@ public class GameState {
         return false;
     }
 
-    public char requiredLetter() {
-        return puzzle.getRequiredLetter();
-    }
-
-    public ArrayList<String> guessed() {
-        return puzzle.getGuessed();
-    }
+    //Returns the required letter
+    public char requiredLetter() {return puzzle.getRequiredLetter();}
+    //Returns the list of guessed words
+    public ArrayList<String> guessed() {return puzzle.getGuessed();}
 
     public Puzzle.Memento getMemento() {return puzzle.saveToMemento();}
 
     public void restoreFromMemento(Puzzle.Memento m) {puzzle.restoreFromMemento(m);}
 
+    //Returns the letters of the current puzzle
     public char[] getLetters() {
         return puzzle.getLetters();
     }
-
+    //Returns the current rank
     public int getRank() { return puzzle.getRank(); }
 
     public int getScore() { return puzzle.getScore(); }

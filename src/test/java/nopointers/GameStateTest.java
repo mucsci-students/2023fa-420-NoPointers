@@ -214,7 +214,7 @@ class GameStateTest {
         gameState.addScore("Tom Cruise");
         assertTrue(gameState.newScore());
         assertNotEquals(gameState.printScore(), prev, "Scores should not be the same.");
-        gameState.conClose();
+        //gameState.conClose();
     }
 
     /** Tests the game state's State design pattern functionality.

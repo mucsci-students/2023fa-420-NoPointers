@@ -203,7 +203,32 @@ class GameStateTest {
 
     }
 
+    /** Tests the game state's score adding and saving functionality.
+     *
+     * @author kstigelman
+     */
+    @RepeatedTest(2)
+    @DisplayName("Test GameState's Scores")
+    public void testScores () {
+        String prev = gameState.printScore();
+        gameState.addScore("Tom Cruise");
+        assertTrue(gameState.newScore());
+        assertNotEquals(gameState.printScore(), prev, "Scores should not be the same.");
+        gameState.conClose();
+    }
 
+    /** Tests the game state's State design pattern functionality.
+     *
+     * @author kstigelman
+     */
+    @RepeatedTest(2)
+    @DisplayName("Test GameState's State Design Pattern")
+    public void testState () {
+        assertNotNull(gameState.getState(), "Should not be null.");
+        assertTrue(gameState.getState() instanceof FreshState, "Should be a brand new state.");
+        gameState.changeState(new CompletedState(gameState));
+        assertSame(gameState.guess("banana"), GuessOutcome.PUZZLE_COMPLETED, "Puzzle should be completed.");
+    }
 
 
 }

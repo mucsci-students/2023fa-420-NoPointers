@@ -55,9 +55,6 @@ public class GameState {
         this.state = state;
     }
 
-    public Puzzle getPuzzle() {
-        return puzzle;
-    }
     public State getState() {
         return state;
     }
@@ -67,17 +64,8 @@ public class GameState {
     }
 
     // Save method for controllers to call on.
-    public boolean savePuzzle () throws IOException {
-        if (puzzle != null) {
-            //memento.save();
-            save();
-            System.out.println("Puzzle Saved to Home Directory");
-            return true;
-        }
-        else {
-            System.out.println("No Puzzle to Save");
-            return false;
-        }
+    public void savePuzzle () throws IOException {
+        save();
     }
 
     // Load method to be called on by controllers.
@@ -107,10 +95,6 @@ public class GameState {
 
     public ArrayList<String> guessed() {
         return puzzle.getGuessed();
-    }
-
-    public boolean hasPuzzle() {
-        return (puzzle != null);
     }
 
     public Puzzle.Memento getMemento() {return puzzle.saveToMemento();}
@@ -185,16 +169,11 @@ public class GameState {
      */
 
     public void save() throws IOException {
-
-        if(puzzle != null)
-        {
-            // Save current puzzle to a Memento.
-            Puzzle.Memento m = puzzle.saveToMemento();
-            String s = new String(m.toGSONObject());
-            String home = System.getProperty("user.home");
-            Files.write(Paths.get(home).resolve( "puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-        }
-
+        // Save current puzzle to a Memento.
+        Puzzle.Memento m = puzzle.saveToMemento();
+        String s = new String(m.toGSONObject());
+        String home = System.getProperty("user.home");
+        Files.write(Paths.get(home).resolve( "puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
     /**

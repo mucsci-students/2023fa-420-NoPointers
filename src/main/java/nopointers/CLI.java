@@ -77,7 +77,6 @@ public class CLI {
         int i = 0;
         switch (args[0]) {
             case "exit":
-
                 if(gameState.newScore() && i++ > 0){
                     promptWinner();
                     System.out.println(gameState.printScore());
@@ -133,10 +132,11 @@ public class CLI {
                 }
                 break;
             case "new":
-                if (gameState.getPuzzle() != null) {
+                if (i != 0) {
                     promptWinner();
                     System.out.println(gameState.printScore());
                 }
+                ++i;
                 try {
                     gameState.newRandomPuzzle();
                     showPuzzle();
@@ -232,7 +232,7 @@ public class CLI {
     // Method to be called on from Show Puzzle Command. Prints out the puzzle
     // letters to user.
     public void showPuzzle() {
-        if (!gameState.hasPuzzle()) {
+        if (gameState == null) {
             System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
             return;
         }

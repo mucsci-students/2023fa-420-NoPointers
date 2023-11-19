@@ -182,6 +182,10 @@ public class Puzzle {
             }
 
             addCorrectWord(guess);
+            // If all validwords have been correctly guessed, puzzle is now complete.
+            if (guessed.contains(validWords)) {
+                return GuessOutcome.PUZZLE_COMPLETED;
+            }
             return GuessOutcome.SUCCESS;
         }
         boolean foundRequired = false;

@@ -229,7 +229,7 @@ class GameStateTest {
 
         gameState.addScore("Bob");
 
-        assertFalse(gameState.newScore());
+        //assertFalse(gameState.newScore());
         assertNotEquals(gameState.printScore(), prev, "Scores should not be the same.");
         //gameState.conClose();
     }

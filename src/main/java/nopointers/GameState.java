@@ -13,6 +13,7 @@ import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
 import com.google.gson.Gson;
+import javafx.stage.FileChooser;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,8 +22,12 @@ public class GameState {
     // Fields
     private Puzzle puzzle;
     private Database database;
+
     private State state;
     private boolean isDone = false;
+
+    private Scanner sc = new Scanner(System.in);
+
 
     private GameState(GameStateBuilder builder) {
         this.puzzle = new Puzzle();
@@ -63,7 +68,7 @@ public class GameState {
         if (puzzle != null) {
             //memento.save();
             save();
-            System.out.println("Puzzle Saved!");
+            System.out.println("Puzzle Saved to Home Directory");
             return true;
         }
         else {
@@ -191,10 +196,8 @@ public class GameState {
             Puzzle.Memento m = puzzle.saveToMemento();
             String s = new String(m.toGSONObject());
             String home = System.getProperty("user.home");
-
-            System.out.println(s);
             try {
-                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                Files.write(Paths.get(home).resolve( "puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             } catch (IOException error) {
                 throw new RuntimeException(error);
             }

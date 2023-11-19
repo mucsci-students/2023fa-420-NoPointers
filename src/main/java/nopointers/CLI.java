@@ -24,8 +24,9 @@ public class CLI {
 
     private GameState gameState;
 
-
     public CLI() throws IOException {
+        //gameState = new GameState();
+        //gameState = new GameState.GameStateBuilder(Database.getInstance());
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
 
@@ -69,8 +70,14 @@ public class CLI {
     private void parser(String command) {
 
         String[] args = command.split(" ");
+        int i = 0;
         switch (args[0]) {
             case "exit":
+                if(gameState.newScore() && i++ > 0){
+                    promptWinner();
+                    System.out.println(gameState.printScore());
+                }
+                gameState.conClose();
                 System.out.println("\033[49m");
                 System.exit(0);
             case "":
@@ -102,6 +109,11 @@ public class CLI {
                 gameState.loadPuzzle();
                 break;
             case "new":
+                if(i == 0){
+                    promptWinner();
+                    System.out.println(gameState.printScore());
+                    i++;
+                }
                 gameState.newRandomPuzzle();
                 showPuzzle();
                 break;
@@ -109,18 +121,34 @@ public class CLI {
                 commands();
                 break;
             case "rank":
-
                 gameState.rank();
                 break;
             case "custom":
-
                 if (!gameState.newUserPuzzle(args[1])) {
                     System.out.println("Invalid Pangram!");
                 }
                 break;
+            case "hints":
+                String res = gameState.hints();
+                System.out.print(res);
+                break;
             default:
                 System.out.println(command + ": Unknown Command");
         }
+    }
+
+    /**
+     * This function prompt the user
+     * to enter their name and it will
+     * add it into the database.
+     *
+     */
+    private void promptWinner() {
+        System.out.print("Enter name: ");
+        String user = reader.readLine().toLowerCase();
+        boolean res = gameState.addScore(user);
+        if(!res){System.out.print("did not add.");}
+        System.out.println(gameState.getScore());
     }
 
     private void handleOutcome(GuessOutcome outcome) {
@@ -144,6 +172,12 @@ public class CLI {
             case MISSING_REQUIRED -> {
                 System.out.println("Incorrect. Does not use required letter.");
                 System.out.println("The Required letter is [" + gameState.requiredLetter() + "]");
+            }
+            case PUZZLE_COMPLETED -> {
+                // Uses the onGuess() function from either FreshState or Completed State.
+                // When a user successfully enters the last word, FreshState's text will be returned.
+                // Subsequent attempts to guess words will cause CompletedState's text to appear.
+                System.out.println(gameState.getState().onGuess());
             }
         }
     }
@@ -267,6 +301,8 @@ public class CLI {
         System.out.println("============================================================================================================");
 
     }
+
+
 
 
 }

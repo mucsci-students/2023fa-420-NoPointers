@@ -22,21 +22,41 @@ public class GameState {
     // Fields
     private Puzzle puzzle;
     private Database database;
+    private State state;
+    private boolean isDone = false;
 
     private GameState(GameStateBuilder builder) {
         this.puzzle = new Puzzle();
         database = Database.getInstance();
+        this.state = new FreshState(this);
     }
 
 
     // Guess method to be called on by controller. Calls on puzzle's guessWord method.
     public GuessOutcome guess (String input) {
+        GuessOutcome outcome;
+        // If GameState is in CompletedState(all words found) just return PUZZLE_COMPLETED rather than calling function.
+        if (isDone == true) {
+            return GuessOutcome.PUZZLE_COMPLETED;
+        }
         if (input.isBlank() || input.length() < 4) {
 
             return GuessOutcome.TOO_SHORT;
 
         }
          return puzzle.guessWord(input);
+    }
+    // Changes state to/from FreshState and CompletedState.
+    public void changeState(State state) {
+        this.state = state;
+    }
+
+    public State getState() {
+        return state;
+    }
+    // Marks puzzle as being completed.
+    public void setDone(boolean done) {
+        this.isDone = done;
     }
 
     // Save method for controllers to call on.
@@ -129,7 +149,7 @@ public class GameState {
     /**
      * Displays a loading animation on our terminal.
      */
-    void time() {
+    private void time() {
         for (int i = 0; i < 100; ++i) {
             try {
                 TimeUnit.MILLISECONDS.sleep(1);
@@ -207,14 +227,73 @@ public class GameState {
         }
     }
 
+    /**
+     * Called the print func from puzzle
+     * and returns the string of the total hints.
+     *
+     * @return A string of the total hints
+     */
+    public String hints(){
+        String res = puzzle.printHints();
+        return res;
+    }
+
+    /**
+     * Checks to see if the current score is
+     * an acceptable high score.
+     *
+     * @return True if the score is a new high
+     * score and false if it isn't.
+     */
+    public boolean newScore(){
+        if(database.checkScore(getScore())){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Adds the current score into the database of
+     * high scores.
+     *
+     * @param name The name of the user.
+     * @return True if it is added and false if it
+     * isn't.
+     */
+    public boolean addScore(String name){
+        return puzzle.newHighScore(getScore(),name);
+    }
+
+    /**
+     * Returns total list of high scores.
+     *
+     * @return The string of the total
+     * list of high scores.
+     */
+    public String printScore(){
+        return puzzle.printScore();
+    }
+
+    /**
+     * Function that closes the connection
+     * to the database.
+     *
+     */
+    public void conClose(){database.conClose();}
+
+
     // Builder implementation for GameState
     public static class GameStateBuilder {
         private Puzzle puzzle;
         private Database database;
+        private State state;
+        private boolean isDone = false;
 
         public GameStateBuilder(Database database) {
             this.puzzle = new Puzzle();
             this.database = database;
+            this.isDone = false;
+            this.state = state;
         }
 
         public GameState build() {
@@ -223,6 +302,4 @@ public class GameState {
 
     }
 
-
 }
-

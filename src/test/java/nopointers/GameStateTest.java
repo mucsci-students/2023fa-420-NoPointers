@@ -162,4 +162,11 @@ class GameStateTest {
         assertEquals(0, gameState.getRank(), "Rank should be zero.");
         gameState.rank();
     }
+
+    @Test
+    public void testSaveAndLoad () {
+        assertFalse (gameState.load(), "Puzzle should successfully load");
+        gameState.save();
+        assertTrue (gameState.load(), "Puzzle should successfully load");
+    }
 }

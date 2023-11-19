@@ -24,6 +24,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
 import java.util.ArrayList; 
+
 import javafx.scene.robot.*;
 import javafx.scene.image.*;
 import javafx.stage.FileChooser;
@@ -338,11 +339,8 @@ public class Controller {
             case MISSING_REQUIRED -> {
                 error.setText("Incorrect. Does not use required letter: " + gameState.requiredLetter());
             }
-            case PUZZLE_COMPLETED -> {
-                // Uses the onGuess() function from either FreshState or Completed State.
-                // When a user successfully enters the last word, FreshState's text will be returned.
-                // Subsequent attempts to guess words will cause CompletedState's text to appear.
-                error.setText(gameState.getState().onGuess());
+            case INVALID_LETTER -> {
+                error.setText("Invalid Letter");
             }
         }
 
@@ -378,22 +376,12 @@ public class Controller {
             command.undo();
         }
     }
-    @FXML
-    private void takeScreenshot(ActionEvent e) throws IOException {
-        Stage stage = (Stage) foundWords.getScene().getWindow();
-        WritableImage image = stage.getScene().snapshot(null);
-        RenderedImage renderedImage = SwingFXUtils.fromFXImage(image,null);
-        File file = new File("Screenshot.png");
-        ImageIO.write(renderedImage,"png",file);
-        System.out.println("File saved to: " + file.getAbsolutePath());
-
-    }
 
     @FXML
     private void fileChooser(ActionEvent e) throws IOException {
         Stage stage = (Stage) foundWords.getScene().getWindow();
         WritableImage image = stage.getScene().snapshot(null);
-
+        
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Screenshot");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG Files", "*.png"));

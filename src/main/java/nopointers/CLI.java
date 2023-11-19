@@ -22,6 +22,9 @@ public class CLI {
     private History history;
     private Highlighter highlighter;
 
+    private static final String RESET_TERMINAL_COLOR = "\033[0m";
+    private static final String RED_TERMINAL_COLOR = "\u001b[31;1m";
+    private static final String PRINT_RED_TERMINAL_COLOR = "\u001b[31;1;3m";
     private GameState gameState;
 
     public CLI() throws IOException {
@@ -56,9 +59,10 @@ public class CLI {
         }
 
         while (true) {
-            terminal.writer().print(">");
+            terminal.writer().print(RED_TERMINAL_COLOR +">");
             String command = reader.readLine().toLowerCase();
             parser(command);
+
         }
     }
 
@@ -73,12 +77,16 @@ public class CLI {
         int i = 0;
         switch (args[0]) {
             case "exit":
+<<<<<<< HEAD
                 if(gameState.newScore() && i++ > 0){
                     promptWinner();
                     System.out.println(gameState.printScore());
                 }
                 gameState.conClose();
                 System.out.println("\033[49m");
+=======
+                System.out.println(RESET_TERMINAL_COLOR);
+>>>>>>> 4005d586476a9c692be6dde0d7dafb9778a5ceda
                 System.exit(0);
             case "":
                 System.out.println("Please enter a command");
@@ -101,6 +109,10 @@ public class CLI {
             case "shuffle":
 
                 gameState.shuffle();
+                showPuzzle();
+                System.out.println("\n");
+
+                terminal.writer().println("Puzzle Shuffled!");
                 break;
             case "rules":
                 rules();
@@ -124,9 +136,12 @@ public class CLI {
                 gameState.rank();
                 break;
             case "custom":
-                if (!gameState.newUserPuzzle(args[1])) {
-                    System.out.println("Invalid Pangram!");
+                if(args.length > 1) {
+                    if (!gameState.newUserPuzzle(args[1])) {
+                        System.out.println("Invalid Pangram!");
+                    }
                 }
+                terminal.writer().println("Invalid New Puzzle!");
                 break;
             case "hints":
                 String res = gameState.hints();
@@ -221,6 +236,7 @@ public class CLI {
                 + "(________mrf\\____.| .________)____)");
         // Print out the seven letters with the required letter in brackets [].
         gameState.rank();
+        System.out.println(PRINT_RED_TERMINAL_COLOR);
         for (int i = 0; i < gameState.getLetters().length; ++i) {
             if (i == 6)
                 System.out.print("[");
@@ -228,11 +244,13 @@ public class CLI {
         }
         System.out.print("]\n");
         System.out.println("Guessed Words: " + gameState.guessed().toString());
+        System.out.println(RED_TERMINAL_COLOR);
     }
 
 
 
     private void intro() {
+        terminal.writer().write(RED_TERMINAL_COLOR);
         String logo = "\n" +
                 "/***\n" +
                 " *                                                                                                                                                          \n" +
@@ -256,7 +274,6 @@ public class CLI {
                 " *                                                                                                           /                                              \n" +
                 " *                                                                                                          /                                               \n" +
                 " */\n";
-        terminal.writer().print("\033[31m");
         terminal.writer().print(logo);
         terminal.writer().print("\n\t\t\t Welcome \u001b[24m To Word Wizards! To begin playing enter a command below!\n\n\n");
         terminal.writer().print("\t\t\t \u001b[4m New \u001b[24m \254  Creates a New Puzzle\n\n");
@@ -264,10 +281,11 @@ public class CLI {
         terminal.writer().print("\t\t\t \u001b[4m Load \u001b[24m \254 Loads a Puzzle From Your Home Directory\n\n");
         terminal.writer().print("\t\t\t \u001b[4m Help \u001b[24m \254 Display Additional Commands \n\n");
         terminal.writer().print("\t\t\t \u001b[4m Exit \u001b[24m \254 Exits the Program\n\n");
-        terminal.writer().flush();
+
     }
 
     public void commands() {
+        System.out.println(RED_TERMINAL_COLOR);
         String padding = "               ";
         System.out.println(padding + "============================================================================");
         System.out.println(padding + " New \u001b[24m \254  Creates a New Puzzle\n");
@@ -286,6 +304,7 @@ public class CLI {
     }
 
     private void rules() {
+        System.out.println(RED_TERMINAL_COLOR);
         System.out.println("============================================================================================================");
         System.out.println("Welcome to Word Wizards! The goal of this game is to find all the possible words of a generated pangram \nHere are the rules for the game.\n"
                 + "\n"

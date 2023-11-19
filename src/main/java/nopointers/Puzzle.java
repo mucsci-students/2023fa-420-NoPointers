@@ -18,33 +18,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 public class Puzzle {
 
-    //Rank related structures
-
-    String[] ranks = {
-            "Student",
-            "Apprentice",
-            "Adept",
-            "Master",
-            "Elder Wizard",
-            "Sorcerer",
-            "Keeper of Words",
-            "Keeper of Words",
-            "Genius",
-            "Word Wizard"
-    };
-    int[] levels = {
-            0,
-            2,
-            5,
-            8,
-            15,
-            25,
-            40,
-            50,
-            70,
-            100
-    };
-
     // Fields of Puzzle Class
     // The 6 optional letters
 
@@ -225,10 +198,10 @@ public class Puzzle {
     }
 
     public void displayRank () {
-        System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " + ranks[getRank()]);
+        System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " +  RankInfo.ranks[getRank()]);
         if (getRank () == 9)
             return;
-        System.out.println ("Next rank: " + ranks[getRank() + 1] + " at " + (int) (levels[getRank () + 1] * maxScore / 100) + "pts");
+        System.out.println ("Next rank: " + RankInfo.ranks[getRank() + 1] + " at " + (int) ( RankInfo.levels[getRank () + 1] * maxScore / 100) + "pts");
     }
     private void addCorrectWord (String guess) {
         guessed.add(guess);
@@ -258,10 +231,6 @@ public class Puzzle {
             points += 7;
 
         return points;
-    }
-
-    public String[] getRanks() {
-        return ranks;
     }
 
     /*public void setRanks(String[] ranks) {
@@ -679,6 +648,10 @@ public class Puzzle {
         @SerializedName(value = "author")
         @Expose (serialize = true, deserialize = true)
         private String author;
+
+        @SerializedName(value = "rank")
+        @Expose (serialize = true, deserialize = true)
+        private int rank;
         // Constructor.
         public Memento (Puzzle puzzle) {
             this.letters = puzzle.letters;
@@ -687,6 +660,7 @@ public class Puzzle {
             this.score = puzzle.score;
             this.validWords = puzzle.validWords;
             this.author = "no-pointers";
+            this.rank = puzzle.getRank();
         }
 
         public char getRequiredLetter() {
@@ -703,6 +677,10 @@ public class Puzzle {
 
         public int getScore() {
             return score;
+        }
+
+        public int getRank() {
+            return rank;
         }
 
         public String toGSONObject()

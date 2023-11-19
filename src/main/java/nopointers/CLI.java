@@ -27,11 +27,15 @@ public class CLI {
     private static final String PRINT_RED_TERMINAL_COLOR = "\u001b[31;1;3m";
     private GameState gameState;
 
+    private Database database;
+
     public CLI() throws IOException {
         //gameState = new GameState();
         //gameState = new GameState.GameStateBuilder(Database.getInstance());
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
+
+        database = Database.getInstance();
 
         try {
             start();
@@ -77,12 +81,10 @@ public class CLI {
         int i = 0;
         switch (args[0]) {
             case "exit":
-
-                if(gameState.newScore() && i++ > 0){
+                if(database.checkScore(gameState.getScore())){
                     promptWinner();
                     System.out.println(gameState.printScore());
                 }
-                gameState.conClose();
                 System.out.println("\033[49m");
 
                 System.out.println(RESET_TERMINAL_COLOR);
@@ -95,7 +97,12 @@ public class CLI {
                 showPuzzle();
                 break;
             case "save":
-                gameState.savePuzzle();
+                try {
+                    gameState.savePuzzle();
+                }
+                catch (IOException e) {
+                    System.out.print("Saving failed");
+                }
                 break;
             case "guess":
                 if(args.length > 1)
@@ -104,8 +111,10 @@ public class CLI {
                     handleOutcome(outcome);
                     break;
                 }
-            terminal.writer().write("Blank Guess!\n");
-            break;
+                else {
+                    terminal.writer().write("Blank Guess!\n");
+                    break;
+                }
             case "shuffle":
 
                 gameState.shuffle();
@@ -118,16 +127,26 @@ public class CLI {
                 rules();
                 break;
             case "load":
-                gameState.loadPuzzle();
+                try {
+                    gameState.loadPuzzle();
+                }
+                catch (IOException e) {
+                    System.out.println("No Save Found");
+                }
                 break;
             case "new":
-                if(i == 0){
+                if (i != 0) {
                     promptWinner();
                     System.out.println(gameState.printScore());
-                    i++;
                 }
-                gameState.newRandomPuzzle();
-                showPuzzle();
+                ++i;
+                try {
+                    gameState.newRandomPuzzle();
+                    showPuzzle();
+                }
+                catch (InterruptedException e) {
+                    System.out.println ("Something went wrong. Please try again.");
+                }
                 break;
             case "help":
                 commands();
@@ -137,11 +156,18 @@ public class CLI {
                 break;
             case "custom":
                 if(args.length > 1) {
-                    if (!gameState.newUserPuzzle(args[1])) {
-                        System.out.println("Invalid Pangram!");
+                    try {
+                        if (!gameState.newUserPuzzle(args[1])) {
+                            System.out.println("Invalid Pangram!");
+                        }
+                    }
+                    catch (InterruptedException e) {
+                        System.out.println ("Something went wrong. Please try again.");
                     }
                 }
-                terminal.writer().println("Invalid New Puzzle!");
+                else {
+                    terminal.writer().println("Invalid New Puzzle!");
+                }
                 break;
             case "hints":
                 String res = gameState.hints();
@@ -209,7 +235,7 @@ public class CLI {
     // Method to be called on from Show Puzzle Command. Prints out the puzzle
     // letters to user.
     public void showPuzzle() {
-        if (!gameState.hasPuzzle()) {
+        if (gameState == null) {
             System.out.println("No puzzle to show please load a puzzle or generate a new puzzle");
             return;
         }

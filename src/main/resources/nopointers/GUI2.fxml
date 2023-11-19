@@ -284,7 +284,7 @@
                         <Font size="24.0" />
                      </font>
                   </TextArea>
-                  <Button fx:id="hintsButton" layoutX="47.0" layoutY="550.0" mnemonicParsing="false" onAction="#hintsf" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Hints">
+                  <Button fx:id="hintsButton" layoutX="42.0" layoutY="550.0" mnemonicParsing="false" onAction="#hintsf" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Hints">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -294,6 +294,30 @@
                      <font>
                         <Font name="Algerian" size="24.0" />
                      </font>
+                  </Button>
+                  <TextArea fx:id="scoresBox" editable="false" layoutX="12.0" layoutY="89.0" opacity="0.85" prefHeight="441.0" prefWidth="447.0" visible="false" wrapText="true">
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextArea>
+                  <TextField fx:id="enterName" alignment="CENTER" layoutX="114.0" layoutY="245.0" onAction="#guess" prefHeight="51.0" prefWidth="166.0" promptText="Name" visible="false">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="enter" layoutX="313.0" layoutY="242.0" mnemonicParsing="false" onAction="#enterf" prefHeight="58.0" prefWidth="87.0" style="-fx-background-color: lime;" text="Enter" visible="false">
+                     <effect>
+                        <InnerShadow />
+                     </effect>
+                     <font>
+                        <Font name="Algerian" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </Pane>

@@ -16,6 +16,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import javafx.scene.image.WritableImage;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
+import javafx.scene.text.Text;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 
 public class Controller {
@@ -91,12 +107,21 @@ public class Controller {
 
     @FXML
     Button quit = new Button();
-
+    //Button the user pressed to show the hints
     @FXML
-
     Button hintsButton = new Button();
+    //Text ares that presents the hint
     @FXML
     TextArea hintsBox = new TextArea();
+    //Text area that presents the scores
+    @FXML
+    TextArea scoresBox = new TextArea();
+    //Text field where user enters their name
+    @FXML
+    TextField enterName = new TextField();
+    //Button the user presses to enter their name
+    @FXML
+    Button enter = new Button();
 
     Button g = new Button();
     Controller controller = this;
@@ -110,7 +135,12 @@ public class Controller {
 
     public void quit(ActionEvent e)
     {
-        System.exit(0);
+        if(gameState.newScore()){
+            scoresf(e);
+        }
+        else{
+            System.exit(0);
+        }
     }
 
     public void customPuzzle(ActionEvent e)
@@ -135,7 +165,20 @@ public class Controller {
     public void NewPuzzle(ActionEvent e)
     {
         // Create a new puzzle via the New button with a NewPuzzle command.
-        executeCommand(new NewPuzzleCommand(this, gameState));
+        String word = new String(gameState.getLetters());
+        if(!l0.getText().equals(String.valueOf(word.charAt(0)))){
+            executeCommand(new NewPuzzleCommand(this, gameState));
+        }
+        else if(scoresBox.isVisible()){
+            scoresBox.setVisible(false);
+        }
+        else{
+            scoresf(e);
+            executeCommand(new NewPuzzleCommand(this, gameState));
+        }
+
+
+
 
     }
 
@@ -289,17 +332,23 @@ public class Controller {
             history.push(command);
         }
     }
-
+    /**
+     * A javafx function for
+     *
+     * @param e
+     */
     public void hintsf(ActionEvent e){
         if(hintsBox.isVisible()){
             hintsBox.setVisible(false);
+            return;
         }
         String res = gameState.hints();
         hintsBox.setText(gameState.hints());
         hintsBox.setVisible(true);
     }
+
     // Undo previous command. Reverts to previous state.
-    private void undo() {
+        private void undo() {
         if (history.isEmpty()) {
             return;
         }
@@ -307,5 +356,36 @@ public class Controller {
         if (command != null) {
             command.undo();
         }
+    }
+
+    /**
+     * A javafx function for the textbox
+     * that presents the scoresbox
+     *
+     * @param e
+     */
+    public void scoresf(ActionEvent e){
+        if(scoresBox.isVisible()){
+            scoresBox.setVisible(false);
+        }
+        enterName.setVisible(true);
+        enter.setVisible(true);
+    }
+
+    /**
+     * A javafx function that
+     *
+     *
+     * @param e
+     */
+    public void enterf(ActionEvent e){
+        enterName.setVisible(false);
+        enter.setVisible(false);
+        gameState.addScore(enterName.getText());
+        enterName.setText("");
+        String res = gameState.printScore();
+        scoresBox.setText(res);
+        scoresBox.setVisible(true);
+
     }
 }

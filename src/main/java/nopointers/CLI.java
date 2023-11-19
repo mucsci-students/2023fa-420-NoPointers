@@ -25,6 +25,7 @@ public class CLI {
     private GameState gameState;
 
 
+
     public CLI(Terminal t) {
         //gameState = new GameState();
         //gameState = new GameState.GameStateBuilder(Database.getInstance());
@@ -70,8 +71,14 @@ public class CLI {
      */
     private void parser(String command) {
         String[] args = command.split(" ");
+        int i = 0;
         switch (args[0]) {
             case "exit":
+                if(gameState.newScore() && i++ > 0){
+                    promptWinner();
+                    System.out.println(gameState.printScore());
+                }
+                gameState.conClose();
                 System.out.println("\033[49m");
                 System.exit(0);
             case "":
@@ -98,6 +105,11 @@ public class CLI {
                 gameState.loadPuzzle();
                 break;
             case "new":
+                if(i == 0){
+                    promptWinner();
+                    System.out.println(gameState.printScore());
+                    i++;
+                }
                 gameState.newRandomPuzzle();
                 showPuzzle();
                 break;
@@ -105,11 +117,9 @@ public class CLI {
                 commands();
                 break;
             case "rank":
-
                 gameState.rank();
                 break;
             case "custom":
-
                 if (!gameState.newUserPuzzle(args[1])) {
                     System.out.println("Invalid Pangram!");
                 }
@@ -121,6 +131,20 @@ public class CLI {
             default:
                 System.out.println(command + ": Unknown Command");
         }
+    }
+
+    /**
+     * This function prompt the user
+     * to enter their name and it will
+     * add it into the database.
+     *
+     */
+    private void promptWinner() {
+        System.out.print("Enter name: ");
+        String user = reader.readLine().toLowerCase();
+        boolean res = gameState.addScore(user);
+        if(!res){System.out.print("did not add.");}
+        System.out.println(gameState.getScore());
     }
 
     private void handleOutcome(GuessOutcome outcome) {

@@ -19,6 +19,7 @@ run
 shadowJar {
     manifest {
         attributes 'Main-Class': 'nopointers.EntryPoint'
+        archiveBaseName = 'WordWizards.jar'
     }
 
 

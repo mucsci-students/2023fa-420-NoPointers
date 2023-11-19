@@ -20,35 +20,35 @@
          <children>
             <Pane prefHeight="805.0" prefWidth="1279.0" styleClass="root" stylesheets="@../StyleSheets/BG.css">
                <children>
-                  <Button fx:id="l4" layoutX="534.0" layoutY="375.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                  <Button fx:id="l4" layoutX="534.0" layoutY="375.0" lineSpacing="2.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <Bloom threshold="0.11" />
+                        <Bloom threshold="0.39" />
                      </effect></Button>
-                  <Button fx:id="l3" layoutX="620.0" layoutY="429.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                  <Button fx:id="l3" layoutX="620.0" layoutY="429.0" lineSpacing="2.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <Bloom threshold="0.08" />
+                        <Bloom threshold="0.39" />
                      </effect></Button>
-                  <Button fx:id="l5" layoutX="534.0" layoutY="278.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                  <Button fx:id="l5" layoutX="534.0" layoutY="278.0" lineSpacing="2.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <Bloom threshold="0.0" />
+                        <Bloom threshold="0.39" />
                      </effect></Button>
-                  <Button fx:id="l0" layoutX="620.0" layoutY="216.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                  <Button fx:id="l0" layoutX="620.0" layoutY="216.0" lineSpacing="2.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <Bloom threshold="0.0" />
+                        <Bloom threshold="0.39" />
                      </effect></Button>
-                  <Button fx:id="l2" layoutX="705.0" layoutY="375.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                  <Button fx:id="l2" layoutX="705.0" layoutY="375.0" lineSpacing="2.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -56,41 +56,38 @@
                         <Font size="18.0" />
                      </font>
                      <effect>
-                        <Bloom threshold="0.0" />
+                        <Bloom threshold="0.39" />
                      </effect></Button>
-                  <Button fx:id="l1" layoutX="705.0" layoutY="278.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
+                  <Button fx:id="l1" layoutX="705.0" layoutY="278.0" lineSpacing="2.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <Bloom threshold="0.23" />
+                        <Bloom threshold="0.39" />
                      </effect></Button>
-                  <Button fx:id="requiredLetter" layoutX="620.0" layoutY="323.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" style="-fx-background-color: #D7580A;" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css" underline="true">
+                  <Button fx:id="requiredLetter" layoutX="620.0" layoutY="323.0" lineSpacing="2.0" maxHeight="62.0" maxWidth="61.0" minHeight="37.0" mnemonicParsing="false" onAction="#handleButtonClick" prefHeight="62.0" prefWidth="61.0" scaleX="1.25" scaleY="1.25" style="-fx-background-color: #D7580A;" styleClass="circular-button" stylesheets="@../StyleSheets/circlebutton.css" underline="true">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                      <effect>
-                        <InnerShadow>
-                           <input>
-                              <Bloom threshold="0.0" />
-                           </input></InnerShadow>
+                        <Bloom threshold="0.39" />
                      </effect></Button>
-                  <Button fx:id="saveButton" layoutX="47.0" layoutY="735.0" mnemonicParsing="false" onAction="#save" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Save">
+                  <Button fx:id="saveButton" layoutX="47.0" layoutY="735.0" mnemonicParsing="false" onAction="#save" prefHeight="41.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="Save">
                      <effect>
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="22.0" />
+                        <Font name="Baskerville Old Face" size="25.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button fx:id="loadButton" layoutX="219.0" layoutY="735.0" mnemonicParsing="false" onAction="#load" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Load">
+                  <Button fx:id="loadButton" layoutX="219.0" layoutY="735.0" mnemonicParsing="false" onAction="#load" prefHeight="41.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="Load">
                      <effect>
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="22.0" />
+                        <Font name="Baskerville Old Face" size="25.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -100,24 +97,24 @@
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="16.0" />
+                        <Font name="Baskerville Old Face" size="20.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button fx:id="guess" layoutX="774.0" layoutY="492.0" mnemonicParsing="false" onAction="#guess" prefHeight="58.0" prefWidth="62.0" style="-fx-background-color: lime;" text="Guess">
+                  <Button fx:id="guess" layoutX="774.0" layoutY="492.0" mnemonicParsing="false" onAction="#guess" prefHeight="58.0" prefWidth="62.0" style="-fx-background-color: lime;" styleClass="small-button" stylesheets="@../StyleSheets/Square_Button.css" text="Guess">
                      <effect>
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="14.0" />
+                        <Font name="Baskerville Old Face" size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <TextField fx:id="input" alignment="CENTER" layoutX="493.0" layoutY="89.0" onAction="#guess" promptText="Enter or Guess">
+                  <TextField fx:id="input" alignment="CENTER" layoutX="478.0" layoutY="94.0" onAction="#guess" promptText="Enter or Guess">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="Baskerville Old Face" size="25.0" />
                      </font>
                   </TextField>
                   <VBox layoutX="986.0" layoutY="251.0" prefHeight="321.0" prefWidth="204.0">
@@ -127,12 +124,12 @@
                               <InnerShadow />
                            </effect>
                            <font>
-                              <Font size="24.0" />
+                              <Font name="Baskerville Old Face" size="24.0" />
                            </font>
                         </TextArea>
                      </children>
                   </VBox>
-                  <Button fx:id="newPuzzle" layoutX="47.0" layoutY="668.0" mnemonicParsing="false" onAction="#NewPuzzle" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="New">
+                  <Button fx:id="newPuzzle" layoutX="47.0" layoutY="668.0" mnemonicParsing="false" onAction="#NewPuzzle" prefHeight="41.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="New">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -140,17 +137,17 @@
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="24.0" />
+                        <Font name="Baskerville Old Face" size="25.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button fx:id="deleteButton" layoutX="464.0" layoutY="492.0" mnemonicParsing="false" onAction="#delete" prefHeight="58.0" prefWidth="62.0" style="-fx-background-color: crimson;" text="DEL">
+                  <Button fx:id="deleteButton" layoutX="464.0" layoutY="492.0" mnemonicParsing="false" onAction="#delete" prefHeight="58.0" prefWidth="62.0" style="-fx-background-color: crimson;" styleClass="small-button" stylesheets="@../StyleSheets/Square_Button.css" text="DEL">
                      <effect>
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="17.0" />
+                        <Font name="Baskerville Old Face" size="17.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -163,7 +160,7 @@
                         <DropShadow />
                      </effect>
                   </Text>
-                  <Button fx:id="newPuzzle1" layoutX="219.0" layoutY="668.0" mnemonicParsing="false" onAction="#setHelp" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Help">
+                  <Button fx:id="newPuzzle1" layoutX="219.0" layoutY="668.0" mnemonicParsing="false" onAction="#setHelp" prefHeight="41.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="Help">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -171,7 +168,7 @@
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="24.0" />
+                        <Font name="Baskerville Old Face" size="25.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -179,7 +176,7 @@
                   </Button>
                   <Text fill="#ffe100" layoutX="987.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Found Words">
                      <font>
-                        <Font name="Algerian" size="28.0" />
+                        <Font name="Baskerville Old Face" size="34.0" />
                      </font>
                      <effect>
                         <DropShadow />
@@ -187,7 +184,7 @@
                   </Text>
                   <Text fill="#ffe100" layoutX="987.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score:" wrappingWidth="101.46875">
                      <font>
-                        <Font name="Algerian" size="28.0" />
+                        <Font name="Baskerville Old Face" size="34.0" />
                      </font>
                      <effect>
                         <DropShadow />
@@ -195,13 +192,13 @@
                   </Text>
                   <Text fx:id="score" fill="#ffe100" layoutX="1098.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
                      <font>
-                        <Font name="Algerian" size="28.0" />
+                        <Font name="Baskerville Old Face" size="34.0" />
                      </font>
                      <effect>
                         <DropShadow />
                      </effect>
                   </Text>
-                  <Button fx:id="custom" layoutX="42.0" layoutY="607.0" mnemonicParsing="false" onAction="#CustomButton" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Custom">
+                  <Button fx:id="custom" layoutX="47.0" layoutY="607.0" mnemonicParsing="false" onAction="#CustomButton" prefHeight="41.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="Custom">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -209,7 +206,7 @@
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="24.0" />
+                        <Font name="Baskerville Old Face" size="25.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -229,7 +226,7 @@
                      </font></Label>
                   <Text fill="#ffe100" layoutX="987.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rank:" wrappingWidth="101.46875">
                      <font>
-                        <Font name="Algerian" size="28.0" />
+                        <Font name="Baskerville Old Face" size="34.0" />
                      </font>
                      <effect>
                         <DropShadow />
@@ -243,7 +240,7 @@
                         <DropShadow />
                      </effect>
                   </Text>
-                  <Button fx:id="quit" layoutX="219.0" layoutY="607.0" mnemonicParsing="false" onAction="#quit" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Quit">
+                  <Button fx:id="quit" layoutX="219.0" layoutY="607.0" mnemonicParsing="false" onAction="#quit" prefHeight="41.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="Quit">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -251,7 +248,7 @@
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="24.0" />
+                        <Font name="Baskerville Old Face" size="25.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -276,7 +273,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="screenshot" layoutX="42.0" layoutY="554.0" mnemonicParsing="false" onAction="#fileChooser" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Screenshot">
+                  <Button fx:id="screenshot" layoutX="48.0" layoutY="548.0" mnemonicParsing="false" onAction="#fileChooser" prefHeight="44.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="Screenshot">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -284,7 +281,7 @@
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="20.0" />
+                        <Font name="Baskerville Old Face" size="25.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />

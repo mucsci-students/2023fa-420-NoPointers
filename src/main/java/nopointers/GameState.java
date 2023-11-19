@@ -22,6 +22,7 @@ public class GameState {
     // Fields
     private Puzzle puzzle;
     private Database database;
+    private Scanner sc = new Scanner(System.in);
 
     private GameState(GameStateBuilder builder) {
         this.puzzle = new Puzzle();
@@ -172,11 +173,8 @@ public class GameState {
             Puzzle.Memento m = puzzle.saveToMemento();
             String s = new String(m.toGSONObject());
             String home = System.getProperty("user.home");
-
-
-            System.out.println(s);
             try {
-                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                Files.write(Paths.get(home).resolve( "puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
             } catch (IOException error) {
                 throw new RuntimeException(error);
             }

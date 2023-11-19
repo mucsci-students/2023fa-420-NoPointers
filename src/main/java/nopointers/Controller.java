@@ -302,22 +302,12 @@ public class Controller {
             command.undo();
         }
     }
-    @FXML
-    private void takeScreenshot(ActionEvent e) throws IOException {
-        Stage stage = (Stage) foundWords.getScene().getWindow();
-        WritableImage image = stage.getScene().snapshot(null);
-        RenderedImage renderedImage = SwingFXUtils.fromFXImage(image,null);
-        File file = new File("Screenshot.png");
-        ImageIO.write(renderedImage,"png",file);
-        System.out.println("File saved to: " + file.getAbsolutePath());
-
-    }
 
     @FXML
     private void fileChooser(ActionEvent e) throws IOException {
         Stage stage = (Stage) foundWords.getScene().getWindow();
         WritableImage image = stage.getScene().snapshot(null);
-
+        
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save Screenshot");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG Files", "*.png"));

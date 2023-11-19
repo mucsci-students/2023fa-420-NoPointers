@@ -81,7 +81,6 @@ public class CLI {
                     promptWinner();
                     System.out.println(gameState.printScore());
                 }
-                gameState.conClose();
                 System.out.println("\033[49m");
 
                 System.out.println(RESET_TERMINAL_COLOR);

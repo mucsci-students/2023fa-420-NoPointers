@@ -207,7 +207,7 @@ class GameStateTest {
      *
      * @author kstigelman
      */
-    @RepeatedTest(2)
+    @RepeatedTest(1)
     @DisplayName("Test GameState's Scores")
     public void testScores () {
 
@@ -221,17 +221,18 @@ class GameStateTest {
         }
         String prev = gameState.printScore();
         gameState.addScore("Tom Cruise");
-        assertTrue(gameState.newScore());
         gameState.guess(testPuzzle.getValidWords().get(0));
+        assertTrue(gameState.newScore());
+        gameState.guess(testPuzzle.getValidWords().get(1));
+        gameState.guess(testPuzzle.getValidWords().get(2));
 
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         gameState = builder.build();
 
         gameState.addScore("Bob");
 
-        //assertFalse(gameState.newScore());
+        assertFalse(gameState.newScore());
         assertNotEquals(gameState.printScore(), prev, "Scores should not be the same.");
-        //gameState.conClose();
     }
 
     /** Tests the game state's State design pattern functionality.

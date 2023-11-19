@@ -241,13 +241,6 @@ public class GameState {
         return puzzle.printScore();
     }
 
-    /**
-     * Function that closes the connection
-     * to the database.
-     *
-     */
-    public void conClose(){database.conClose();}
-
 
     // Builder implementation for GameState
     public static class GameStateBuilder {

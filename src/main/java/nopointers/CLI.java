@@ -95,7 +95,12 @@ public class CLI {
                 showPuzzle();
                 break;
             case "save":
-                gameState.savePuzzle();
+                try {
+                    gameState.savePuzzle();
+                }
+                catch (IOException e) {
+                    System.out.print("Saving failed");
+                }
                 break;
             case "guess":
                 if(args.length > 1)
@@ -104,8 +109,10 @@ public class CLI {
                     handleOutcome(outcome);
                     break;
                 }
-            terminal.writer().write("Blank Guess!\n");
-            break;
+                else {
+                    terminal.writer().write("Blank Guess!\n");
+                    break;
+                }
             case "shuffle":
 
                 gameState.shuffle();
@@ -118,16 +125,25 @@ public class CLI {
                 rules();
                 break;
             case "load":
-                gameState.loadPuzzle();
+                try {
+                    gameState.loadPuzzle();
+                }
+                catch (IOException e) {
+                    System.out.println("No Save Found");
+                }
                 break;
             case "new":
-                if(i == 0){
+                if (gameState.getPuzzle() != null) {
                     promptWinner();
                     System.out.println(gameState.printScore());
-                    i++;
                 }
-                gameState.newRandomPuzzle();
-                showPuzzle();
+                try {
+                    gameState.newRandomPuzzle();
+                    showPuzzle();
+                }
+                catch (InterruptedException e) {
+                    System.out.println ("Something went wrong. Please try again.");
+                }
                 break;
             case "help":
                 commands();
@@ -137,11 +153,18 @@ public class CLI {
                 break;
             case "custom":
                 if(args.length > 1) {
-                    if (!gameState.newUserPuzzle(args[1])) {
-                        System.out.println("Invalid Pangram!");
+                    try {
+                        if (!gameState.newUserPuzzle(args[1])) {
+                            System.out.println("Invalid Pangram!");
+                        }
+                    }
+                    catch (InterruptedException e) {
+                        System.out.println ("Something went wrong. Please try again.");
                     }
                 }
-                terminal.writer().println("Invalid New Puzzle!");
+                else {
+                    terminal.writer().println("Invalid New Puzzle!");
+                }
                 break;
             case "hints":
                 String res = gameState.hints();

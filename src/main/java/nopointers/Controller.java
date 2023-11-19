@@ -163,19 +163,21 @@ public class Controller {
 
     public void customPuzzle(ActionEvent e)
     {
-
-
         String s = customInput.getText().trim().toLowerCase();
-        if (gameState.newUserPuzzle(s)) {
-            setButtons();
-            error.setVisible(false);
-            customInput.clear();
+        try {
+            if (gameState.newUserPuzzle(s)) {
+                setButtons();
+                error.setVisible(false);
+                customInput.clear();
+            }
+            else {
+                error.setText("Not a valid custom puzzle!");
+                error.setVisible(true);
+            }
         }
-        else {
-            error.setText("Not a valid custom puzzle!");
-            error.setVisible(true);
+        catch (InterruptedException err) {
+            System.out.println("Something went wrong, please try again.");
         }
-
     }
 
 
@@ -261,14 +263,14 @@ public class Controller {
 
     public void load(ActionEvent e)
     {
-        if (gameState.loadPuzzle()) {
+        try {
+            gameState.loadPuzzle();
             setButtons();
-            for(String s : gameState.guessed())
-            {
+            for (String s : gameState.guessed()) {
                 foundWords.insertText(0, s + "\n");
             }
         }
-        else {
+        catch (IOException err) {
             error.setText("No puzzle to load.");
             error.setVisible(true);
         }
@@ -297,7 +299,12 @@ public class Controller {
 
     public void save(ActionEvent e)
     {
-        gameState.savePuzzle();
+        try {
+            gameState.savePuzzle();
+        }
+        catch (IOException err) {
+            System.out.println("There was an error with saving. Please try again.");
+        }
     }
 
     public void CustomButton (ActionEvent e)
@@ -321,7 +328,7 @@ public class Controller {
                 score.setText(String.valueOf(gameState.getScore()));
                 input.clear();
                 int currentRank = gameState.getRank();
-                String[] arr = gameState.getRanks();
+                String[] arr = RankInfo.ranks;
                 rank.setText(arr[gameState.getRank()]);
             }
             case TOO_SHORT -> {

@@ -38,7 +38,7 @@ public class Controller {
 
     private GameState gameState;
     private CommandHistory history = new CommandHistory();
-
+    //Text area to input a guess
     @FXML
     TextField input = new TextField();
 
@@ -59,19 +59,19 @@ public class Controller {
 
     @FXML
     Button l5 = new Button();
-
+    //Button for the required letter
     @FXML
     Button requiredLetter = new Button();
-
+    //Button that generates a new puzzle
     @FXML
     Button newPuzzle = new Button();
-
+    //Button that shuffles the letters
     @FXML
     Button shuffle = new Button();
-
+    //Button to input a guess
     @FXML
     Button guess = new Button();
-
+    //Shows the list of found words
     @FXML
     TextArea foundWords = new TextArea();
 
@@ -80,7 +80,7 @@ public class Controller {
 
     @FXML
     Button loadButton = new Button();
-
+    //Button to delete a word
     @FXML
     Button deleteButton = new Button();
 
@@ -101,10 +101,10 @@ public class Controller {
 
     @FXML
     TextField customInput = new TextField();
-
+    //Button for custom input
     @FXML
     Button customButton = new Button();
-
+    //Button that quits the game
     @FXML
     Button quit = new Button();
     //Button the user pressed to show the hints
@@ -133,6 +133,12 @@ public class Controller {
         this.gameState = builder.build();
     }
 
+    /**
+     * Quits the game and presents the scores
+     * list if the user's score is a high score
+     *
+     * @param e
+     */
     public void quit(ActionEvent e)
     {
         if(gameState.newScore()){
@@ -161,7 +167,13 @@ public class Controller {
     }
 
 
-
+    /**
+     * Generate a new puzzle and inputs a new high
+     * score if user's previous game generated
+     * a new high score
+     *
+     * @param e
+     */
     public void NewPuzzle(ActionEvent e)
     {
         // Create a new puzzle via the New button with a NewPuzzle command.
@@ -176,8 +188,6 @@ public class Controller {
             scoresf(e);
             executeCommand(new NewPuzzleCommand(this, gameState));
         }
-
-
 
 
     }
@@ -210,6 +220,11 @@ public class Controller {
         input.setText(input.getText() + buttonText);
     }
 
+    /**
+     * Deletes a letter from the text box
+     *
+     * @param e
+     */
     public void delete(ActionEvent e)
     {
         if(input.getLength() > 0)
@@ -238,6 +253,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Loads a new puzzle
+     *
+     * @param e
+     */
     public void load(ActionEvent e)
     {
         if (gameState.loadPuzzle()) {
@@ -252,6 +272,12 @@ public class Controller {
             error.setVisible(true);
         }
     }
+
+    /**
+     * Shuffles the letters in the hive
+     *
+     * @param e
+     */
     public void shuffle(ActionEvent e)
     {
         if (gameState == null)
@@ -270,11 +296,21 @@ public class Controller {
         input.clear();
     }
 
+    /**
+     * Saves a user's puzzle
+     *
+     * @param e
+     */
     public void save(ActionEvent e)
     {
         gameState.savePuzzle();
     }
 
+    /**
+     * Allows the user to input a custom game
+     *
+     * @param e
+     */
     public void CustomButton (ActionEvent e)
     {
         customButton.setVisible(!customButton.isVisible());
@@ -286,6 +322,11 @@ public class Controller {
 
     }
 
+    /**
+     * Function that evaluates a user's guess
+     *
+     * @param e
+     */
     public void guess(ActionEvent e)
     {
 
@@ -333,7 +374,7 @@ public class Controller {
         }
     }
     /**
-     * A javafx function for
+     * A javafx function for presenting the hints
      *
      * @param e
      */
@@ -374,7 +415,8 @@ public class Controller {
 
     /**
      * A javafx function that
-     *
+     * inputs the user's name into
+     * the scores list
      *
      * @param e
      */

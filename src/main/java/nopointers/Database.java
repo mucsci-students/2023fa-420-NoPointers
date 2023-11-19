@@ -11,9 +11,11 @@ import java.util.*;
  * @author kstigelman, yohannesgeleta
  */
 public class Database {
+    //String of the full alphabet
     private final static String alphabet = "abcdefghijklmnopqrstuvwxyz";
-
+    //An instance of the database
     private static Database instance;
+    //One and only connection to the database
     private static Connection connection;
 
     //private static Connection sconnection;
@@ -25,11 +27,9 @@ public class Database {
     private Database () {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite::resource:words.db");
-            //sconnection = DriverManager.getConnection("jdbc:sqlite::src/main/resources/words.db");
         }
         catch (SQLException e) {
             connection = null;
-            //sconnection = null;
         }
     }
 
@@ -365,7 +365,7 @@ public class Database {
             ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()){
-                word = rs.getString("name");
+                word = rs.getString("name").toUpperCase();
                 num = rs.getInt("score");
                 if(map.containsKey(word)){
                     map.put("."+ String.valueOf(i) + word, num);

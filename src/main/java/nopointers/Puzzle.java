@@ -46,19 +46,18 @@ public class Puzzle {
     };
 
     // Fields of Puzzle Class
+
     // The 6 optional letters
-
     private char[] letters;
-
-
+    //The list of words the user guessed
     private ArrayList<String> guessed;
 
     // The required letter
-
     private char requiredLetter;
+    //The list of valid words
     private ArrayList<String> validWords;
 
-
+    //The score of the user
     private int score;
 
     @SerializedName(value = "maxPoints")
@@ -137,6 +136,11 @@ public class Puzzle {
         maxScore = calculateMaxScore ();
     }
 
+    /**
+     *
+     *
+     * @return A list of vowels
+     */
     private ArrayList<Character> findVowels () {
         ArrayList<Character> found = new ArrayList<>();
         char[] vowels = {'a', 'e', 'i', 'o', 'u'};
@@ -152,6 +156,11 @@ public class Puzzle {
         return found;
     }
 
+    /**
+     * Returns the required letter
+     *
+     * @return
+     */
     private char selectRequiredLetter () {
         ArrayList<Character> vowels = findVowels();
 
@@ -222,6 +231,11 @@ public class Puzzle {
         }
     }
 
+    /**
+     * Displays the rank of the user while
+     * playing the game
+     *
+     */
     public void displayRank () {
         System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " + ranks[getRank()]);
         if (getRank () == 9)
@@ -236,6 +250,13 @@ public class Puzzle {
             System.out.println ("Level up!");
         displayRank ();
     }
+
+    /**
+     * Calculate the maximum score that a user
+     * can get from the current puzzle
+     *
+     * @return The max score
+     */
     private int calculateMaxScore () {
         int total = 0;
         for (String word : validWords) {
@@ -248,6 +269,14 @@ public class Puzzle {
         }
         return total;
     }
+
+    /**
+     * Calculates the point value of a guess
+     *
+     *
+     * @param guess Word the user guess
+     * @return The point value of the guess
+     */
     private int calculatePoints (String guess) {
         int points = guess.length();
         if (points == 4)
@@ -259,6 +288,11 @@ public class Puzzle {
         return points;
     }
 
+    /**
+     * Returns the ranks in the game
+     *
+     * @return All the ranks
+     */
     public String[] getRanks() {
         return ranks;
     }
@@ -275,6 +309,11 @@ public class Puzzle {
         this.levels = levels;
     }*/
 
+    /**
+     * Returns a list of the valid words
+     *
+     * @return A list of the valid words
+     */
     public ArrayList<String> getValidWords() {
         return validWords;
     }
@@ -283,6 +322,11 @@ public class Puzzle {
         this.validWords = validWords;
     }*/
 
+    /**
+     * Returns the user's current score
+     *
+     * @return The score
+     */
     public int getScore() {
         return score;
     }
@@ -295,6 +339,11 @@ public class Puzzle {
         return maxScore;
     }*/
 
+    /**
+     * Returns the letters in the current puzzle
+     *
+     * @return The letters of the puzzle
+     */
     public char[] getLetters() {
         return letters;
     }
@@ -304,6 +353,11 @@ public class Puzzle {
         this.letters = letters;
     }*/
 
+    /**
+     * Returns the current words that were guessed
+     *
+     * @return The list of words
+     */
     public ArrayList<String> getGuessed() {
         return guessed;
     }
@@ -320,9 +374,19 @@ public class Puzzle {
 
     }*/
 
-    public double getScorePercent () {
-        return (double) score / maxScore;
-    }
+    /**
+     * Returns the percent of the total score
+     * the user has
+     *
+     * @return The score percent
+     */
+    public double getScorePercent () {return (double) score / maxScore;}
+
+    /**
+     * Returns the rank of the current player
+     *
+     * @return The rank
+     */
     public int getRank () {
         double overallScorePercent = (double) score / maxScore;
 
@@ -356,7 +420,14 @@ public class Puzzle {
     // letters.
     //return c;
     //}
-    
+
+    /**
+     * A toString function that builds
+     * a large string with all the elements
+     * of the hints box
+     *
+     * @return The hints string
+     */
     public String printHints(){
         StringBuilder res = new StringBuilder();
         res.append("Center letter is bold.\n\n");

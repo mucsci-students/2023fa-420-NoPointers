@@ -77,16 +77,16 @@ public class CLI {
         int i = 0;
         switch (args[0]) {
             case "exit":
-<<<<<<< HEAD
+
                 if(gameState.newScore() && i++ > 0){
                     promptWinner();
                     System.out.println(gameState.printScore());
                 }
                 gameState.conClose();
                 System.out.println("\033[49m");
-=======
+
                 System.out.println(RESET_TERMINAL_COLOR);
->>>>>>> 4005d586476a9c692be6dde0d7dafb9778a5ceda
+
                 System.exit(0);
             case "":
                 System.out.println("Please enter a command");

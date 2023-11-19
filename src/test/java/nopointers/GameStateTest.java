@@ -210,9 +210,26 @@ class GameStateTest {
     @RepeatedTest(2)
     @DisplayName("Test GameState's Scores")
     public void testScores () {
+
+        Puzzle testPuzzle = new Puzzle("lengthy");
+        try {
+            gameState.newUserPuzzle("lengthy");
+            assertNotNull(gameState.hints(), "Hints should be equal.");
+        }
+        catch (InterruptedException e) {
+            fail ("Interrupt exception thrown");
+        }
         String prev = gameState.printScore();
         gameState.addScore("Tom Cruise");
         assertTrue(gameState.newScore());
+        gameState.guess(testPuzzle.getValidWords().get(0));
+
+        GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
+        gameState = builder.build();
+
+        gameState.addScore("Bob");
+
+        assertFalse(gameState.newScore());
         assertNotEquals(gameState.printScore(), prev, "Scores should not be the same.");
         //gameState.conClose();
     }

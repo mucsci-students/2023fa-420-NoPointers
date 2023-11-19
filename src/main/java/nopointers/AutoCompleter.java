@@ -18,52 +18,54 @@ public class AutoCompleter {
     private AggregateCompleter completer;
 
     public AutoCompleter(){
+
         this.completer = new AggregateCompleter(
                 new ArgumentCompleter(
-                        new StringsCompleter("new"),
+
+                        new StringsCompleter("\033[31mnew"),
 
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("Custom"),
+                        new StringsCompleter("\033[31mCustom"),
 
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("Rules"),
+                        new StringsCompleter("\033[31mRules"),
 
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("Guess"),
+                        new StringsCompleter("\033[31mGuess"),
 
                         new NullCompleter()
                 ),
 
                 new ArgumentCompleter(
-                        new StringsCompleter("show"),
+                        new StringsCompleter("\033[31mshow"),
 
                         new NullCompleter() 
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("shuffle"),
+                        new StringsCompleter("\033[31mshuffle"),
 
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("save"),
+                        new StringsCompleter("\033[31msave"),
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("load"),
+                        new StringsCompleter("\033[31mload"),
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("exit"),
+                        new StringsCompleter("\033[31mexit"),
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("help"),
+                        new StringsCompleter("\033[31mhelp"),
                         new NullCompleter()
                 )
         );

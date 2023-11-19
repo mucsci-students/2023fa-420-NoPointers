@@ -44,7 +44,7 @@ public class GameState {
         if (puzzle != null) {
             //memento.save();
             save();
-            System.out.println("Puzzle Saved!");
+            System.out.println("Puzzle Saved to Home Directory");
             return true;
         }
         else {

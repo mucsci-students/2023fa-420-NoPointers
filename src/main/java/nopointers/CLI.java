@@ -113,10 +113,12 @@ public class CLI {
                 gameState.rank();
                 break;
             case "custom":
-
-                if (!gameState.newUserPuzzle(args[1])) {
-                    System.out.println("Invalid Pangram!");
+                if(args.length > 1) {
+                    if (!gameState.newUserPuzzle(args[1])) {
+                        System.out.println("Invalid Pangram!");
+                    }
                 }
+                terminal.writer().println("Invalid New Puzzle!");
                 break;
             default:
                 System.out.println(command + ": Unknown Command");

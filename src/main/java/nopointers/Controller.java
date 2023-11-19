@@ -22,7 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList; 
+import java.util.ArrayList;
 import javafx.scene.robot.*;
 import javafx.scene.image.*;
 import javafx.stage.FileChooser;
@@ -279,6 +279,10 @@ public class Controller {
             case MISSING_REQUIRED -> {
                 error.setText("Incorrect. Does not use required letter: " + gameState.requiredLetter());
             }
+            case INVALID_LETTER -> {
+                error.setText("Invalid Letter");
+            }
+
         }
 
     }

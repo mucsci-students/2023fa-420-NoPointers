@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nopointers.Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nopointers.Controller">
    <children>
       <VBox prefHeight="653.0" prefWidth="1150.0" VBox.vgrow="ALWAYS">
          <children>
@@ -72,7 +72,7 @@
                      <effect>
                         <Bloom threshold="0.39" />
                      </effect></Button>
-                  <Button fx:id="saveButton" layoutX="47.0" layoutY="735.0" mnemonicParsing="false" onAction="#save" prefHeight="41.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="Save">
+                  <Button fx:id="saveButton" layoutX="47.0" layoutY="735.0" mnemonicParsing="false" onAction="#saveToFile" prefHeight="41.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="Save">
                      <effect>
                         <InnerShadow />
                      </effect>
@@ -220,9 +220,9 @@
                         <Font size="18.0" />
                      </font>
                   </TextArea>
-                  <Label fx:id="error" layoutX="544.0" layoutY="149.0" prefHeight="41.0" prefWidth="195.0" style="-fx-alignment: center;" textFill="#fff800">
+                  <Label fx:id="error" layoutX="419.0" layoutY="149.0" prefHeight="41.0" prefWidth="447.0" style="-fx-alignment: center;" textAlignment="CENTER" textFill="#fff800">
                      <font>
-                        <Font name="Algerian" size="22.0" />
+                        <Font name="Baskerville Old Face" size="25.0" />
                      </font></Label>
                   <Text fill="#ffe100" layoutX="987.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rank:" wrappingWidth="101.46875">
                      <font>
@@ -282,7 +282,7 @@
                         <Font size="24.0" />
                      </font>
                   </TextArea>
-                  <Button fx:id="hintsButton" layoutX="42.0" layoutY="550.0" mnemonicParsing="false" onAction="#hintsf" prefHeight="41.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Hints">
+                  <Button fx:id="hintsButton" layoutX="42.0" layoutY="550.0" mnemonicParsing="false" onAction="#hintsf" prefHeight="41.0" prefWidth="150.0" stylesheets="@../StyleSheets/Option_Buttons.css" text="Hints">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -290,10 +290,13 @@
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Algerian" size="24.0" />
+                        <Font name="Baskerville Old Face" size="24.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
-                  <Button fx:id="screenshot" layoutX="48.0" layoutY="548.0" mnemonicParsing="false" onAction="#fileChooser" prefHeight="44.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="Screenshot">
+                  <Button fx:id="screenshot" layoutX="219.0" layoutY="548.0" mnemonicParsing="false" onAction="#fileChooser" prefHeight="44.0" prefWidth="150.0" styleClass="option_button" stylesheets="@../StyleSheets/Option_Buttons.css" text="Screenshot">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
@@ -301,8 +304,11 @@
                         <InnerShadow />
                      </effect>
                      <font>
-                        <Font name="Baskerville Old Face" size="25.0" />
+                        <Font name="Baskerville Old Face" size="24.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <TextArea fx:id="scoresBox" editable="false" layoutX="12.0" layoutY="89.0" opacity="0.85" prefHeight="441.0" prefWidth="447.0" visible="false" wrapText="true">
                      <effect>

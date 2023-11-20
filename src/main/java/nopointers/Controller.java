@@ -209,14 +209,15 @@ public class Controller {
         // Create a new puzzle via the New button with a NewPuzzle command.
         String word = new String(gameState.getLetters());
         if(!l0.getText().equals(String.valueOf(word.charAt(0)))){
-            executeCommand(new NewPuzzleCommand(this, gameState));
+            //Call on CommandFactory to produce the desired command.
+            executeCommand(CommandFactory.getCommand(CommandType.NewPuzzle, this, gameState));
         }
         else if(scoresBox.isVisible()){
             scoresBox.setVisible(false);
         }
         else{
             scoresf(e);
-            executeCommand(new NewPuzzleCommand(this, gameState));
+            executeCommand(CommandFactory.getCommand(CommandType.NewPuzzle, this, gameState));
         }
 
 

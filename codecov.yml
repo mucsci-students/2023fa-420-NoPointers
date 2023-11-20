@@ -14,6 +14,8 @@ ignore:
   - "src/main/java/nopointers/CompletedState.java"
   - "src/main/java/nopointers/State.java"
   - "src/main/java/nopointers/FreshState.java"
+  - "src/main/java/nopointers/CommandType.java"
+  - "src/main/java/nopointers/CommandFactory.java"
 
 coverage:
   status:

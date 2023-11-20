@@ -21,4 +21,5 @@ public abstract class Command {
         gameState.restoreFromMemento(memento);
     }
     public abstract boolean execute();
+
 }

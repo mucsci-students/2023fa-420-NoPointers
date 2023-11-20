@@ -1,6 +1,6 @@
 package nopointers;
 
-public class NewPuzzleCommand extends Command {
+public class NewPuzzleCommand extends Command implements Cloneable {
     public NewPuzzleCommand(Controller controller, GameState gameState) {
         super(controller, gameState);
     }
@@ -20,4 +20,6 @@ public class NewPuzzleCommand extends Command {
         }
         return false;
     }
+
+    public Object clone()
 }

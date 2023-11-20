@@ -398,7 +398,9 @@ public class Controller {
     // Executes Command. Pushes command onto command history stack.
     private void executeCommand (Command command) {
         if (command.execute()) {
-            history.push(command);
+           Command prev = command.clone();
+            //history.push(command);
+            history.push(prev);
         }
     }
     /**

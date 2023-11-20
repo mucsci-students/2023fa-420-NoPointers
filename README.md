@@ -70,3 +70,9 @@ The GameState class saves the Memento to a JSON file and loads that saved Mement
 2. Command - Clicking the New button in the GUI uses a NewPuzzleCommand to called on by the Controller to create a new Puzzle.
 3. Builder - A new GameState is created via GameStateBuilder nested within the GameState class. 
 4. Singleton - The Database class is implemented as a Singleton and used to access the sqlite database.
+5. State - The GameState has two States, FreshState and Completed State. When a user successfully guesses all 
+the valid words in a puzzle, the State will change from FreshState to CompletedState. Afterwards a new message 
+will be shown to the user whenever they try further guesses.
+6. Factory - A Factory for Commands has been implemented via the CommandFactory class. When the controller 
+wants to create a NewPuzzleCommand, it will call on the CommandFactory's getCommand method, which returns the 
+desired Command.

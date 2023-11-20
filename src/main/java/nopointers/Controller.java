@@ -1,6 +1,7 @@
 package nopointers;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,8 +17,7 @@ import javafx.scene.text.Text;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.RenderedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -54,6 +54,7 @@ public class Controller {
     private GameState gameState;
     private CommandHistory history = new CommandHistory();
     //Text area to input a guess
+    private boolean hitExit = false;
     @FXML
     TextField input = new TextField();
 
@@ -162,13 +163,19 @@ public class Controller {
      */
     public void quit(ActionEvent e)
     {
-        if(database.checkScore(gameState.getScore())){
-            scoresf(e);
-        }
-        else{
+        if (hitExit)
+        {
             System.exit(0);
         }
+        if(database.checkScore(gameState.getScore())){
+
+            scoresf(e);
+        }
+
+
     }
+
+
 
     public void customPuzzle(ActionEvent e)
     {
@@ -293,7 +300,9 @@ public class Controller {
             for (String s : gameState.guessed()) {
                 foundWords.insertText(0, s + "\n");
             }
+            error.setText("Puzzle Loaded From user.home");
         }
+
         catch (IOException err) {
             error.setText("No puzzle to load.");
             error.setVisible(true);
@@ -353,12 +362,6 @@ public class Controller {
     }
 
 
-
-    /**
-     * Function that evaluates a user's guess
-     *
-     * @param e
-     */
     public void guess(ActionEvent e)
     {
 
@@ -429,6 +432,28 @@ public class Controller {
     }
 
     @FXML
+    public void saveToFile() throws IOException {
+        Stage stage = (Stage) foundWords.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files (*.json)", "*.json"));
+        File file = fileChooser.showSaveDialog(stage);
+
+
+        if (file != null) {
+            saveContentToFile(file, gameState.getMemento().toGSONObject());
+        }
+    }
+
+    private void saveContentToFile(File file, String content) throws IOException {
+
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            fileWriter.write(content);
+            error.setText("PUZZLE SAVED SUCCESSFULLY");
+        }
+    }
+
+    @FXML
     private void fileChooser(ActionEvent e) throws IOException {
         Stage stage = (Stage) foundWords.getScene().getWindow();
         WritableImage image = stage.getScene().snapshot(null);
@@ -441,10 +466,10 @@ public class Controller {
         if (file != null) {
             try {
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-                System.out.println("Screenshot saved to: " + file.getAbsolutePath());
+                error.setText("SCREENSHOT SAVED SUCCESSFULLY");
             } catch (IOException error) {
                 error.printStackTrace();
-                System.out.println("Saving Error!");
+
             }
         }
     }
@@ -478,6 +503,6 @@ public class Controller {
         String res = gameState.printScore();
         scoresBox.setText(res);
         scoresBox.setVisible(true);
-
+        hitExit = true;
     }
 }

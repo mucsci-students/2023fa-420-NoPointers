@@ -13,6 +13,7 @@ import com.github.cliftonlabs.json_simple.JsonArray;
 import com.github.cliftonlabs.json_simple.JsonObject;
 import com.github.cliftonlabs.json_simple.Jsoner;
 import com.google.gson.Gson;
+import javafx.stage.FileChooser;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,14 +23,26 @@ public class GameState {
     private Puzzle puzzle;
     private Database database;
 
+    private State state;
+    private boolean isDone = false;
+
+    private Scanner sc = new Scanner(System.in);
+
+
     private GameState(GameStateBuilder builder) {
         this.puzzle = new Puzzle();
         database = Database.getInstance();
+        this.state = new FreshState(this);
     }
 
 
     // Guess method to be called on by controller. Calls on puzzle's guessWord method.
     public GuessOutcome guess (String input) {
+        GuessOutcome outcome;
+        // If GameState is in CompletedState(all words found) just return PUZZLE_COMPLETED rather than calling function.
+        if (isDone == true) {
+            return GuessOutcome.PUZZLE_COMPLETED;
+        }
         if (input.isBlank() || input.length() < 4) {
 
             return GuessOutcome.TOO_SHORT;
@@ -37,32 +50,29 @@ public class GameState {
         }
          return puzzle.guessWord(input);
     }
+    // Changes state to/from FreshState and CompletedState.
+    public void changeState(State state) {this.state = state;}
+
+    public State getState() {return state;}
+    // Marks puzzle as being completed.
+    public void setDone(boolean done) {this.isDone = done;}
 
     // Save method for controllers to call on.
-    public boolean savePuzzle () {
-        if (puzzle != null) {
-            //memento.save();
-            save();
-            System.out.println("Puzzle Saved!");
-            return true;
-        }
-        else {
-            System.out.println("No Puzzle to Save");
-            return false;
-        }
+    public void savePuzzle () throws IOException {
+        save();
     }
 
     // Load method to be called on by controllers.
-    public boolean loadPuzzle() {
-        return load();
+    public void loadPuzzle() throws IOException {
+        load();
     }
     // Create new puzzle method to be called on by controllers.
-    public void newRandomPuzzle() {
+    public void newRandomPuzzle() throws InterruptedException {
         newPuzzle();
     }
 
     // Create new puzzle from user input method to be called on by controllers
-    public boolean newUserPuzzle(String input) {
+    public boolean newUserPuzzle(String input) throws InterruptedException {
         if (input.length() < 7) {
             return false;
         } else if (database.checkPangram(input)) {
@@ -73,29 +83,21 @@ public class GameState {
         return false;
     }
 
-    public char requiredLetter() {
-        return puzzle.getRequiredLetter();
-    }
-
-    public ArrayList<String> guessed() {
-        return puzzle.getGuessed();
-    }
-
-    public boolean hasPuzzle() {
-        return (puzzle != null);
-    }
+    //Returns the required letter
+    public char requiredLetter() {return puzzle.getRequiredLetter();}
+    //Returns the list of guessed words
+    public ArrayList<String> guessed() {return puzzle.getGuessed();}
 
     public Puzzle.Memento getMemento() {return puzzle.saveToMemento();}
 
     public void restoreFromMemento(Puzzle.Memento m) {puzzle.restoreFromMemento(m);}
 
+    //Returns the letters of the current puzzle
     public char[] getLetters() {
         return puzzle.getLetters();
     }
-
+    //Returns the current rank
     public int getRank() { return puzzle.getRank(); }
-
-    public String[] getRanks() { return puzzle.getRanks(); }
 
     public int getScore() { return puzzle.getScore(); }
 
@@ -119,7 +121,7 @@ public class GameState {
      *
      * @poscondition We have generated a new puzzle for the user to solve.
      */
-    void newPuzzle() {
+    void newPuzzle() throws InterruptedException {
         System.out.println("Generating New Puzzle...");
         time();
         this.puzzle = new Puzzle();
@@ -128,23 +130,18 @@ public class GameState {
     /**
      * Displays a loading animation on our terminal.
      */
-    private void time() {
+    private void time() throws InterruptedException {
         for (int i = 0; i < 100; ++i) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(1);
-                System.out.print("\u001b[1000D");
-                System.out.flush();
-                TimeUnit.MILLISECONDS.sleep(1);
-                System.out.print((i + 1) + "%");
-                System.out.flush();
-            } catch (InterruptedException e) {
-
-                e.printStackTrace();
-            }
+            TimeUnit.MILLISECONDS.sleep(1);
+            System.out.print("\u001b[1000D");
+            System.out.flush();
+            TimeUnit.MILLISECONDS.sleep(1);
+            System.out.print((i + 1) + "%");
+            System.out.flush();
         }
     }
     // Helper method to generate new puzzle from user input
-    private void newPuzzleBase(String input) {
+    private void newPuzzleBase(String input) throws InterruptedException {
         //  Auto-generated method stub
         System.out.println("Generating New Puzzle...");
         time();
@@ -163,23 +160,12 @@ public class GameState {
      * @postcondition The users puzzle is saved to the given path.
      */
 
-    public void save() {
-
-        if(puzzle != null)
-        {
-            // Save current puzzle to a Memento.
-            Puzzle.Memento m = puzzle.saveToMemento();
-            String s = new String(m.toGSONObject());
-            String home = System.getProperty("user.home");
-
-            System.out.println(s);
-            try {
-                Files.write(Paths.get(home).resolve("puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-            } catch (IOException error) {
-                throw new RuntimeException(error);
-            }
-        }
-
+    public void save() throws IOException {
+        // Save current puzzle to a Memento.
+        Puzzle.Memento m = puzzle.saveToMemento();
+        String s = new String(m.toGSONObject());
+        String home = System.getProperty("user.home");
+        Files.write(Paths.get(home).resolve( "puzzle.json"), s.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
 
     /**
@@ -187,38 +173,66 @@ public class GameState {
      * Loads the saved puzzle from a JSON file from the given path.
      */
 
-    public boolean load() {
+    public void load() throws IOException {
         String home = System.getProperty("user.home");
         Path path = Paths.get(home).resolve("puzzle.json");
-        try {
-            Gson gson = new Gson();
-            String json = new String(Files.readAllBytes(path));
-            // Load json to a Memento
-            Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
-            puzzle = new Puzzle();
-            // Make current puzzle's fields to those of the saved Memento
-            puzzle.restoreFromMemento(m); 
-            return true;
-        } catch (IOException err) {
-            System.out.println("No Save Found");
-            return false;
-        }
+
+        Gson gson = new Gson();
+        String json = new String(Files.readAllBytes(path));
+        // Load json to a Memento
+        Puzzle.Memento m = gson.fromJson(json, Puzzle.Memento.class);
+        puzzle = new Puzzle();
+        // Make current puzzle's fields to those of the saved Memento
+        puzzle.restoreFromMemento(m);
     }
 
-
+    /**
+     * Called the print func from puzzle
+     * and returns the string of the total hints.
+     *
+     * @return A string of the total hints
+     */
     public String hints(){
-        String res = puzzle.print();
+        String res = puzzle.printHints();
         return res;
     }
+
+
+    /**
+     * Adds the current score into the database of
+     * high scores.
+     *
+     * @param name The name of the user.
+     * @return True if it is added and false if it
+     * isn't.
+     */
+    public boolean addScore(String name){
+        return puzzle.newHighScore(getScore(),name);
+    }
+
+    /**
+     * Returns total list of high scores.
+     *
+     * @return The string of the total
+     * list of high scores.
+     */
+    public String printScore(){
+        return puzzle.printScore();
+    }
+
 
     // Builder implementation for GameState
     public static class GameStateBuilder {
         private Puzzle puzzle;
         private Database database;
+        private State state;
+        private boolean isDone = false;
 
         public GameStateBuilder(Database database) {
             this.puzzle = new Puzzle();
             this.database = database;
+            this.isDone = false;
+            this.state = state;
         }
 
         public GameState build() {

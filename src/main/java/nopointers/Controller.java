@@ -1,28 +1,60 @@
 package nopointers;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.io.IOException;
+import java.awt.image.RenderedImage;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+
+import java.util.ArrayList; 
+
+import javafx.scene.robot.*;
+import javafx.scene.image.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
+import javafx.scene.image.WritableImage;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
+import javafx.scene.text.Text;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 
 
 public class Controller {
 
     private GameState gameState;
     private CommandHistory history = new CommandHistory();
-
+    //Text area to input a guess
+    private boolean hitExit = false;
     @FXML
     TextField input = new TextField();
 
@@ -43,19 +75,19 @@ public class Controller {
 
     @FXML
     Button l5 = new Button();
-
+    //Button for the required letter
     @FXML
     Button requiredLetter = new Button();
-
+    //Button that generates a new puzzle
     @FXML
     Button newPuzzle = new Button();
-
+    //Button that shuffles the letters
     @FXML
     Button shuffle = new Button();
-
+    //Button to input a guess
     @FXML
     Button guess = new Button();
-
+    //Shows the list of found words
     @FXML
     TextArea foundWords = new TextArea();
 
@@ -64,7 +96,7 @@ public class Controller {
 
     @FXML
     Button loadButton = new Button();
-
+    //Button to delete a word
     @FXML
     Button deleteButton = new Button();
 
@@ -85,57 +117,109 @@ public class Controller {
 
     @FXML
     TextField customInput = new TextField();
-
+    //Button for custom input
     @FXML
     Button customButton = new Button();
-
+    //Button that quits the game
     @FXML
     Button quit = new Button();
+    //Button the user pressed to show the hints
+    @FXML
+    Button Screenshot = new Button();
 
     @FXML
-
     Button hintsButton = new Button();
+    //Text ares that presents the hint
     @FXML
     TextArea hintsBox = new TextArea();
+    //Text area that presents the scores
+    @FXML
+    TextArea scoresBox = new TextArea();
+    //Text field where user enters their name
+    @FXML
+    TextField enterName = new TextField();
+    //Button the user presses to enter their name
+    @FXML
+    Button enter = new Button();
 
     Button g = new Button();
     Controller controller = this;
 
 
+    Database database;
+
     public Controller() {
         //this.gameState = new GameState();
         GameState.GameStateBuilder builder = new GameState.GameStateBuilder(Database.getInstance());
         this.gameState = builder.build();
+        database = Database.getInstance();
     }
 
+    /**
+     * Quits the game and presents the scores
+     * list if the user's score is a high score
+     *
+     * @param e
+     */
     public void quit(ActionEvent e)
     {
-        System.exit(0);
+        if (hitExit)
+        {
+            System.exit(0);
+        }
+        if(database.checkScore(gameState.getScore())){
+
+            scoresf(e);
+        }
+
+
     }
+
+
 
     public void customPuzzle(ActionEvent e)
     {
-
-
         String s = customInput.getText().trim().toLowerCase();
-        if (gameState.newUserPuzzle(s)) {
-            setButtons();
-            error.setVisible(false);
-            customInput.clear();
+        try {
+            if (gameState.newUserPuzzle(s)) {
+                setButtons();
+                error.setVisible(false);
+                customInput.clear();
+            }
+            else {
+                error.setText("Not a valid custom puzzle!");
+                error.setVisible(true);
+            }
         }
-        else {
-            error.setText("Not a valid custom puzzle!");
-            error.setVisible(true);
+        catch (InterruptedException err) {
+            System.out.println("Something went wrong, please try again.");
         }
-
     }
 
 
-
+    /**
+     * Generate a new puzzle and inputs a new high
+     * score if user's previous game generated
+     * a new high score
+     *
+     * @param e
+     */
     public void NewPuzzle(ActionEvent e)
     {
         // Create a new puzzle via the New button with a NewPuzzle command.
-        executeCommand(new NewPuzzleCommand(this, gameState));
+        String word = new String(gameState.getLetters());
+        if(!l0.getText().equals(String.valueOf(word.charAt(0)))){
+            //Call on CommandFactory to produce the desired command.
+            executeCommand(CommandFactory.getCommand(CommandType.NewPuzzle, this, gameState));
+        }
+        else if(scoresBox.isVisible()){
+            scoresBox.setVisible(false);
+        }
+        else{
+            scoresf(e);
+            executeCommand(CommandFactory.getCommand(CommandType.NewPuzzle, this, gameState));
+        }
+
 
     }
 
@@ -167,6 +251,11 @@ public class Controller {
         input.setText(input.getText() + buttonText);
     }
 
+    /**
+     * Deletes a letter from the text box
+     *
+     * @param e
+     */
     public void delete(ActionEvent e)
     {
         if(input.getLength() > 0)
@@ -192,31 +281,47 @@ public class Controller {
             input.clear();
             foundWords.clear();
 
+
+
+
         }
     }
 
+    /**
+     * Loads a new puzzle
+     *
+     * @param e
+     */
     public void load(ActionEvent e)
     {
-        if (gameState.loadPuzzle()) {
+        try {
+            gameState.loadPuzzle();
             setButtons();
-            for(String s : gameState.guessed())
-            {
+            for (String s : gameState.guessed()) {
                 foundWords.insertText(0, s + "\n");
             }
+            error.setText("Puzzle Loaded From user.home");
         }
-        else {
+
+        catch (IOException err) {
             error.setText("No puzzle to load.");
             error.setVisible(true);
         }
     }
-    public void shuffle(ActionEvent e)
-    {
+
+    /**
+     * Shuffles the letters in the hive
+     *
+     * @param e
+     */
+    public void shuffle(ActionEvent e) {
         if (gameState == null)
             return;
 
         gameState.shuffle();
 
         String word = new String (gameState.getLetters());
+
         l0.setText(String.valueOf(word.charAt(0)));
         l1.setText(String.valueOf(word.charAt(1)));
         l2.setText(String.valueOf(word.charAt(2)));
@@ -224,24 +329,38 @@ public class Controller {
         l4.setText(String.valueOf(word.charAt(4)));
         l5.setText(String.valueOf(word.charAt(5)));
 
+        requiredLetter.setText(String.valueOf(word.charAt(6)));
+        score.setText(String.valueOf(gameState.getScore()));
         input.clear();
+
     }
 
+    /**
+     * Saves a user's puzzle
+     *
+     * @param e
+     */
     public void save(ActionEvent e)
     {
-        gameState.savePuzzle();
+        try {
+            gameState.savePuzzle();
+        }
+        catch (IOException err) {
+            System.out.println("There was an error with saving. Please try again.");
+        }
     }
 
+    /**
+     * Allows the user to input a custom game
+     *
+     * @param e
+     */
     public void CustomButton (ActionEvent e)
     {
         customButton.setVisible(!customButton.isVisible());
         customInput.setVisible(!customInput.isVisible());
     }
 
-    public void ConfirmButton (ActionEvent e)
-    {
-
-    }
 
     public void guess(ActionEvent e)
     {
@@ -256,7 +375,7 @@ public class Controller {
                 score.setText(String.valueOf(gameState.getScore()));
                 input.clear();
                 int currentRank = gameState.getRank();
-                String[] arr = gameState.getRanks();
+                String[] arr = RankInfo.ranks;
                 rank.setText(arr[gameState.getRank()]);
             }
             case TOO_SHORT -> {
@@ -274,25 +393,35 @@ public class Controller {
             case MISSING_REQUIRED -> {
                 error.setText("Incorrect. Does not use required letter: " + gameState.requiredLetter());
             }
+            case INVALID_LETTER -> {
+                error.setText("Invalid Letter");
+            }
         }
 
     }
-
+    // Executes Command. Pushes command onto command history stack.
     private void executeCommand (Command command) {
         if (command.execute()) {
             history.push(command);
         }
     }
-
+    /**
+     * A javafx function for presenting the hints
+     *
+     * @param e
+     */
     public void hintsf(ActionEvent e){
         if(hintsBox.isVisible()){
             hintsBox.setVisible(false);
+            return;
         }
         String res = gameState.hints();
         hintsBox.setText(gameState.hints());
         hintsBox.setVisible(true);
     }
-    private void undo() {
+
+    // Undo previous command. Reverts to previous state.
+        private void undo() {
         if (history.isEmpty()) {
             return;
         }
@@ -300,5 +429,80 @@ public class Controller {
         if (command != null) {
             command.undo();
         }
+    }
+
+    @FXML
+    public void saveToFile() throws IOException {
+        Stage stage = (Stage) foundWords.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files (*.json)", "*.json"));
+        File file = fileChooser.showSaveDialog(stage);
+
+
+        if (file != null) {
+            saveContentToFile(file, gameState.getMemento().toGSONObject());
+        }
+    }
+
+    private void saveContentToFile(File file, String content) throws IOException {
+
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            fileWriter.write(content);
+            error.setText("PUZZLE SAVED SUCCESSFULLY");
+        }
+    }
+
+    @FXML
+    private void fileChooser(ActionEvent e) throws IOException {
+        Stage stage = (Stage) foundWords.getScene().getWindow();
+        WritableImage image = stage.getScene().snapshot(null);
+        
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save Screenshot");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PNG Files", "*.png"));
+
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null) {
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+                error.setText("SCREENSHOT SAVED SUCCESSFULLY");
+            } catch (IOException error) {
+                error.printStackTrace();
+
+            }
+        }
+    }
+
+    /**
+     * A javafx function for the textbox
+     * that presents the scoresbox
+     *
+     * @param e
+     */
+    public void scoresf(ActionEvent e){
+        if(scoresBox.isVisible()){
+            scoresBox.setVisible(false);
+        }
+        enterName.setVisible(true);
+        enter.setVisible(true);
+    }
+
+    /**
+     * A javafx function that
+     * inputs the user's name into
+     * the scores list
+     *
+     * @param e
+     */
+    public void enterf(ActionEvent e){
+        enterName.setVisible(false);
+        enter.setVisible(false);
+        gameState.addScore(enterName.getText());
+        enterName.setText("");
+        String res = gameState.printScore();
+        scoresBox.setText(res);
+        scoresBox.setVisible(true);
+        hitExit = true;
     }
 }

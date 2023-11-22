@@ -15,58 +15,64 @@ import org.jline.reader.impl.completer.StringsCompleter;
 
 public class AutoCompleter {
 
-    private AggregateCompleter comp;
+    private AggregateCompleter completer;
 
     public AutoCompleter(){
-        this.comp = new AggregateCompleter(
+
+        this.completer = new AggregateCompleter(
                 new ArgumentCompleter(
-                        new StringsCompleter("add"),
+
+                        new StringsCompleter("\033[31mnew"),
 
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("show"),
+                        new StringsCompleter("\033[31mCustom"),
+
+                        new NullCompleter()
+                ),
+                new ArgumentCompleter(
+                        new StringsCompleter("\033[31mRules"),
+
+                        new NullCompleter()
+                ),
+                new ArgumentCompleter(
+                        new StringsCompleter("\033[31mGuess"),
+
+                        new NullCompleter()
+                ),
+
+                new ArgumentCompleter(
+                        new StringsCompleter("\033[31mshow"),
 
                         new NullCompleter() 
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("shuffle"),
+                        new StringsCompleter("\033[31mshuffle"),
 
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("add"),
+                        new StringsCompleter("\033[31msave"),
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("save"),
+                        new StringsCompleter("\033[31mload"),
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("load"),
+                        new StringsCompleter("\033[31mexit"),
                         new NullCompleter()
                 ),
                 new ArgumentCompleter(
-                        new StringsCompleter("display"),
-                        new NullCompleter()
-                ),
-                new ArgumentCompleter(
-                        new StringsCompleter("redo"),
-                        new NullCompleter()
-                ),
-                new ArgumentCompleter(
-                        new StringsCompleter("exit"),
-                        new NullCompleter()
-                ),
-                new ArgumentCompleter(
-                        new StringsCompleter("help"),
+                        new StringsCompleter("\033[31mhelp"),
                         new NullCompleter()
                 )
         );
     }
 
     public AggregateCompleter updateCompleter(){
-        Collection<Completer> completers = comp.getCompleters();
+        Collection<Completer> completers = completer.getCompleters();
         completers = new ArrayList<>(completers);
         return new AggregateCompleter(completers);
     }

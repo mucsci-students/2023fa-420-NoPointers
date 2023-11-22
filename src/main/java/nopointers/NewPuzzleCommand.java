@@ -8,10 +8,16 @@ public class NewPuzzleCommand extends Command {
     @Override
     public boolean execute() {
         backup();
-        gameState.newRandomPuzzle();
-        String word = new String(gameState.getLetters());
-        controller.setButtons();
-        controller.foundWords.clear();
-        return true;
+        try {
+            gameState.newRandomPuzzle();
+            String word = new String(gameState.getLetters());
+            controller.setButtons();
+            controller.foundWords.clear();
+            return true;
+        }
+        catch (InterruptedException err) {
+            System.out.println("Something went wrong, please try again.");
+        }
+        return false;
     }
 }

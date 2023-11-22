@@ -223,23 +223,24 @@ public class Connect {
 
     }
 
-    public static boolean access(String word) {
+    public static String access(String word) {
         // Database URL
         String url = "jdbc:sqlite:words.db";
         int size = word.length();
+        String res = "";
 
-        boolean res = false;
         try {
             // Create a connection to the database
             Connection conn = DriverManager.getConnection(url);
             if (conn != null) {
-                res = findWord(size, word, conn);
-
+                Statement smnt = conn.createStatement();
+                ResultSet rs = smnt.executeQuery(word);
+                res = rs.getString(1);
                 conn.close();
             }
         } catch (SQLException e) {
             System.err.println("Database creation error: " + e.getMessage());
-            return false;
+            return "false";
         }
         return res;
     }
@@ -263,6 +264,12 @@ public class Connect {
             return false;
         }
     }
+
+    /**
+     * Counts the number of pangrams in a puzzle
+     *
+     * @return Number of pangrams
+     */
     public static int pangramCount() {
         String url = "jdbc:sqlite::resource:words.db";
         String sql = "SELECT COUNT(*) FROM pangrams;";
@@ -289,7 +296,13 @@ public class Connect {
         }
         return 0;
     }
-    
+
+    /**
+     * Returns the amount of perfect pangrams in
+     * a puzzle
+     *
+     * @return The number of perfect pangrams
+     */
     public static int countPerfectPangrams() {
         String url = "jdbc:sqlite::resource:words.db";
         String sql = "SELECT * FROM pangrams;"; // Change the SQL query to select all columns
@@ -320,11 +333,20 @@ public class Connect {
         return 0; // Return 0 for error or no perfect pangrams found
     }
 
+    /**
+     * Determines if a text is a perfect pangram
+     *
+     * @param text The text to be determined
+     * @return True if it is a perfect pangram false if not
+     */
     public static boolean isPerfectPangram(String text) {
+        if(text.length() != 7){
+            return false;
+        }
         String alphabet = "abcdefghijklmnopqrstuvwxyz";
-        
+
         text = text.toLowerCase().replaceAll(" ", "");
-        
+
         for (char letter : alphabet.toCharArray()) {
             if (text.indexOf(letter) == -1) {
                 return false;

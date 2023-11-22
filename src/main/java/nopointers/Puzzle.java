@@ -18,47 +18,20 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 public class Puzzle {
 
-    //Rank related structures
-
-    String[] ranks = {
-            "Student",
-            "Apprentice",
-            "Adept",
-            "Master",
-            "Elder Wizard",
-            "Sorcerer",
-            "Keeper of Words",
-            "Keeper of Words",
-            "Genius",
-            "Word Wizard"
-    };
-    int[] levels = {
-            0,
-            2,
-            5,
-            8,
-            15,
-            25,
-            40,
-            50,
-            70,
-            100
-    };
-
     // Fields of Puzzle Class
+
     // The 6 optional letters
-
     private char[] letters;
-
-
+    //The list of words the user guessed
     private ArrayList<String> guessed;
 
     // The required letter
-
     private char requiredLetter;
+    //The list of valid words
+
     private ArrayList<String> validWords;
 
-
+    //The score of the user
     private int score;
 
     @SerializedName(value = "maxPoints")
@@ -137,6 +110,11 @@ public class Puzzle {
         maxScore = calculateMaxScore ();
     }
 
+    /**
+     *
+     *
+     * @return A list of vowels
+     */
     private ArrayList<Character> findVowels () {
         ArrayList<Character> found = new ArrayList<>();
         char[] vowels = {'a', 'e', 'i', 'o', 'u'};
@@ -152,6 +130,11 @@ public class Puzzle {
         return found;
     }
 
+    /**
+     * Returns the required letter
+     *
+     * @return
+     */
     private char selectRequiredLetter () {
         ArrayList<Character> vowels = findVowels();
 
@@ -182,6 +165,10 @@ public class Puzzle {
             }
 
             addCorrectWord(guess);
+            // If all validwords have been correctly guessed, puzzle is now complete.
+            if (guessed.contains(validWords)) {
+                return GuessOutcome.PUZZLE_COMPLETED;
+            }
             return GuessOutcome.SUCCESS;
         }
         boolean foundRequired = false;
@@ -218,11 +205,16 @@ public class Puzzle {
         }
     }
 
+    /**
+     * Displays the rank of the user while
+     * playing the game
+     *
+     */
     public void displayRank () {
-        System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " + ranks[getRank()]);
+        System.out.println ("You have " + score + "pts / " + maxScore + "  |  Rank: " +  RankInfo.ranks[getRank()]);
         if (getRank () == 9)
             return;
-        System.out.println ("Next rank: " + ranks[getRank() + 1] + " at " + (int) (levels[getRank () + 1] * maxScore / 100) + "pts");
+        System.out.println ("Next rank: " + RankInfo.ranks[getRank() + 1] + " at " + (int) ( RankInfo.levels[getRank () + 1] * maxScore / 100) + "pts");
     }
     private void addCorrectWord (String guess) {
         guessed.add(guess);
@@ -230,8 +222,14 @@ public class Puzzle {
         score += calculatePoints(guess);
         if (getRank() != prevRank)
             System.out.println ("Level up!");
-        displayRank ();
     }
+
+    /**
+     * Calculate the maximum score that a user
+     * can get from the current puzzle
+     *
+     * @return The max score
+     */
     private int calculateMaxScore () {
         int total = 0;
         for (String word : validWords) {
@@ -244,6 +242,14 @@ public class Puzzle {
         }
         return total;
     }
+
+    /**
+     * Calculates the point value of a guess
+     *
+     *
+     * @param guess Word the user guess
+     * @return The point value of the guess
+     */
     private int calculatePoints (String guess) {
         int points = guess.length();
         if (points == 4)
@@ -253,10 +259,6 @@ public class Puzzle {
             points += 7;
 
         return points;
-    }
-
-    public String[] getRanks() {
-        return ranks;
     }
 
     /*public void setRanks(String[] ranks) {
@@ -271,6 +273,11 @@ public class Puzzle {
         this.levels = levels;
     }*/
 
+    /**
+     * Returns a list of the valid words
+     *
+     * @return A list of the valid words
+     */
     public ArrayList<String> getValidWords() {
         return validWords;
     }
@@ -279,6 +286,11 @@ public class Puzzle {
         this.validWords = validWords;
     }*/
 
+    /**
+     * Returns the user's current score
+     *
+     * @return The score
+     */
     public int getScore() {
         return score;
     }
@@ -291,6 +303,11 @@ public class Puzzle {
         return maxScore;
     }*/
 
+    /**
+     * Returns the letters in the current puzzle
+     *
+     * @return The letters of the puzzle
+     */
     public char[] getLetters() {
         return letters;
     }
@@ -300,6 +317,11 @@ public class Puzzle {
         this.letters = letters;
     }*/
 
+    /**
+     * Returns the current words that were guessed
+     *
+     * @return The list of words
+     */
     public ArrayList<String> getGuessed() {
         return guessed;
     }
@@ -316,9 +338,19 @@ public class Puzzle {
 
     }*/
 
-    public double getScorePercent () {
-        return (double) score / maxScore;
-    }
+    /**
+     * Returns the percent of the total score
+     * the user has
+     *
+     * @return The score percent
+     */
+    public double getScorePercent () {return (double) score / maxScore;}
+
+    /**
+     * Returns the rank of the current player
+     *
+     * @return The rank
+     */
     public int getRank () {
         double overallScorePercent = (double) score / maxScore;
 
@@ -352,8 +384,15 @@ public class Puzzle {
     // letters.
     //return c;
     //}
-    
-    public String print(){
+
+    /**
+     * A toString function that builds
+     * a large string with all the elements
+     * of the hints box
+     *
+     * @return The hints string
+     */
+    public String printHints(){
         StringBuilder res = new StringBuilder();
         res.append("Center letter is bold.\n\n");
         res.append("\u001B"+Character.toString(requiredLetter).toUpperCase() + " ");
@@ -364,12 +403,10 @@ public class Puzzle {
         res.append("\n");
         res.append("WORDS:" + validWords.size() + ", POINTS: " + Integer.toString(maxScore));//+ var
         res.append(", PANGRAMS: ");
-	    res.append(Connect.pangramCount());
-        /*
+        res.append(Connect.pangramCount());
         if(Connect.countPerfectPangrams() > 0){
 	    res.append("(" + Connect.countPerfectPangrams() + "Perfect)");
         }
-        */
         res.append("\n\n" + buildMatrix(validWords) + "\n");
         res.append("Two letter list:\n");
         res.append(twoLetLst(validWords));
@@ -591,6 +628,51 @@ public class Puzzle {
         return res.toString();
     }
 
+    /**
+     * Adds the name and score of the user
+     * if the score is a new high score.
+     *
+     * @param score The score of the user.
+     * @param name The name of the user.
+     * @return True if the score is a new
+     * high score and false if it isn't.
+     */
+    public boolean newHighScore(int score,String name){
+        if(database.checkScore(score)){
+            return database.addScore(score,name);
+        }
+        return false;
+    }
+
+    /**
+     * Returns a large string containing
+     * the total list of high scores in the
+     * correct order.
+     *
+     * @return String of the total high score.
+     */
+    public String printScore(){
+        StringBuilder res = new StringBuilder();
+        res.append("TOTAL HIGH SCORES\n");
+        Map<String,Integer> map = database.totalScore();
+        int i = 1;
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            res.append(String.valueOf(i) + ".");
+            i++;
+            res.append("Name: ");
+            String word = entry.getKey().toString().toUpperCase();
+            if(word.substring(0,1).equals(".")){
+                res.append(word.substring(2,word.length()));
+            }else{
+                res.append(entry.getKey().toString());
+            }
+            res.append("| Score: ");
+            res.append(entry.getValue().toString());
+            res.append("\n");
+        }
+        return res.toString();
+    }
+
     // Changes current puzzle's fields to be of those stored in the saved Memento
     public void restoreFromMemento(Memento memento) {
         letters = memento.getLetters();
@@ -624,13 +706,26 @@ public class Puzzle {
         @Expose (serialize = true, deserialize = true)
         private int score;
 
+        @SerializedName(value = "wordlist")
+        @Expose (serialize = true, deserialize = true)
+        private ArrayList<String> validWords;
 
+        @SerializedName(value = "author")
+        @Expose (serialize = true, deserialize = true)
+        private String author;
+
+        @SerializedName(value = "rank")
+        @Expose (serialize = true, deserialize = true)
+        private int rank;
         // Constructor.
         public Memento (Puzzle puzzle) {
             this.letters = puzzle.letters;
             this.guessed = puzzle.guessed;
             this.requiredLetter = puzzle.requiredLetter;
             this.score = puzzle.score;
+            this.validWords = puzzle.validWords;
+            this.author = "no-pointers";
+            this.rank = puzzle.getRank();
         }
 
         public char getRequiredLetter() {
@@ -647,6 +742,10 @@ public class Puzzle {
 
         public int getScore() {
             return score;
+        }
+
+        public int getRank() {
+            return rank;
         }
 
         public String toGSONObject()
